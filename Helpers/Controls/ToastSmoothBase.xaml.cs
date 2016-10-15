@@ -16,10 +16,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Wallace.UWP.Helpers.Controls {
     public partial class ToastSmoothBase : UserControl {
-        private Popup DialogPopup;
+        protected Popup DialogPopup;
 
-        private string TextContent;
-        private TimeSpan WholeTime;
+        protected string TextContent;
+        protected TimeSpan WholeTime;
 
         public static readonly DependencyProperty ToastBackgroundProperty = DependencyProperty.Register("ToastBackground", typeof(Brush), typeof(ToastSmoothBase), null);
         public Brush ToastBackground {
@@ -43,20 +43,11 @@ namespace Wallace.UWP.Helpers.Controls {
             this . Unloaded += NotifyPopup_Unloaded;
         }
 
-        /// <summary>
-        /// 构造特定时间的Toast
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="showTime"></param>
         public ToastSmoothBase ( string content , TimeSpan showTime ) : this() {
             this . TextContent = content;
             this . WholeTime = showTime;
         }
 
-        /// <summary>
-        /// 默认构造两秒的Toast
-        /// </summary>
-        /// <param name="content"></param>
         public ToastSmoothBase ( string content ) : this(content, TimeSpan.FromSeconds(2)) { }
 
         public void Show ( ) {

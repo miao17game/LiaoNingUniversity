@@ -1,0 +1,316 @@
+﻿<Page
+    x:Class="LiaoNingUniversity.NET.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LiaoNingUniversity.NET.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <!--#region Page.Resources-->
+    <Page.Resources>
+        <Style x:Key="SummaryTextStyle" TargetType="TextBlock" >
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+            <Setter Property="Foreground" Value="{ThemeResource AppPersonalTextColorAlphaItem01}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TitleTextStyle" TargetType="TextBlock" >
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="{ThemeResource AppPersonalTextColorPure02}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    <!--#endregion-->
+    
+    <Grid Name="grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromVerticalOffset="400"/>
+            </TransitionCollection>
+        </Grid.Transitions>
+
+        <Pivot Width="{Binding Width, ElementName=grid ,Mode=OneWay}"
+               SelectionChanged="Pivot_SelectionChanged">
+            
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Margin="10,3,5,3" FontSize="18" />
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            
+            <!--#region Settings-->
+            <PivotItem Name="Settings" x:Uid="SettPageItem_Settings">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Vertical" 
+                                    Margin=" 10,10,10,0">
+                            <TextBlock x:Uid="VisualOptions" FontWeight="Bold"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            <Rectangle Height="1" Margin=" 0,5,0,0" Fill="{ThemeResource DQDSummTextColor}"/>
+                        </StackPanel>
+                        <Grid Margin="10,10,10,0" >
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="DarkMode"
+                                   Style="{StaticResource TitleTextStyle}"/>
+                                <TextBlock x:Uid="DarkModeSummary"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            </StackPanel>
+                            <ToggleSwitch Name="ThemeSwitch" 
+                                      Style="{ThemeResource ThemeModeSwitch}" 
+                                      HorizontalAlignment="Right"
+                                      Margin="0,0,-100,0"
+                                      OnContent=" " 
+                                      OffContent=" " 
+                                      Toggled="ThemeSwitch_Toggled" />
+                        </Grid>
+                        <StackPanel Orientation="Vertical" 
+                                    Margin=" 10,10,10,0">
+                            <TextBlock x:Uid="LanguageOptions" FontWeight="Bold"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            <Rectangle Height="1" Margin=" 0,5,0,0" Fill="{ThemeResource DQDSummTextColor}"/>
+                        </StackPanel>
+                        <Grid Margin="10,10,10,0" >
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="LanguageMode"
+                                   Style="{StaticResource TitleTextStyle}"/>
+                                <TextBlock x:Uid="LanguageModeSummary"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            </StackPanel>
+                            <ComboBox Name="LanguageCombox" 
+                                      HorizontalAlignment="Right"
+                                      MinWidth="150"
+                                      SelectionChanged="LanguageCombox_SelectionChanged">
+                                <ComboBoxItem Name="enUSSelect" Content="English"/>
+                                <ComboBoxItem Name="zhCNSelect" Content="简体中文"/>
+                            </ComboBox>
+                        </Grid>
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <!--#endregion-->
+            
+            <!--#region About-->
+            <PivotItem Name="About" x:Uid="SettPageItem_About" >
+                <ScrollViewer>
+                    <StackPanel>
+
+                        <TextBlock Margin="10,5,10,5" x:Uid="VersionMessageFor" 
+                                   FontWeight="ExtraBold" Name="VersionMessage" FontSize="23"/>
+
+                        <TextBlock Margin="10,5,10,0" x:Uid="AboutENRZUWP"
+                                   FontWeight="ExtraBold" FontSize="16"/>
+
+                        <Rectangle Height="1" Margin=" 10,5,10,0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="{ThemeResource ENRZLineColor}" Offset="0.0" />
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Margin="10,5,10,5" FontSize="14" FontWeight="Thin"
+                               TextWrapping="WrapWholeWords">
+                            <Run x:Uid="AboutENRZUWP_mess01" /><LineBreak/><LineBreak/>
+                            <Run x:Uid="AboutENRZUWP_mess02" /><LineBreak/><LineBreak/>
+                            <Run x:Uid="AboutENRZUWP_mess03" /><LineBreak/><LineBreak/>
+                            <Run x:Uid="AboutENRZUWP_mess04" />
+                        </TextBlock>
+
+                        <TextBlock Margin="10,5,10,0" x:Uid="ProgressRoute"
+                                   FontWeight="ExtraBold" FontSize="16"/>
+
+                        <Rectangle Height="1" Margin=" 10,5,10,0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="{ThemeResource ENRZLineColor}" Offset="0.0" />
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
+                               TextWrapping="WrapWholeWords">
+                            
+                            <Run Text="Version：1.1002.2304 / 2016.10.12" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="紧急修复Badge图标问题" /><LineBreak/>
+                            <Run Text="加入夜间模式和日间模式的切换" /><LineBreak/>
+                            <Run Text="修复了一些其他的小问题" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1001.1500 / 2016.10.12" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Windows应用商店第一版" /><LineBreak/>
+                            <Run Text="BadgeLogo存在问题审核被驳回" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.5 / 2016.10.12" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="体验基本完善，修改细节" /><LineBreak/>
+                            <Run Text="应用图标修改，为提交商店做准备" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.4 / 2016.10.12" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="内容页面开发完成" /><LineBreak/>
+                            <Run Text="菜单滑动手势加入" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.3 / 2016.10.11" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="目录功能完成" /><LineBreak/>
+                            <Run Text="新闻与图片的获取" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.1 / 2016.10.09" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="主要外观框架开发完成" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.0 / 2016.10.09" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="ENRZ.COM For Windows10 正式进入开发阶段" /><LineBreak/><LineBreak/>
+                            
+                        </TextBlock>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <!--#endregion-->
+            
+            <!--#region About ENRZ-->
+            <PivotItem Name="AboutENRZ" x:Uid="SettPageItem_AboutENRZ" >
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Margin="10,5,10,5" FontSize="14" FontWeight="Thin"
+                               TextWrapping="WrapWholeWords">
+                            <Run x:Uid="ENRZWebsites" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
+                            <LineBreak/>
+                        <Run x:Uid="ENRZWebsites_mess01"/><LineBreak/>
+                        <LineBreak/>
+                        <Run x:Uid="ENRZWebsites_mess02"/><LineBreak/>
+                        <LineBreak/>
+                        <Run x:Uid="ENRZWebsites_mess03"/><LineBreak/>
+                        <LineBreak/>
+                            <Run x:Uid="ENRZMagazine" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
+                            <LineBreak/>
+                        <Run x:Uid="ENRZMagazine_mess01"/><LineBreak/>
+                        <LineBreak/>
+                        <Run x:Uid="ENRZMagazine_mess02"/><LineBreak/>
+                        <LineBreak/>
+                            <Run x:Uid="ENRZGroupProfile" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
+                            <LineBreak/>
+                        <Run x:Uid="ENRZGroupProfile_mess01"/><LineBreak/>
+
+                        </TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <!--#endregion-->
+            
+            <!--#region About Me-->
+            <PivotItem Name="AboutMe" x:Uid="SettPageItem_AboutMe" >
+                <ScrollViewer>
+                    <StackPanel>
+                        <Ellipse Name="Ellipse" Width="150" Height="150" Margin="10,10,10,10" 
+                         VerticalAlignment="Top" >
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Assets/sb.jpg" />
+                            </Ellipse.Fill>
+                            <Ellipse.Transitions>
+                                <TransitionCollection>
+                                    <EntranceThemeTransition FromVerticalOffset="-200"/>
+                                </TransitionCollection>
+                            </Ellipse.Transitions>
+                        </Ellipse>
+
+                        <TextBlock FontWeight="ExtraBold"
+                               FontSize="20"
+                               Margin="5,15,5,5"
+                               TextWrapping="WrapWholeWords"
+                                   HorizontalAlignment="Center">Wallace Sun</TextBlock>
+
+                        <TextBlock FontWeight="Thin"
+                                   x:Uid="Contact"
+                                   FontSize="16"
+                                   Margin="0,15,5,5"
+                                   TextWrapping="WrapWholeWords"
+                                   HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock FontWeight="Thin"
+                               FontSize="16"
+                               Margin="0,5,5,5"
+                               TextWrapping="WrapWholeWords"
+                                   HorizontalAlignment="Center">WeChat：miao17game</TextBlock>
+                        <TextBlock FontWeight="Thin"
+                               FontSize="16"
+                               Margin="0,5,5,5"
+                               TextWrapping="WrapWholeWords"
+                                   HorizontalAlignment="Center">QQ：245396954</TextBlock>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center" Margin="0,5,5,5">
+                            <TextBlock FontWeight="Thin"
+                                       x:Uid="Blog"
+                                       FontSize="16"
+                                       TextWrapping="WrapWholeWords"></TextBlock>
+                            <HyperlinkButton Content="Wallace Sun"
+                                     NavigateUri="http://noodlesblog.azurewebsites.net/" 
+                                     Foreground="{ThemeResource ENRZForeground01}"
+                                     Padding="0" FontWeight="Bold"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center" Margin="0,5,5,5">
+                            <TextBlock FontWeight="Thin"
+                                       x:Uid="Weibo"
+                                       FontSize="16"
+                                       TextWrapping="WrapWholeWords"></TextBlock>
+                            <HyperlinkButton x:Uid="Weibo_mess"
+                                     NavigateUri="http://weibo.com/miao17game?refer_flag=1001030102_" 
+                                     Foreground="{ThemeResource ENRZForeground01}"
+                                     Padding="0" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <TextBlock FontWeight="Thin"
+                               FontSize="16"
+                               Margin="0,5,5,0"
+                                   HorizontalAlignment="Center"
+                               TextWrapping="WrapWholeWords">
+                        <Run x:Uid="D_C" FontWeight="SemiBold"/>
+                        </TextBlock>
+                        <TextBlock FontWeight="Thin"
+                               FontSize="16"
+                               Margin="0,5,5,5"
+                                   HorizontalAlignment="Center"
+                               TextWrapping="WrapWholeWords">
+                        <Run x:Uid="Alipay" FontSize="14"/><LineBreak/>
+                        </TextBlock>
+
+                        <Rectangle Height="1" Width="300" Margin=" 35,5,35,0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="Transparent" Offset="0.0" />
+                                    <GradientStop Color="{ThemeResource ENRZLineColor}" Offset="0.5" />
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock FontWeight="Thin"
+                               FontSize="16"
+                               Margin="0,15,5,5"
+                                   HorizontalAlignment="Center"
+                               TextWrapping="WrapWholeWords">
+                        <Run x:Uid="Feedback_Email" FontWeight="SemiBold"/>
+                        </TextBlock>
+                        <Button x:Uid="Feedback"
+                            Background="{ThemeResource ENRZForeground01}"
+                            Foreground="#EFEFEF"
+                            Name="FeedBackBtn" 
+                                 Margin="0,10,5,5"
+                                HorizontalAlignment="Center"
+                            Click="FeedBackBtn_Click"/>
+
+                        <StackPanel.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition FromVerticalOffset="400"/>
+                            </TransitionCollection>
+                        </StackPanel.Transitions>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <!--#endregion-->
+            
+        </Pivot>
+    </Grid>
+</Page>

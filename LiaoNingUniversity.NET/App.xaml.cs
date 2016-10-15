@@ -1,12 +1,18 @@
-﻿using System;
+﻿using LiaoNingUniversity.NET.Controls;
+using LiaoNingUniversity.NET.Tools;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Wallace.UWP.Helpers.Helpers;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +20,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+using static Wallace.UWP.Helpers.Tools.UWPStates;
 
 namespace LiaoNingUniversity.NET {
     /// <summary>
@@ -27,6 +35,26 @@ namespace LiaoNingUniversity.NET {
         public App() {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e) {
+            e.Handled = true;
+            new ToastSmooth($"{GetUIString("AppErrorString")}\n" + e.Exception.Message).Show();
+        }
+
+        /// <summary>
+        /// Should be called from OnActivated and OnLaunched
+        /// </summary>
+        private void RegisterExceptionHandlingSynchronizationContext() {
+            Wallace.UWP.Helpers.Tools.ExceptionHandlingSynchronizationContext
+                .Register()
+                .UnhandledException += SynchronizationContext_UnhandledException;
+        }
+
+        private void SynchronizationContext_UnhandledException(object sender, Wallace.UWP.Helpers.Tools.UnhandledExceptionEventArgs e) {
+            e.Handled = true;
+            new ToastSmooth($"{GetUIString("AppErrorString")}\n" + e.Exception.Message).Show();
         }
 
         /// <summary>
@@ -41,6 +69,11 @@ namespace LiaoNingUniversity.NET {
             //                this.DebugSettings.EnableFrameRateCounter = true;
             //            }
             //#endif
+
+            RegisterExceptionHandlingSynchronizationContext();
+
+            ApplicationLanguages.PrimaryLanguageOverride = (string)SettingsHelper.ReadSettingsValue(SettingsSelect.Language)?? "zh-CN";
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -69,6 +102,10 @@ namespace LiaoNingUniversity.NET {
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args) {
+            RegisterExceptionHandlingSynchronizationContext();
         }
 
         /// <summary>

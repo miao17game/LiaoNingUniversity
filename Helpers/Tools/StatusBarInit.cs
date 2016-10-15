@@ -33,7 +33,7 @@ namespace Wallace.UWP.Helpers. Tools {
         /// <summary>
         /// 为准备画面初始化Desktop任务栏
         /// </summary>
-        public static void InitDesktopStatusBarToPrepare (bool IsLightTheme) {
+        public static void InitDesktopStatusBar (bool IsLightTheme) {
             if (!IsLightTheme) {
                 SetTitleBarSelfView(0, 32, 32, 32, Colors.White, Colors.LightGray, Colors.Gray);
                 SetTitleBarButtonSelfView(0, 32, 32, 32, Colors.White);
@@ -41,6 +41,21 @@ namespace Wallace.UWP.Helpers. Tools {
             } else {
                 SetTitleBarSelfView(0, 246, 246, 246, Colors.Black, Colors.LightGray, Colors.Gray);
                 SetTitleBarButtonSelfView(0, 246, 246, 246, Colors.Black);
+                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.Black, Colors.SteelBlue, Colors.White, Colors.DarkGray, Colors.Gray);
+            }
+        }
+
+        /// <summary>
+        /// 为准备画面初始化Desktop任务栏
+        /// </summary>
+        public static void InitDesktopStatusBar(bool IsLightTheme, Color ForeColorLight, Color BackColorLight, Color ForeColorDark, Color BackColorDark) {
+            if (IsLightTheme) {
+                SetTitleBarSelfView(BackColorLight, ForeColorLight, Colors.LightGray, Colors.Gray);
+                SetTitleBarButtonSelfView(Colors.Transparent, ForeColorLight);
+                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.White, Colors.SteelBlue, Colors.White, Colors.DarkGray, Colors.Gray);
+            } else {
+                SetTitleBarSelfView(BackColorDark, ForeColorDark, Colors.LightGray, Colors.Gray);
+                SetTitleBarButtonSelfView(Colors.Transparent, ForeColorDark);
                 SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.Black, Colors.SteelBlue, Colors.White, Colors.DarkGray, Colors.Gray);
             }
         }
@@ -130,7 +145,19 @@ namespace Wallace.UWP.Helpers. Tools {
         }
 
         /// <summary>
-        /// 设置Desktop任务栏按钮初始风格
+        /// 设置Desktop任务栏按钮初始风格 ///
+        /// 分别设置背景色和前景色
+        /// </summary>
+        /// <param name="ForeColor">背景色</param>
+        /// <param name="ForeColor">前景色</param>
+        public static void SetTitleBarButtonSelfView(Color BackColor, Color ForeColor) {
+            var AppView = ApplicationView.GetForCurrentView();
+            AppView.TitleBar.ButtonBackgroundColor = BackColor;
+            AppView.TitleBar.ButtonForegroundColor = ForeColor;
+        }
+
+        /// <summary>
+        /// 设置Desktop任务栏初始风格
         /// 1）分别设置ARGB和前景色
         /// 2）设置失去焦点的背景和前景
         /// </summary>
@@ -148,6 +175,23 @@ namespace Wallace.UWP.Helpers. Tools {
             AppView . TitleBar . ForegroundColor = ForeColor;
             AppView . TitleBar . InactiveBackgroundColor = InacBack;
             AppView . TitleBar . InactiveForegroundColor = InacFore;
+        }
+
+        /// <summary>
+        /// 设置Desktop任务栏初始风格
+        /// 1）分别设置背景色和前景色
+        /// 2）设置失去焦点的背景和前景
+        /// </summary>
+        /// <param name="BackColor"></param>
+        /// <param name="ForeColor"></param>
+        /// <param name="InacBack"></param>
+        /// <param name="InacFore"></param>
+        public static void SetTitleBarSelfView(Color BackColor, Color ForeColor, Color InacBack, Color InacFore) {
+            var AppView = ApplicationView.GetForCurrentView();
+            AppView.TitleBar.BackgroundColor = BackColor;
+            AppView.TitleBar.ForegroundColor = ForeColor;
+            AppView.TitleBar.InactiveBackgroundColor = InacBack;
+            AppView.TitleBar.InactiveForegroundColor = InacFore;
         }
     }
 }

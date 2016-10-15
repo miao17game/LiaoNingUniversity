@@ -107,7 +107,17 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BarItemModel.cs" />
+    <Compile Include="Models\Converters\ColorConverter.cs" />
+    <Compile Include="Models\Converters\IconConverter.cs" />
+    <Compile Include="Models\Converters\SelfVisibilityConverter.cs" />
+    <Compile Include="Models\Converters\ValueConverter.cs" />
+    <Compile Include="Models\Converters\VisibilityConverter.cs" />
+    <Compile Include="Models\NavigateParameter.cs" />
+    <Compile Include="Models\NavigateType.cs" />
+    <Compile Include="Models\NavigationModel\NavigationBar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\DataProcess.cs" />
     <EmbeddedResource Include="Properties\LiaoNingUniversity.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +125,6 @@
       <Project>{e4cc9a90-2746-41e6-89d5-b6c6b215fa31}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
