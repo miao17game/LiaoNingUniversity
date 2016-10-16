@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutENRZUWP.Text" xml:space="preserve">
+    <value>About LNU For Windows10</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="AboutENRZUWP_mess01.Text" xml:space="preserve">
+    <value>App content from the Liaoning University academic management and related websites, third party developer works, based on the Windows users to provide a simplified content of Liaoning University academic management content acquisition, better service experience.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="AboutENRZUWP_mess02.Text" xml:space="preserve">
+    <value>I will be within the scope of the ability to provide the best maintenance and follow-up, but such as the application of the content is not updated, the situation is not the developer. Application development is still in an early stage, I hope you positive feedback.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="AboutENRZUWP_mess03.Text" xml:space="preserve">
+    <value>Application of all content from the Liaoning University academic management is completely free of charge, the application itself will not be a fee to limit the user to use the threshold, I do not have this power. Additional content is not included in this column.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="AboutENRZUWP_mess04.Text" xml:space="preserve">
+    <value>Support for donations, how much at random, focusing on encouragement. Development is not easy, please encourage seniors, Namaste, Liaoning University long live. -- By Baidu Translation.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Alipay.Text" xml:space="preserve">
+    <value>AliPay：18640046260</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Blog.Text" xml:space="preserve">
+    <value>Blog：</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Contact</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="DarkMode.Text" xml:space="preserve">
+    <value>DarkTheme Mode</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="DarkModeSummary.Text" xml:space="preserve">
+    <value>Change the background and fonts foreground.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="D_C.Text" xml:space="preserve">
+    <value>Donations and support</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZGroupProfile.Text" xml:space="preserve">
+    <value>Prospect</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZGroupProfile_mess01.Text" xml:space="preserve">
+    <value>Since the school, Liaoning University has trained more than 19 kinds of students for the country, long-term students more than 8000 people to the United States, Japan, Russia, South Korea, Italy, Britain, France and other 94 countries to cultivate, short-term students more than 3000 people. Schools with Russian National University of Irkutsk, Lithuania and Vilnius University and Senegal University of Dakar Confucius college, carefully crafted Confucius college brand across Asia, Europe, Africa and the three continents, walk into the office of internationalization of a new stage of development. Facing the new situation and requirements, adhering to the "Liaoning University Mingde fine, Dusing induced strong" spirit of the school motto, after all the Liaoning adults work as soon as possible to the construction of Liaoning University become the application characteristics and advantage subject to the domestic first-class, internationally renowned comprehensive high level research university.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZMagazine.Text" xml:space="preserve">
+    <value>School Survey</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZMagazine_mess01.Text" xml:space="preserve">
+    <value>Liaoning University is a comprehensive university in Liaoning Province, which has the characteristics of literature, history, philosophy, classics, law, science, technology, engineering, management, medicine, art and other disciplines. The school has three campuses, namely Shenyang, Shenyang Chongshan campus Puhe campus and Liaoyang wusheng campus, teaching area covers an area of 2153 mu, building area of 653 thousand and 700 square meters, is one of the key construction of the national "211 Project". The school has 27 colleges, arts, history, philosophy and public school of management, School of economics, School of business, School of law, School of foreign languages, broadcast the film and Television Institute, School of Journalism &amp; communication, University of International Relations, Marx Institute, AABC's new China, international business school, School of art, mathematics, physics institute school, school, School of medicine, life sciences, Environmental Sciences, School of information, College of light industry, the International Institute of education, Institute of Humanities Science and technology, adult education college / School of continuing education, public school, Institute of innovation and entrepreneurship.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZMagazine_mess02.Text" xml:space="preserve">
+    <value>The school has 1267 full-time teachers, including 283 professors, 504 associate professors, 119 doctoral supervisors, 83 experts who enjoy the special allowance of the State Council, the Yangtze River scholar Professor 2 people, 1 academicians.The existing 71 undergraduate; a master degree authorization 26, with EMBA (EMBA), MBA (MBA), MPA (Master of Public Administration), JM (Master of law), MTCSOL (MTCSOL), MFA (Master of Arts) 24 professional degrees; the existing theory of economics, applied economics, business management, China language and literature, philosophy, law, chemistry and statistics of 8 first level discipline doctorate authorization, 8 postdoctoral stations; with the world economy, national economics and finance, 3 national key disciplines, 6 provincial key a subject; with national economics foundation training base, college counselors training and training base and the Ministry of education, Humanities and social science research base, the transformation of national politics and economy. Research Center, Liaoning University, Macao City University, Macao social and economic development research center. The school has 2 National Experimental Teaching Demonstration Center, 6 provincial key research institute of Humanities and Social Sciences, 9 provincial key laboratories, 3 provincial engineering technology research center, 3 provincial engineering laboratory, 8 provincial experimental teaching demonstration center, the 6 central and local governments in the distinctive discipline laboratory, 14 central government support local university teaching experiment platform, 4 provincial college students' innovation and entrepreneurship education practice base, 1 college students venture breeding base, 6 provincial higher education innovation team.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZWebsites.Text" xml:space="preserve">
+    <value>LiaoNing University</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ENRZWebsites_mess01.Text" xml:space="preserve">
+    <value>Liaoning University start-up in November 1948 in Shenyang established the Northeast People's government business school, the beginning of school is to recruit four year students. In September 15, 1958, the Northeast College of Finance and economics, Shenyang normal college and Shenyang Russian college merged to form the Liaoning University, comrade Zhu De personally wrote the name.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback.Content" xml:space="preserve">
+    <value>Feedback</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_Email.Text" xml:space="preserve">
+    <value>Feedback by email</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="LanguageMode.Text" xml:space="preserve">
+    <value>Language localization</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="LanguageModeSummary.Text" xml:space="preserve">
+    <value>Choose your local language.</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="LanguageOptions.Text" xml:space="preserve">
+    <value>Language Options</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="ProgressRoute.Text" xml:space="preserve">
+    <value>LNU For Windows10 progress record (Only zh-CN)</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="SettPageItem_About.Header" xml:space="preserve">
+    <value>About</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="SettPageItem_AboutENRZ.Header" xml:space="preserve">
+    <value>About LiaoNing University</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="SettPageItem_AboutMe.Header" xml:space="preserve">
+    <value>About Developer</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="SettPageItem_Settings.Header" xml:space="preserve">
+    <value>Settings</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="VersionMessage" xml:space="preserve">
+    <value>App Version : </value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="VersionMessageFor.Text" xml:space="preserve">
+    <value>App Version : Create by system</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="VisualOptions.Text" xml:space="preserve">
+    <value>Visual Options</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Weibo.Text" xml:space="preserve">
+    <value>Weibo：</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Weibo_mess.Content" xml:space="preserve">
+    <value>Code大白痴</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="AppErrorString" xml:space="preserve">
+    <value>Error throws !</value>
+    <comment>App.cs</comment>
+  </data>
+  <data name="Art" xml:space="preserve">
+    <value>Art</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="A_B" xml:space="preserve">
+    <value>Party A Party B</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Beauty" xml:space="preserve">
+    <value>Beauty</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Car" xml:space="preserve">
+    <value>Car</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Cars" xml:space="preserve">
+    <value>Cars</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Collocation" xml:space="preserve">
+    <value>Collocation</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Complain" xml:space="preserve">
+    <value>Complain</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="CoverStars" xml:space="preserve">
+    <value>Cover stars</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Digital" xml:space="preserve">
+    <value>Digital</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Ent" xml:space="preserve">
+    <value>Entertainment</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Fashion" xml:space="preserve">
+    <value>Fashion</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Fashions" xml:space="preserve">
+    <value>Fashions</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Feedback_Body" xml:space="preserve">
+    <value>Description</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_FriendlyName" xml:space="preserve">
+    <value>DeviceName</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_OS" xml:space="preserve">
+    <value>OperatingSystem</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_SFV" xml:space="preserve">
+    <value>FirmwareVersion</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_SHV" xml:space="preserve">
+    <value>HardwareVersion</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_SMF" xml:space="preserve">
+    <value>Manufacturer</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_SPN" xml:space="preserve">
+    <value>ProductName</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_Subject" xml:space="preserve">
+    <value>LNU For Win10 Feedback</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Feedback_Version" xml:space="preserve">
+    <value>Version</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="FetchDataError" xml:space="preserve">
+    <value>Error occurred when fetching data</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Gallery</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="HotGossip" xml:space="preserve">
+    <value>Hot gossip</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="LoveOfHabit" xml:space="preserve">
+    <value>Love of habit</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="MaleCharacters" xml:space="preserve">
+    <value>Male characters</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Mall" xml:space="preserve">
+    <value>Mall</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Men" xml:space="preserve">
+    <value>Men</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Men_large" xml:space="preserve">
+    <value>Men's large</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="mix" xml:space="preserve">
+    <value>Mix</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="NewsGirl" xml:space="preserve">
+    <value>News girl</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Outdoor" xml:space="preserve">
+    <value>Outdoor</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Photographic" xml:space="preserve">
+    <value>Photographic</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Photography" xml:space="preserve">
+    <value>Photography</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Plaything" xml:space="preserve">
+    <value>Plaything</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="RC" xml:space="preserve">
+    <value>RC</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="See" xml:space="preserve">
+    <value>See</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="SettingsString" xml:space="preserve">
+    <value>Settings</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="SkinCare" xml:space="preserve">
+    <value>Skin care</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Sports" xml:space="preserve">
+    <value>Sports</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="SportsBaby" xml:space="preserve">
+    <value>Sports baby</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Stunner" xml:space="preserve">
+    <value>Stunner</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Swaths" xml:space="preserve">
+    <value>Swaths</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="TheGlobalVillage" xml:space="preserve">
+    <value>The global village</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="TimeOutError" xml:space="preserve">
+    <value>Network timed out, please try again.</value>
+    <comment>WebProcess.cs</comment>
+  </data>
+  <data name="Topics" xml:space="preserve">
+    <value>Topics</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Untitled" xml:space="preserve">
+    <value>Untitled</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Watch" xml:space="preserve">
+    <value>Watch</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Wine" xml:space="preserve">
+    <value>Wine</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="Yuppie" xml:space="preserve">
+    <value>Yuppie</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="ClickTwiceToExit" xml:space="preserve">
+    <value>Click back-button again to exit app</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Image_Ent.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_Fashion.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_Girl.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_More.Content" xml:space="preserve">
+    <value>More&gt;&gt;</value>
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_Plaything.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_Recommend.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Image_Select.Text" xml:space="preserve">
+    <value />
+    <comment>ImagePage</comment>
+  </data>
+  <data name="Picture_Next.Text" xml:space="preserve">
+    <value>NEXT</value>
+    <comment>PicturesPage</comment>
+  </data>
+  <data name="Picture_Previous.Text" xml:space="preserve">
+    <value>PREVIOUS</value>
+    <comment>PicturesPage</comment>
+  </data>
+  <data name="Picture_Recommend.Text" xml:space="preserve">
+    <value>RECOMMEND</value>
+    <comment>PicturesPage</comment>
+  </data>
+  <data name="Picture_Watch.Text" xml:space="preserve">
+    <value>ENRZ.COM-PIC</value>
+    <comment>PicturesPage</comment>
+  </data>
+  <data name="SaveImageSuccess" xml:space="preserve">
+    <value>Picture Saved.</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="SettingButton.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Top5.Text" xml:space="preserve">
+    <value>Top5</value>
+    <comment>ImagePage</comment>
+  </data>
+  <data name="ValidToShow" xml:space="preserve">
+    <value>content not supported display</value>
+    <comment>DataProcess.cs</comment>
+  </data>
+  <data name="LNU_A_A_O" xml:space="preserve">
+    <value>Academic Affairs Office</value>
+  </data>
+  <data name="LNU_C_A" xml:space="preserve">
+    <value>Course announcement</value>
+  </data>
+  <data name="LNU_C_I" xml:space="preserve">
+    <value>Course introduction</value>
+  </data>
+  <data name="LNU_For_Teacher" xml:space="preserve">
+    <value>For teachers</value>
+  </data>
+  <data name="LNU_G_E" xml:space="preserve">
+    <value>General Education</value>
+  </data>
+  <data name="LNU_Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="LNU_P_C" xml:space="preserve">
+    <value>Purpose of the course</value>
+  </data>
+  <data name="LNU_P_G" xml:space="preserve">
+    <value>Proof of grades</value>
+  </data>
+  <data name="LNU_R_R" xml:space="preserve">
+    <value>Rules &amp; Regulations</value>
+  </data>
+  <data name="LNU_Search_Query" xml:space="preserve">
+    <value>Course &amp; Mark</value>
+  </data>
+  <data name="LNU_S_T" xml:space="preserve">
+    <value>Summer term</value>
+  </data>
+  <data name="LNU_Title.Text" xml:space="preserve">
+    <value>LiaoNing University</value>
+  </data>
+  <data name="LNU_T_E" xml:space="preserve">
+    <value>Teaching evaluation</value>
+  </data>
+  <data name="LNU_T_I" xml:space="preserve">
+    <value>Teachers introduction</value>
+  </data>
+  <data name="LNU_T_O_N" xml:space="preserve">
+    <value>Teaching operation notice</value>
+  </data>
+  <data name="LNU_U_H_P" xml:space="preserve">
+    <value>University Home Page</value>
+  </data>
+  <data name="ReStartToChangeLanguage" xml:space="preserve">
+    <value>Restart app to change language .</value>
+  </data>
+  <data name="AppCache.Text" xml:space="preserve">
+    <value>App Cache</value>
+  </data>
+  <data name="Caculating.Text" xml:space="preserve">
+    <value>[Caculating...]</value>
+  </data>
+  <data name="ClearCache.Content" xml:space="preserve">
+    <value>Cear app cache</value>
+  </data>
+  <data name="OtherOptions.Text" xml:space="preserve">
+    <value>Other Options</value>
+  </data>
+  <data name="SplitMode.Text" xml:space="preserve">
+    <value>SplitView Mode</value>
+  </data>
+  <data name="SplitSummary.Text" xml:space="preserve">
+    <value>Change the width of content page(Only PC)</value>
+  </data>
+</root>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace LiaoNingUniversity.Core.Models.Converters {
+namespace LNU.Core.Models.Converters {
     public class SelfVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             return ConvertToVisibility((string)value);

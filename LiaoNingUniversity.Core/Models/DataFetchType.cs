@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LNU.Core.Models {
-    public class BarItemModel {
-        public string Title { get; set; }
-        public Uri PathUri { get; set; }
+    public enum DataFetchType {
+        LNU_Index = 0,
     }
 }

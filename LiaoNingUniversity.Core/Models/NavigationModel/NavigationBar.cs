@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiaoNingUniversity.Core.Models.NavigationModel {
+namespace LNU.Core.Models.NavigationModel {
     public class NavigationBar {
         public string Title { get; set; }
         public Uri PathUri { get; set; }
         public NavigateType NaviType { get; set; }
+        public DataFetchType FetchType { get; set; }
     }
 }

@@ -12,7 +12,7 @@
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -108,16 +108,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BarItemModel.cs" />
+    <Compile Include="Models\ContentModels\IndexModel.cs" />
     <Compile Include="Models\Converters\ColorConverter.cs" />
     <Compile Include="Models\Converters\IconConverter.cs" />
     <Compile Include="Models\Converters\SelfVisibilityConverter.cs" />
     <Compile Include="Models\Converters\ValueConverter.cs" />
     <Compile Include="Models\Converters\VisibilityConverter.cs" />
+    <Compile Include="Models\DataFetchType.cs" />
+    <Compile Include="Models\IndexModels\AdaptiveItem.cs" />
     <Compile Include="Models\NavigateParameter.cs" />
     <Compile Include="Models\NavigateType.cs" />
     <Compile Include="Models\NavigationModel\NavigationBar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ConstFields.cs" />
     <Compile Include="Tools\DataProcess.cs" />
+    <Compile Include="Tools\SettingsSelect.cs" />
     <EmbeddedResource Include="Properties\LiaoNingUniversity.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

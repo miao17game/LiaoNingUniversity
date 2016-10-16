@@ -13,9 +13,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 
 using static Wallace.UWP.Helpers.Tools.UWPStates;
-using LiaoNingUniversity.Core.Models.NavigationModel;
+using LNU.Core.Models.NavigationModel;
 
-namespace LiaoNingUniversity.Core.Tools {
+namespace LNU.Core.Tools {
     public static class DataProcess {
         #region Properties and State
         
@@ -35,7 +35,7 @@ namespace LiaoNingUniversity.Core.Tools {
 
         public static Uri ConvertToUri(string str) { return !string.IsNullOrEmpty(str) ? new Uri(str) : null; }
 
-        public static List<NavigationBar> FetchNavigationBarFromHtml(string htmlResources) {
+        public static List<NavigationBar> FetchLNUIndexFromHtml(string htmlResources) {
             
             var list = new List<NavigationBar>();
 

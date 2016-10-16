@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 using static Wallace.UWP.Helpers.Tools.UWPStates;
 
-namespace LiaoNingUniversity.Core.Models.Converters {
+namespace LNU.Core.Models.Converters {
     public class ColorConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             return ToColorSolidBrush(value as string);

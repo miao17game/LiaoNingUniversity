@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiaoNingUniversity.Core.Models {
+namespace LNU.Core.Models {
     public enum NavigateType {
         BaseList = 0,
         Content = 1,

@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace LiaoNingUniversity.Core.Models.Converters {
+namespace LNU.Core.Models.Converters {
     /// <summary>
     /// 定义一个值转换器，用于将绑定的数据格式化为指定的格式
     /// </summary>

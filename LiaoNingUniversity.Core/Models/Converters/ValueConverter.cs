@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace LiaoNingUniversity.Core.Models.Converters {
+namespace LNU.Core.Models.Converters {
     public class ValueConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             return ToValueCode(System.Convert.ToDouble(value), System.Convert.ToUInt32(parameter));
