@@ -46,15 +46,15 @@ namespace LNU.NET.Pages {
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if ((sender as Pivot).SelectedIndex == 0) {
-                MainPage.ChangeTitlePath(3, null);
-                return;
-            }
-            MainPage.ChangeTitlePath(
-                3, 
-                (e.AddedItems.FirstOrDefault() as PivotItem).Header as string != GetUIString("SettingsString") ? 
-                (e.AddedItems.FirstOrDefault() as PivotItem).Header as string :
-                null);
+            //if ((sender as Pivot).SelectedIndex == 0) {
+            //    MainPage.ChangeTitlePath(3, null);
+            //    return;
+            //}
+            //MainPage.ChangeTitlePath(
+            //    3, 
+            //    (e.AddedItems.FirstOrDefault() as PivotItem).Header as string != GetUIString("SettingsString") ? 
+            //    (e.AddedItems.FirstOrDefault() as PivotItem).Header as string :
+            //    null);
         }
 
         private async void FeedBackBtn_Click(object sender, RoutedEventArgs e) {
