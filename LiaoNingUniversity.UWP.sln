@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiaoNingUniversity.Core", "LiaoNingUniversity.Core\LiaoNingUniversity.Core.csproj", "{1CADD107-AA95-41DE-B747-789ABF043348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LNU.Core", "LiaoNingUniversity.Core\LNU.Core.csproj", "{1CADD107-AA95-41DE-B747-789ABF043348}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{E4CC9A90-2746-41E6-89D5-B6C6B215FA31}"
 EndProject

@@ -3,19 +3,70 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LNU.NET.Pages"
+    xmlns:Model="using:LNU.Core.Models.IndexModels"
+    xmlns:MSControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:Model="using:LiaoNingUniversity.Core.Models.IndexModels"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <controls:AdaptiveGridView>
-            <controls:AdaptiveGridView.ItemTemplate>
-                <DataTemplate x:DataType="Model:AdaptiveItem">
+    <Page.Resources>
+        <CollectionViewSource x:Name="HeaderResources"/>
+        <CollectionViewSource x:Name="GridViewResources"/>
+    </Page.Resources>
 
+    <Grid Name="grid" 
+          Background="{ThemeResource LNUBackground01}" >
+
+        <MSControls:AdaptiveGridView
+            ItemHeight="200"
+            DesiredWidth="320"
+            IsItemClickEnabled="True"
+            SelectionMode="None"
+            ItemClick="AdaptiveGridView_ItemClick"
+            ItemsSource="{Binding Source={StaticResource GridViewResources}}">
+            <MSControls:AdaptiveGridView.ItemTemplate>
+                <DataTemplate >
+                    <Grid Margin="-2,-2,-5,-2" Background="{Binding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="BackgroundImage" 
+                               Grid.ColumnSpan="2"
+                               Stretch="UniformToFill"
+                               Source="{Binding BackImage}"  >
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:Blur x:Name="BlurBehavior"
+                                                Value="1.75"
+                                                Duration="0"
+                                                Delay="0"
+                                                AutomaticallyStart="True"/>
+                            </interactivity:Interaction.Behaviors>
+                        </Image>
+                        <Border Grid.ColumnSpan="2" Background="#60000000"/>
+                        <TextBlock Text="{Binding ItemTitle}"  
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="60"
+                                   Foreground="{Binding IconForeground}"
+                                   Style="{ThemeResource CenterContentTextBlock}"
+                                   FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                        <TextBlock Text="{Binding Description}"  
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   Margin="5,0,5,0"
+                                   TextWrapping="WrapWholeWords"
+                                   Style="{ThemeResource CenterContentTextBlock}"
+                                   Foreground="{Binding TitleForeground}"/>
+                    </Grid>
                 </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+            </MSControls:AdaptiveGridView.ItemTemplate>
+        </MSControls:AdaptiveGridView>
+
     </Grid>
 </Page>

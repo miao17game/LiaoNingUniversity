@@ -17,6 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>LNU.NET_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\miao1\Desktop\</AppxPackageDir>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -106,11 +111,11 @@
     <Compile Include="Pages\BaseListPage.xaml.cs">
       <DependentUpon>BaseListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ContentPage.xaml.cs">
-      <DependentUpon>ContentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ContentPage.xaml.cs">
+      <DependentUpon>ContentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PreparePage.xaml.cs">
       <DependentUpon>PreparePage.xaml</DependentUpon>
@@ -122,6 +127,11 @@
       <DependentUpon>WebViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Converters\ColorConverter.cs" />
+    <Compile Include="Tools\Converters\IconConverter.cs" />
+    <Compile Include="Tools\Converters\SelfVisibilityConverter.cs" />
+    <Compile Include="Tools\Converters\ValueConverter.cs" />
+    <Compile Include="Tools\Converters\VisibilityConverter.cs" />
     <Compile Include="Tools\ReportHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +141,12 @@
     <None Include="LNU.NET_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\124.jpg" />
+    <Content Include="Assets\46.jpg" />
+    <Content Include="Assets\56.jpg" />
+    <Content Include="Assets\73.jpg" />
+    <Content Include="Assets\79.jpg" />
+    <Content Include="Assets\sb.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -165,13 +181,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ContentPage.xaml">
+    <Page Include="Pages\IndexPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\IndexPage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Pages\ContentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PreparePage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -191,9 +207,9 @@
       <Project>{e4cc9a90-2746-41e6-89d5-b6c6b215fa31}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LiaoNingUniversity.Core\LiaoNingUniversity.Core.csproj">
+    <ProjectReference Include="..\LiaoNingUniversity.Core\LNU.Core.csproj">
       <Project>{1cadd107-aa95-41de-b747-789abf043348}</Project>
-      <Name>LiaoNingUniversity.Core</Name>
+      <Name>LNU.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

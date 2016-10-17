@@ -7,8 +7,8 @@
     <ProjectGuid>{1CADD107-AA95-41DE-B747-789ABF043348}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LiaoNingUniversity.Core</RootNamespace>
-    <AssemblyName>LiaoNingUniversity.Core</AssemblyName>
+    <RootNamespace>LNU.Core</RootNamespace>
+    <AssemblyName>LNU.Core</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -109,11 +109,6 @@
   <ItemGroup>
     <Compile Include="Models\BarItemModel.cs" />
     <Compile Include="Models\ContentModels\IndexModel.cs" />
-    <Compile Include="Models\Converters\ColorConverter.cs" />
-    <Compile Include="Models\Converters\IconConverter.cs" />
-    <Compile Include="Models\Converters\SelfVisibilityConverter.cs" />
-    <Compile Include="Models\Converters\ValueConverter.cs" />
-    <Compile Include="Models\Converters\VisibilityConverter.cs" />
     <Compile Include="Models\DataFetchType.cs" />
     <Compile Include="Models\IndexModels\AdaptiveItem.cs" />
     <Compile Include="Models\NavigateParameter.cs" />

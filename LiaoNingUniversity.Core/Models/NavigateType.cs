@@ -10,5 +10,6 @@ namespace LNU.Core.Models {
         Content = 1,
         Settings = 2,
         Webview = 3,
+        Index = 4,
     }
 }

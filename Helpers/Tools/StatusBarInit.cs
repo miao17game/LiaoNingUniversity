@@ -52,11 +52,11 @@ namespace Wallace.UWP.Helpers. Tools {
             if (IsLightTheme) {
                 SetTitleBarSelfView(BackColorLight, ForeColorLight, Colors.LightGray, Colors.Gray);
                 SetTitleBarButtonSelfView(Colors.Transparent, ForeColorLight);
-                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.White, Colors.SteelBlue, Colors.White, Colors.DarkGray, Colors.Gray);
+                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.White, Colors.SteelBlue, Colors.White, Colors.Transparent, Colors.Gray);
             } else {
                 SetTitleBarSelfView(BackColorDark, ForeColorDark, Colors.LightGray, Colors.Gray);
                 SetTitleBarButtonSelfView(Colors.Transparent, ForeColorDark);
-                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.Black, Colors.SteelBlue, Colors.White, Colors.DarkGray, Colors.Gray);
+                SetTitleBarButtonHPIView(Colors.SteelBlue, Colors.Black, Colors.SteelBlue, Colors.White, Colors.Transparent, Colors.Gray);
             }
         }
 

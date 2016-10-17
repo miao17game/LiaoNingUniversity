@@ -59,8 +59,10 @@ namespace LNU.NET {
                 if (!isNeedClose) { InitCloseAppTask(); } else { Application.Current.Exit(); }
                 e.Handled = true;
                 return;
-            } else
+            } else {
                 ContentFrame.Content = null;
+                HamburgerListBox.SelectedIndex = 0;
+            }
             e.Handled = true;
         }
 
@@ -80,40 +82,17 @@ namespace LNU.NET {
                 NavigationSplit.IsPaneOpen = false;
             if (model == null)
                 return;
-            ChangeTitlePath(2, (sender as ListBox).SelectedIndex == 0 ? null : model.Title);
+            if (model.NaviType != NavigateType.Content || model.NaviType != NavigateType.Webview)
+                ChangeTitlePath(2, (sender as ListBox).SelectedIndex == 0 ? null : model.Title);
             if (IfContainsPageInstance(NaviPathTitle.RoutePath)) {
                 GetFrameInstance(model.NaviType).Content = GetPageInstance(NaviPathTitle.RoutePath);
-            } else {
-                NavigateToBase?.Invoke(
-                    sender,
-                    new NavigateParameter { PathUri = model.PathUri , MessageBag = model.Title, },
-                    GetFrameInstance(model.NaviType),
-                    GetPageType(model.NaviType));
+                return;
             }
-        }
-
-        private void ImageControlButton_Click(object sender, RoutedEventArgs e) {
-            ImagePopup.IsOpen = false;
-        }
-
-        private void ImagePopup_SizeChanged(object sender, SizeChangedEventArgs e) {
-            ImagePopupBorder.Width = (sender as Popup).ActualWidth;
-            ImagePopupBorder.Height = (sender as Popup).ActualHeight;
-        }
-
-        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
-            ImagePopup.Width = (sender as Grid).ActualWidth;
-            ImagePopup.Height = (sender as Grid).ActualHeight;
-        }
-
-        private void ImageSaveButton_Click(object sender, RoutedEventArgs e) {
-            //SoftwareBitmap sb = await DownloadImage(PopupImageUri.ToString());
-            //if (sb != null) {
-            //    SoftwareBitmapSource source = new SoftwareBitmapSource();
-            //    await source.SetBitmapAsync(sb);
-            //    var name = await WriteToFile(sb);
-            //    new ToastSmooth(GetUIString("SaveImageSuccess")).Show();
-            //}
+            NavigateToBase?.Invoke(
+                sender,
+                new NavigateParameter { PathUri = model.PathUri, MessageBag = model.Title, },
+                GetFrameInstance(model.NaviType),
+                GetPageType(model.NaviType));
         }
 
         #endregion
@@ -252,38 +231,40 @@ namespace LNU.NET {
 
             public static List<NavigationBar> HamburgerResList { get { return navigationListMap; } }
             static private List<NavigationBar> navigationListMap = new List<NavigationBar> {
-                { new NavigationBar { Title = GetUIString("LNU_Index"), PathUri = new Uri("http://jwgl.lnu.edu.cn/"), NaviType = NavigateType.BaseList } },
-                { new NavigationBar { Title = GetUIString("LNU_Search_Query"), PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_For_Teacher"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwcjlr/cjlr.loginwindow"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_G_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/tsjy/index.html"), NaviType = NavigateType.Webview} },
-                { new NavigationBar { Title = GetUIString("LNU_S_T"), PathUri = new Uri("http://jwgl.lnu.edu.cn/S/index.html"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_T_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jxpg/"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_R_R"), PathUri = new Uri("http://jwgl.lnu.edu.cn/gzzd/index.html"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_P_C"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/qcb.kc"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_C_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/kcjj/index.html"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_T_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jsjj/"),NaviType = NavigateType.Webview} },
-                { new NavigationBar { Title = GetUIString("LNU_C_A"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/xkgl.htm"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_P_G"), PathUri = new Uri("http://jwc.lnu.edu.cn/info/news/content/56421.htm"), NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_T_O_N"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/jxyx.htm"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_A_A_O"), PathUri = new Uri("http://jwc.lnu.edu.cn"),NaviType = NavigateType.Webview } },
-                { new NavigationBar { Title = GetUIString("LNU_U_H_P"), PathUri = new Uri("http://www.lnu.edu.cn"),NaviType = NavigateType.Webview } },
+                new NavigationBar { Title = GetUIString("LNU_Index"), PathUri = new Uri("http://jwgl.lnu.edu.cn/"), NaviType = NavigateType.Index },
+                new NavigationBar { Title = GetUIString("LNU_Search_Query"), PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_For_Teacher"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwcjlr/cjlr.loginwindow"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_G_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/tsjy/index.html"), NaviType = NavigateType.Webview},
+                new NavigationBar { Title = GetUIString("LNU_S_T"), PathUri = new Uri("http://jwgl.lnu.edu.cn/S/index.html"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_T_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jxpg/"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_R_R"), PathUri = new Uri("http://jwgl.lnu.edu.cn/gzzd/index.html"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_P_C"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/qcb.kc"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_C_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/kcjj/index.html"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_T_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jsjj/"),NaviType = NavigateType.Webview},
+                new NavigationBar { Title = GetUIString("LNU_C_A"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/xkgl.htm"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_P_G"), PathUri = new Uri("http://jwc.lnu.edu.cn/info/news/content/56421.htm"), NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_T_O_N"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/jxyx.htm"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_A_A_O"), PathUri = new Uri("http://jwc.lnu.edu.cn"),NaviType = NavigateType.Webview },
+                new NavigationBar { Title = GetUIString("LNU_U_H_P"), PathUri = new Uri("http://www.lnu.edu.cn"),NaviType = NavigateType.Webview },
             };
 
             public static Type GetPageType(NavigateType type) { return pagesMaps.ContainsKey(type) ? pagesMaps[type] : null; }
             static private Dictionary<NavigateType, Type> pagesMaps = new Dictionary<NavigateType, Type> {
-            {NavigateType.BaseList,typeof(BaseListPage)},
-            {NavigateType.Content,typeof(ContentPage)},
-            {NavigateType.Settings,typeof(SettingsPage)},
-            {NavigateType.Webview,typeof(WebViewPage)},
-        };
+                { NavigateType.BaseList,typeof(BaseListPage)},
+                { NavigateType.Content,typeof(ContentPage)},
+                { NavigateType.Settings,typeof(SettingsPage)},
+                { NavigateType.Webview,typeof(WebViewPage)},
+                { NavigateType.Index,typeof(IndexPage)},
+            };
 
             public static Frame GetFrameInstance(NavigateType type) { return frameMaps.ContainsKey(type) ? frameMaps[type] : null; }
             static private Dictionary<NavigateType, Frame> frameMaps = new Dictionary<NavigateType, Frame> {
-            {NavigateType.BaseList,Current.BasePartFrame},
-            {NavigateType.Settings,Current.ContentFrame},
-            {NavigateType.Content,Current.ContentFrame},
-            {NavigateType.Webview,Current.ContentFrame},
-        };
+                { NavigateType.BaseList,Current.BasePartFrame},
+                { NavigateType.Index,Current.BasePartFrame},
+                { NavigateType.Settings,Current.ContentFrame},
+                { NavigateType.Content,Current.ContentFrame},
+                { NavigateType.Webview,Current.ContentFrame},
+            };
 
             public static void AddBaseListPageInstance(string key, BaseListPage instance) { if (!baseListPageMap.ContainsKey(key)) { baseListPageMap.Add(key, instance); } }
             public static BaseListPage GetPageInstance(string key) { return baseListPageMap.ContainsKey(key) ? baseListPageMap[key] : null; }

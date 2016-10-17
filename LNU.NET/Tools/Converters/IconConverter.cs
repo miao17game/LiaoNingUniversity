@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Data;
 
 using static Wallace.UWP.Helpers.Tools.UWPStates;
 
-namespace LNU.Core.Models.Converters {
+namespace LNU.NET.Tools.Converters {
     public class IconConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
             return ToIconCode(value as string);

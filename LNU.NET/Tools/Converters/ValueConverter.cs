@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace LNU.Core.Models.Converters {
-    public class SelfVisibilityConverter : IValueConverter {
+namespace LNU.NET.Tools.Converters {
+    public class ValueConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, string language) {
-            return ConvertToVisibility((string)value);
+            return ToValueCode(System.Convert.ToDouble(value), System.Convert.ToUInt32(parameter));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language) {
             throw new NotImplementedException();
         }
 
-        private Visibility ConvertToVisibility(string value) { return string.IsNullOrEmpty(value) ? Visibility.Collapsed : Visibility.Visible; }
+        private double ToValueCode(double num, uint seed) {
+            return num / seed;
+        }
     }
 }

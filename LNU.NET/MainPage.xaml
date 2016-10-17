@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LNU.NET"
     xmlns:NVModel="using:LNU.Core.Models.NavigationModel"
-    xmlns:Converters="using:LNU.Core.Models.Converters"
+    xmlns:IDModel="using:LNU.Core.Models.IndexModels"
+    xmlns:Converters="using:LNU.NET.Tools.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -154,8 +155,7 @@
         </Storyboard>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource LNUBackground01}" 
-          SizeChanged="Grid_SizeChanged">
+    <Grid Background="{ThemeResource LNUBackground01}" >
 
         <!--#region StateTriggers-->
         <VisualStateManager.VisualStateGroups>
@@ -364,7 +364,7 @@
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"
                                    Foreground="White"
-                                   MaxWidth="500"/>
+                                   MaxWidth="400"/>
                     </Border>
                     <Button Name="BaseHamburgerButton"
                             VerticalAlignment="Top"
@@ -396,39 +396,6 @@
         <Grid Name="ContentGrid" Grid.Column="1">
             <Frame Name="ContentFrame"/>
         </Grid>
-
-        <Popup x:Name="ImagePopup" IsOpen="False" Grid.ColumnSpan="2"
-               SizeChanged="ImagePopup_SizeChanged">
-            <Border Name="ImagePopupBorder"
-                    Width="{Binding ActualWidth, ElementName=ImagePopup, Mode=OneWay}" 
-                    Height="{Binding ActualHeight, ElementName=ImagePopup, Mode=OneWay}" 
-                    Background="{ThemeResource DQDPopupBackColor}">
-                <Grid>
-                    <Button Name="ImageControlButton" 
-                            Background="Transparent"
-                            Style="{ThemeResource MainPageButtonBackHamburgerStyle}"
-                            HorizontalAlignment="Stretch" 
-                            VerticalAlignment="Stretch"
-                            Click="ImageControlButton_Click" 
-                            ManipulationMode="Scale">
-                        <Image Name="ImageScreen" Margin="40"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                    </Button>
-                    <Button Name="ImageSaveButton" 
-                            Height="50" Width="50"
-                            Background="#404040"
-                            Foreground="White" 
-                            Content="&#xE105;" 
-                            FontSize="27"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            Margin="0,0,30,30" 
-                            Click="ImageSaveButton_Click"
-                            Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
-                </Grid>
-            </Border>
-        </Popup>
 
         <Frame Name="PrepareFrame" Grid.ColumnSpan="2"/>
         
