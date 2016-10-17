@@ -24,15 +24,17 @@ namespace LNU.NET.Pages {
         public WebViewPage() {
             this.InitializeComponent();
             Current = this;
-            MainPage.DivideWindowRange(this, 800, (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6);
+            MainPage.DivideWindowRange(
+                currentFramePage: this, 
+                rangeNum: 800, 
+                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6, 
+                isDivideScreen: (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true);
             if (VisibleWidth > 800 && !IsMobile)
                 this.Margin = new Thickness(3, 0, 0, 0);
         }
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
             MainPage.Current.MainContentFrame.Content = null;
-            MainPage.Current.HamburgerBox.SelectedIndex = 0;
-            MainPage.ChangeTitlePath(2, null);
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {

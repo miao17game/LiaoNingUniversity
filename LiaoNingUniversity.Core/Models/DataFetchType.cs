@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace LNU.Core.Models {
     public enum DataFetchType {
-        LNU_Index = 0,
+        NULL = 0,
+        LNU_Index = 1,
+        LNU_Course_Mark = 2,
     }
 }

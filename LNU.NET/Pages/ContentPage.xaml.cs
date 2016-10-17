@@ -28,7 +28,11 @@ namespace LNU.NET.Pages {
         public ContentPage() {
             this.InitializeComponent();
             Current = this;
-            MainPage.DivideWindowRange(this, 800, (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6);
+            MainPage.DivideWindowRange(
+                currentFramePage: this, 
+                rangeNum: 800, 
+                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6, 
+                isDivideScreen: (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true);
             if (VisibleWidth > 800 && !IsMobile)
                 this.Margin = new Thickness(3, 0, 0, 0);
         }

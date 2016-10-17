@@ -1,4 +1,8 @@
-﻿using LNU.Core.Models;
+﻿#region Using
+using static Wallace.UWP.Helpers.Tools.UWPStates;
+using static LNU.NET.MainPage.InnerResources;
+
+using LNU.Core.Models;
 using LNU.Core.Models.NavigationModel;
 using LNU.NET.Controls;
 using LNU.NET.Pages;
@@ -21,9 +25,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-using static Wallace.UWP.Helpers.Tools.UWPStates;
-using static LNU.NET.MainPage.InnerResources;
+#endregion
 
 namespace LNU.NET {
 
@@ -59,10 +61,8 @@ namespace LNU.NET {
                 if (!isNeedClose) { InitCloseAppTask(); } else { Application.Current.Exit(); }
                 e.Handled = true;
                 return;
-            } else {
+            } else 
                 ContentFrame.Content = null;
-                HamburgerListBox.SelectedIndex = 0;
-            }
             e.Handled = true;
         }
 
@@ -78,11 +78,10 @@ namespace LNU.NET {
         private void HamburgerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             baseListRing.IsActive = false;
             var model = e.AddedItems.FirstOrDefault() as NavigationBar;
-            if (IsMobile || VisibleWidth <= 800)
-                NavigationSplit.IsPaneOpen = false;
+            NavigationSplit.IsPaneOpen = false;
             if (model == null)
                 return;
-            if (model.NaviType != NavigateType.Content || model.NaviType != NavigateType.Webview)
+            if (model.NaviType != NavigateType.Content && model.NaviType != NavigateType.Webview)
                 ChangeTitlePath(2, (sender as ListBox).SelectedIndex == 0 ? null : model.Title);
             if (IfContainsPageInstance(NaviPathTitle.RoutePath)) {
                 GetFrameInstance(model.NaviType).Content = GetPageInstance(NaviPathTitle.RoutePath);
@@ -90,7 +89,7 @@ namespace LNU.NET {
             }
             NavigateToBase?.Invoke(
                 sender,
-                new NavigateParameter { PathUri = model.PathUri, MessageBag = model.Title, },
+                new NavigateParameter { PathUri = model.PathUri, MessageBag = model.Title, DataType = model.FetchType, },
                 GetFrameInstance(model.NaviType),
                 GetPageType(model.NaviType));
         }
@@ -133,11 +132,22 @@ namespace LNU.NET {
             }
         }
 
-        public static void DivideWindowRange(Page currentFramePage, double rangeNum, double divideNum , double defaultDivide = 0.6) {
+        public static void DivideWindowRange(
+            Page currentFramePage, 
+            double rangeNum, 
+            double divideNum , 
+            double defaultDivide = 0.6 , 
+            bool isDivideScreen = true) {
+
             if (IsMobile) {
                 currentFramePage.Width = VisibleWidth;
                 Current.Frame.SizeChanged += (sender, args) => { currentFramePage.Width = VisibleWidth; };
             } else {
+                if (!isDivideScreen) {
+                    currentFramePage.Width = VisibleWidth;
+                    Current.Frame.SizeChanged += (sender, args) => { currentFramePage.Width = VisibleWidth; };
+                    return;
+                }
                 if (divideNum <= 0 || divideNum > 1)
                     divideNum = defaultDivide;
                 var nowWidth = VisibleWidth;
@@ -231,21 +241,83 @@ namespace LNU.NET {
 
             public static List<NavigationBar> HamburgerResList { get { return navigationListMap; } }
             static private List<NavigationBar> navigationListMap = new List<NavigationBar> {
-                new NavigationBar { Title = GetUIString("LNU_Index"), PathUri = new Uri("http://jwgl.lnu.edu.cn/"), NaviType = NavigateType.Index },
-                new NavigationBar { Title = GetUIString("LNU_Search_Query"), PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_For_Teacher"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwcjlr/cjlr.loginwindow"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_G_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/tsjy/index.html"), NaviType = NavigateType.Webview},
-                new NavigationBar { Title = GetUIString("LNU_S_T"), PathUri = new Uri("http://jwgl.lnu.edu.cn/S/index.html"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_T_E"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jxpg/"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_R_R"), PathUri = new Uri("http://jwgl.lnu.edu.cn/gzzd/index.html"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_P_C"), PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/qcb.kc"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_C_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/kcjj/index.html"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_T_I"), PathUri = new Uri("http://jwgl.lnu.edu.cn/jsjj/"),NaviType = NavigateType.Webview},
-                new NavigationBar { Title = GetUIString("LNU_C_A"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/xkgl.htm"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_P_G"), PathUri = new Uri("http://jwc.lnu.edu.cn/info/news/content/56421.htm"), NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_T_O_N"), PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/jxyx.htm"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_A_A_O"), PathUri = new Uri("http://jwc.lnu.edu.cn"),NaviType = NavigateType.Webview },
-                new NavigationBar { Title = GetUIString("LNU_U_H_P"), PathUri = new Uri("http://www.lnu.edu.cn"),NaviType = NavigateType.Webview },
+                new NavigationBar {
+                    Title = GetUIString("LNU_Index"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/"),
+                    NaviType = NavigateType.Index,
+                    FetchType = DataFetchType.LNU_Index,
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_Search_Query"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),
+                    NaviType = NavigateType.Index,
+                    FetchType = DataFetchType.LNU_Course_Mark,
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_For_Teacher"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwcjlr/cjlr.loginwindow"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_G_E"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/tsjy/index.html"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_S_T"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/S/index.html"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_T_E"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/jxpg/"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_R_R"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/gzzd/index.html"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_P_C"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/qcb.kc"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_C_I"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/kcjj/index.html"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_T_I"),
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/jsjj/"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_C_A"),
+                    PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/xkgl.htm"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_P_G"),
+                    PathUri = new Uri("http://jwc.lnu.edu.cn/info/news/content/56421.htm"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_T_O_N"),
+                    PathUri = new Uri("http://jwc.lnu.edu.cn/jwgl/jxyx.htm"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_A_A_O"),
+                    PathUri = new Uri("http://jwc.lnu.edu.cn"),
+                    NaviType = NavigateType.Webview
+                },
+                new NavigationBar {
+                    Title = GetUIString("LNU_U_H_P"),
+                    PathUri = new Uri("http://www.lnu.edu.cn"),
+                    NaviType = NavigateType.Webview
+                },
             };
 
             public static Type GetPageType(NavigateType type) { return pagesMaps.ContainsKey(type) ? pagesMaps[type] : null; }
@@ -329,7 +401,7 @@ namespace LNU.NET {
         private void OpenOrClosePane() {
             NavigationSplit.IsPaneOpen = !NavigationSplit.IsPaneOpen;
             SetVisibility(SlideAnimaRec, !NavigationSplit.IsPaneOpen);
-            if (NavigationSplit.IsPaneOpen && UWPStates.WindowWidth < 800) { OnPaneIsOpened(); }
+            OnPaneIsOpened();
         }
 
         #endregion

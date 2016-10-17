@@ -29,14 +29,25 @@ namespace LNU.NET.Pages {
         #region Constructor
         public IndexPage() {
             this.InitializeComponent();
-            GridViewResources.Source = AdaptiveResList;
         }
         #endregion
 
         #region Events
 
-        private void AdaptiveGridView_ItemClick(object sender, ItemClickEventArgs e) {
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            var args = e.Parameter as NavigateParameter;
+            GridViewResources.Source = GetResourcesInstance(args.DataType);
+        }
 
+        private void AdaptiveGridView_ItemClick(object sender, ItemClickEventArgs e) {
+            var args = e.ClickedItem as AdaptiveItem;
+            if (args == null)
+                return;
+            MainPage.Current.NavigateToBase?.Invoke(
+                sender, 
+                new NavigateParameter { PathUri = args.PathUri, MessageBag = args.ItemTitle }, 
+                MainPage.InnerResources.GetFrameInstance(args.NaviType), 
+                MainPage.InnerResources.GetPageType(args.NaviType));
         }
 
         #endregion
@@ -57,48 +68,78 @@ namespace LNU.NET.Pages {
             static private Dictionary<string, AdaptiveGridView> AdaptiveGridViewMap = new Dictionary<string, AdaptiveGridView> {
             };
 
-            public static List<AdaptiveItem> AdaptiveResList { get { return contentAdaptiveItemsList; } }
-            static private List<AdaptiveItem> contentAdaptiveItemsList = new List<AdaptiveItem> {
+            #region Index Page Source
+            public static List<AdaptiveItem> IndexResList { get { return indexResources; } }
+            static private List<AdaptiveItem> indexResources = new List<AdaptiveItem> {
                 new AdaptiveItem {
-                    ItemTitle = char.ConvertFromUtf32(0xE162),
-                    Description ="选课日程",
+                    ItemIcon = char.ConvertFromUtf32(0xE162),
+                    ItemTitle =GetUIString("LNU_Index_CS"),
+                    Description = null,
                     NaviType = NavigateType.Webview,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/"),
-                    Background = new SolidColorBrush(Color.FromArgb(255, 243, 209, 147)), 
+                    Background = new SolidColorBrush(Color.FromArgb(255, 97, 17, 171)), 
                     IconForeground = new SolidColorBrush(Colors.White),
                     TitleForeground = new SolidColorBrush(Colors.White),
                     BackImage = new Uri("ms-appx:///Assets/79.jpg"),
                 } ,
                 new AdaptiveItem {
-                    ItemTitle = char.ConvertFromUtf32(0xE2AC),
-                    Description ="辽宁大学通识课程简介",
+                    ItemIcon = char.ConvertFromUtf32(0xE2AC),
+                    ItemTitle=GetUIString("LNU_Index_GCI"),
+                    Description = null,
                     NaviType = NavigateType.Webview,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/tskc/index.html"),
-                    Background = new SolidColorBrush(Color.FromArgb(255, 111, 183, 128)),
+                    Background = new SolidColorBrush(Color.FromArgb(255, 69, 90, 172)),
                     IconForeground = new SolidColorBrush(Colors.White),
                     TitleForeground = new SolidColorBrush(Colors.White),
                     BackImage = new Uri("ms-appx:///Assets/124.jpg"),
                 } ,
                 new AdaptiveItem {
-                    ItemTitle = char.ConvertFromUtf32(0xE75A),
-                    Description ="辽宁大学通识教育实施方案",
+                    ItemIcon = char.ConvertFromUtf32(0xE75A),
+                    ItemTitle =GetUIString("LNU_Index_IPOGE"),
+                    Description = null,
                     NaviType = NavigateType.Webview,
                     PathUri = new Uri("http://jwc.lnu.edu.cn/info/news/content/22162.htm"),
-                    Background = new SolidColorBrush(Color.FromArgb(255, 243, 175, 147)),
+                    Background = new SolidColorBrush(Color.FromArgb(255, 255, 193, 63)),
                     IconForeground = new SolidColorBrush(Colors.White),
                     TitleForeground = new SolidColorBrush(Colors.White),
                     BackImage = new Uri("ms-appx:///Assets/46.jpg"),
                 } ,
                 new AdaptiveItem {
-                    ItemTitle = char.ConvertFromUtf32(0xE125),
-                    Description ="学生一体化服务平台",
+                    ItemIcon = char.ConvertFromUtf32(0xE125),
+                    ItemTitle =GetUIString("LNU_Index_SISP"),
+                    Description = null,
                     NaviType = NavigateType.Webview,
                     PathUri = new Uri("http://xg.lnu.edu.cn/"),
-                    Background = new SolidColorBrush(Color.FromArgb(255, 243, 175, 147)),
+                    Background = new SolidColorBrush(Color.FromArgb(255, 255, 63, 138)),
                     IconForeground = new SolidColorBrush(Colors.White),
                     TitleForeground = new SolidColorBrush(Colors.White),
                     BackImage = new Uri("ms-appx:///Assets/56.jpg"),
                 } ,
+            };
+            #endregion
+
+            #region Course&Mark Page Source
+            public static List<AdaptiveItem> CourseMarkResList { get { return cMResources; } }
+            static private List<AdaptiveItem> cMResources = new List<AdaptiveItem> {
+                new AdaptiveItem {
+                    ItemIcon = char.ConvertFromUtf32(0xE162),
+                    ItemTitle =GetUIString("LNU_Index_LS"),
+                    Description = null,
+                    NaviType = NavigateType.Webview,
+                    PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html"),
+                    Background = new SolidColorBrush(Color.FromArgb(255, 255, 67, 63)),
+                    IconForeground = new SolidColorBrush(Colors.White),
+                    TitleForeground = new SolidColorBrush(Colors.White),
+                    BackImage = new Uri("ms-appx:///Assets/73.jpg"),
+                } ,
+            };
+            #endregion
+
+            public static List<AdaptiveItem> GetResourcesInstance(DataFetchType key) { return resourcesDic.ContainsKey(key) ? resourcesDic[key] : null; }
+            public static bool IfContainsListResources(DataFetchType key) { return resourcesDic.ContainsKey(key); }
+            static private Dictionary<DataFetchType, List<AdaptiveItem>> resourcesDic = new Dictionary<DataFetchType, List<AdaptiveItem>> {
+                { DataFetchType.LNU_Index, IndexResList },
+                { DataFetchType.LNU_Course_Mark, CourseMarkResList },
             };
 
         }

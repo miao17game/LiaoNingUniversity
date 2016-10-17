@@ -182,7 +182,7 @@
     <comment>SettingsPage</comment>
   </data>
   <data name="ENRZWebsites.Text" xml:space="preserve">
-    <value>LiaoNing University</value>
+    <value>University History</value>
     <comment>SettingsPage</comment>
   </data>
   <data name="ENRZWebsites_mess01.Text" xml:space="preserve">
@@ -354,11 +354,11 @@
     <comment>DataProcess.cs</comment>
   </data>
   <data name="LoveOfHabit" xml:space="preserve">
-    <value>Love of habit</value>
+    <value>Love Of Habit</value>
     <comment>DataProcess.cs</comment>
   </data>
   <data name="MaleCharacters" xml:space="preserve">
-    <value>Male characters</value>
+    <value>Male Characters</value>
     <comment>DataProcess.cs</comment>
   </data>
   <data name="Mall" xml:space="preserve">
@@ -529,13 +529,13 @@
     <value>Academic Affairs Office</value>
   </data>
   <data name="LNU_C_A" xml:space="preserve">
-    <value>Course announcement</value>
+    <value>Course Announcement</value>
   </data>
   <data name="LNU_C_I" xml:space="preserve">
-    <value>Course introduction</value>
+    <value>Course Introduction</value>
   </data>
   <data name="LNU_For_Teacher" xml:space="preserve">
-    <value>For teachers</value>
+    <value>For Teachers</value>
   </data>
   <data name="LNU_G_E" xml:space="preserve">
     <value>General Education</value>
@@ -544,10 +544,10 @@
     <value>Index</value>
   </data>
   <data name="LNU_P_C" xml:space="preserve">
-    <value>Purpose of the course</value>
+    <value>Purpose Of The Course</value>
   </data>
   <data name="LNU_P_G" xml:space="preserve">
-    <value>Proof of grades</value>
+    <value>Proof Of Grades</value>
   </data>
   <data name="LNU_R_R" xml:space="preserve">
     <value>Rules &amp; Regulations</value>
@@ -556,19 +556,19 @@
     <value>Course &amp; Mark</value>
   </data>
   <data name="LNU_S_T" xml:space="preserve">
-    <value>Summer term</value>
+    <value>Summer Term</value>
   </data>
   <data name="LNU_Title.Text" xml:space="preserve">
     <value>LiaoNing University</value>
   </data>
   <data name="LNU_T_E" xml:space="preserve">
-    <value>Teaching evaluation</value>
+    <value>Teaching Evaluation</value>
   </data>
   <data name="LNU_T_I" xml:space="preserve">
-    <value>Teachers introduction</value>
+    <value>Teachers Introduction</value>
   </data>
   <data name="LNU_T_O_N" xml:space="preserve">
-    <value>Teaching operation notice</value>
+    <value>Teaching Operation Notice</value>
   </data>
   <data name="LNU_U_H_P" xml:space="preserve">
     <value>University Home Page</value>
@@ -593,5 +593,26 @@
   </data>
   <data name="SplitSummary.Text" xml:space="preserve">
     <value>Change the width of content page(Only PC)</value>
+  </data>
+  <data name="DivideSwitch.Text" xml:space="preserve">
+    <value>Divide the screen</value>
+  </data>
+  <data name="DivideSwitchSummary.Text" xml:space="preserve">
+    <value>Only on PC this mode is enabled</value>
+  </data>
+  <data name="LNU_Index_CS" xml:space="preserve">
+    <value>Course Schedule</value>
+  </data>
+  <data name="LNU_Index_GCI" xml:space="preserve">
+    <value>General Course Introduction</value>
+  </data>
+  <data name="LNU_Index_IPOGE" xml:space="preserve">
+    <value>Implementation Plan Of General Education</value>
+  </data>
+  <data name="LNU_Index_LS" xml:space="preserve">
+    <value>Login &amp; Status</value>
+  </data>
+  <data name="LNU_Index_SISP" xml:space="preserve">
+    <value>Student Integrated Service Platform</value>
   </data>
 </root>

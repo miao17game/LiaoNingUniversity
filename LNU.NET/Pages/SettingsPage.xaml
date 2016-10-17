@@ -47,7 +47,7 @@
                     <StackPanel>
                         
                         <StackPanel Orientation="Vertical" 
-                                    Margin=" 10,10,10,0">
+                                    Margin=" 10,25,10,0">
                             <TextBlock x:Uid="VisualOptions" FontWeight="Bold"
                                    Style="{StaticResource SummaryTextStyle}"/>
                             <Rectangle Height="1" Margin=" 0,5,0,0" Fill="{ThemeResource DQDSummTextColor}"/>
@@ -65,11 +65,42 @@
                                       Margin="0,0,-100,0"
                                       OnContent=" " 
                                       OffContent=" " 
-                                      Toggled="ThemeSwitch_Toggled" />
+                                      Toggled="Switch_Toggled" />
+                        </Grid>
+                        <Grid Margin="10,10,10,0" >
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="DivideSwitch"
+                                   Style="{StaticResource TitleTextStyle}"/>
+                                <TextBlock x:Uid="DivideSwitchSummary"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            </StackPanel>
+                            <ToggleSwitch Name="ScreenSwitch" 
+                                      Style="{ThemeResource ThemeModeSwitch}" 
+                                      HorizontalAlignment="Right"
+                                      Margin="0,0,-100,0"
+                                      OnContent=" " 
+                                      OffContent=" " 
+                                      Toggled="Switch_Toggled" />
+                        </Grid>
+                        <Grid Margin="10,10,10,0" >
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="SplitMode"
+                                   Style="{StaticResource TitleTextStyle}"/>
+                                <TextBlock x:Uid="SplitSummary"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            </StackPanel>
+                            <Slider Name="SplitSizeSlider" 
+                                    Style="{ThemeResource NewDefaultSlider}"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,10,0"
+                                    MinWidth="150"
+                                    Maximum="70"
+                                    Minimum="30"
+                                    ValueChanged="SplitSizeSlider_ValueChanged"/>
                         </Grid>
                         
                         <StackPanel Orientation="Vertical" 
-                                    Margin=" 10,10,10,0">
+                                    Margin=" 10,25,10,0">
                             <TextBlock x:Uid="LanguageOptions" FontWeight="Bold"
                                    Style="{StaticResource SummaryTextStyle}"/>
                             <Rectangle Height="1" Margin=" 0,5,0,0" Fill="{ThemeResource DQDSummTextColor}"/>
@@ -91,7 +122,7 @@
                         </Grid>
 
                         <StackPanel Orientation="Vertical" 
-                                    Margin=" 10,10,10,0">
+                                    Margin=" 10,25,10,0">
                             <TextBlock x:Uid="OtherOptions" FontWeight="Bold"
                                    Style="{StaticResource SummaryTextStyle}"/>
                             <Rectangle Height="1" Margin=" 0,5,0,0" Fill="{ThemeResource DQDSummTextColor}"/>
@@ -116,22 +147,6 @@
                                               Height="30"
                                               IsActive="False"/>
                             </Grid>
-                        </Grid>
-                        <Grid Margin="10,10,10,0" >
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock x:Uid="SplitMode"
-                                   Style="{StaticResource TitleTextStyle}"/>
-                                <TextBlock x:Uid="SplitSummary"
-                                   Style="{StaticResource SummaryTextStyle}"/>
-                            </StackPanel>
-                            <Slider Name="SplitSizeSlider" 
-                                    Style="{ThemeResource NewDefaultSlider}"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,0,10,0"
-                                    MinWidth="150"
-                                    Maximum="70"
-                                    Minimum="0"
-                                    ValueChanged="SplitSizeSlider_ValueChanged"/>
                         </Grid>
 
                     </StackPanel>
@@ -182,8 +197,17 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.0.3 / 2016.10.16" FontSize="15" FontWeight="Medium" /><LineBreak/>
-                            <Run Text="必要信息填入" /><LineBreak/><LineBreak/>
+                            <Run Text="Version：1.0.3 / 2016.10.17" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="分屏模式开关加入" /><LineBreak/>
+                            <Run Text="分屏尺寸调整功能加入" /><LineBreak/>
+                            <Run Text="语言下拉选单风格调整" /><LineBreak/>
+                            <Run Text="增加导航类型" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.0.2 / 2016.10.16" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="语言切换功能加入" /><LineBreak/>
+                            <Run Text="明暗主题与切换功能加入" /><LineBreak/>
+                            <Run Text="必要信息填入" /><LineBreak/>
+                            <Run Text="UI调整优化" /><LineBreak/><LineBreak/>
                             
                             <Run Text="Version：1.0.1 / 2016.10.15" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="主要外观框架开发完成" /><LineBreak/><LineBreak/>

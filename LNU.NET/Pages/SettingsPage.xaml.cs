@@ -61,7 +61,7 @@ namespace LNU.NET.Pages {
             await ReportError(null, "N/A", true);
         }
 
-        private void ThemeSwitch_Toggled(object sender, RoutedEventArgs e) {
+        private void Switch_Toggled(object sender, RoutedEventArgs e) {
             GetSwitchHandler((sender as ToggleSwitch).Name)
                .Invoke((sender as ToggleSwitch).Name);
         }
@@ -116,21 +116,51 @@ namespace LNU.NET.Pages {
             VersionMessage.Text = GetUIString("VersionMessage") + Utils.GetAppVersion();
             ThemeSwitch.IsOn = (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsDarkThemeOrNot) ?? true;
             LanguageCombox.SelectedItem = GetComboItemFromTag((string)SettingsHelper.ReadSettingsValue(SettingsSelect.Language) ?? ConstFields.English_US);
+            ScreenSwitch.IsOn = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
             SplitSizeSlider.Value = 100 * ((double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6);
+            ScreenSwitch.IsEnabled = !IsMobile;
             SplitSizeSlider.IsEnabled = !IsMobile;
             await ShowCacheSize();
         }
+
+        #region Toggle Events
 
         private void OnThemeSwitchToggled(ToggleSwitch sender) {
             SettingsHelper.SaveSettingsValue(SettingsConstants.IsDarkThemeOrNot, sender.IsOn);
             MainPage.Current.RequestedTheme = sender.IsOn ? ElementTheme.Dark : ElementTheme.Light;
         }
 
+        private void OnScreenSwitchToggled(ToggleSwitch sender) {
+            SettingsHelper.SaveSettingsValue(SettingsSelect.IsDivideScreen, sender.IsOn);
+            if (WebViewPage.Current != null)
+                MainPage.DivideWindowRange( 
+                    WebViewPage.Current, 
+                    800, 
+                    (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6, 
+                    isDivideScreen : sender.IsOn);
+            if (ContentPage.Current != null)
+                MainPage.DivideWindowRange(
+                    ContentPage.Current,
+                    800,
+                    (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    isDivideScreen: sender.IsOn);
+        }
+
+        #endregion
+
         private static void ChangeSplitViewWidth(double value) {
             if (ContentPage.Current != null)
-                MainPage.DivideWindowRange(ContentPage.Current, 800, value / 100);
+                MainPage.DivideWindowRange(
+                    ContentPage.Current, 
+                    800, 
+                    value / 100, 
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
             if (WebViewPage.Current != null)
-                MainPage.DivideWindowRange(WebViewPage.Current, 800, value / 100);
+                MainPage.DivideWindowRange(
+                    WebViewPage.Current, 
+                    800, 
+                    value / 100,
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
         }
 
         private async Task ShowCacheSize() {
@@ -201,22 +231,24 @@ namespace LNU.NET.Pages {
             public static string GetLanguageTag(ComboBoxItem button) { return languageSaveTagsMaps.ContainsKey(button) ? languageSaveTagsMaps[button] : null; }
             public static ComboBoxItem GetComboItemFromTag(string tag) { return languageSaveTagsMaps.ContainsValue(tag) ? languageSaveTagsMaps.Where(i => i.Value == tag).FirstOrDefault().Key : null; }
             static private Dictionary<string, ComboBoxItem> comboItemsMaps = new Dictionary<string, ComboBoxItem> {
-            {Current.enUSSelect.Name,Current.enUSSelect},
-            {Current.zhCNSelect.Name,Current.zhCNSelect},
+                { Current.enUSSelect.Name,Current.enUSSelect},
+                { Current.zhCNSelect.Name,Current.zhCNSelect},
         };
             static private Dictionary<ComboBoxItem, string> languageSaveTagsMaps = new Dictionary<ComboBoxItem, string> {
-            {Current.enUSSelect,ConstFields.English_US},
-            {Current.zhCNSelect,ConstFields.Chinese_CN},
+                { Current.enUSSelect,ConstFields.English_US},
+                { Current.zhCNSelect,ConstFields.Chinese_CN},
         };
 
             public static ToggleSwitch GetSwitchInstance(string str) { return switchSettingsMaps.ContainsKey(str) ? switchSettingsMaps[str] : null; }
             static private Dictionary<string, ToggleSwitch> switchSettingsMaps = new Dictionary<string, ToggleSwitch> {
-            {Current.ThemeSwitch.Name,Current.ThemeSwitch},
+                { Current.ThemeSwitch.Name,Current.ThemeSwitch},
+                {Current.ScreenSwitch.Name,Current.ScreenSwitch},
         };
 
             public static SwitchEventHandler GetSwitchHandler(string switchName) { return switchHandlerMaps.ContainsKey(switchName) ? switchHandlerMaps[switchName] : null; }
             static private Dictionary<string, SwitchEventHandler> switchHandlerMaps = new Dictionary<string, SwitchEventHandler> {
-            {Current.ThemeSwitch.Name, new SwitchEventHandler(instance=> { Current.OnThemeSwitchToggled(GetSwitchInstance(instance)); }) },
+                { Current.ThemeSwitch.Name, new SwitchEventHandler(instance=> { Current.OnThemeSwitchToggled(GetSwitchInstance(instance)); }) },
+                { Current.ScreenSwitch.Name, new SwitchEventHandler(instance=> { Current.OnScreenSwitchToggled(GetSwitchInstance(instance)); }) },
         };
 
         }

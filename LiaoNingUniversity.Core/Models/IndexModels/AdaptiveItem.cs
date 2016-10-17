@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 
 namespace LNU.Core.Models.IndexModels {
     public class AdaptiveItem {
+        public string ItemIcon { get; set; }
         public string ItemTitle { get; set; }
         public Uri PathUri { get; set; }
         public string Description { get; set; }

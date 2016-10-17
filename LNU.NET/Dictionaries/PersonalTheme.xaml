@@ -194,7 +194,7 @@
             <SolidColorBrush x:Key="ENRZBackground03" Color="#607FD3"/>
 
             <!--LNUBackground01-->
-            <SolidColorBrush x:Key="LNUBackground01" Color="#E6E6E6"/>
+            <SolidColorBrush x:Key="LNUBackground01" Color="#FCFCFC"/>
             
             <!--ENRZBackgroundColor--><!--
             <SolidColorBrush x:Key="ENRZForeground01" Color="#FF125B"/>-->

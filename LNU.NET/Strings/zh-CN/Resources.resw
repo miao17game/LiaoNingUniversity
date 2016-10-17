@@ -183,7 +183,7 @@
     <comment>SettingsPage</comment>
   </data>
   <data name="ENRZWebsites.Text" xml:space="preserve">
-    <value>辽宁大学</value>
+    <value>历史沿革</value>
     <comment>SettingsPage</comment>
   </data>
   <data name="ENRZWebsites_mess01.Text" xml:space="preserve">
@@ -594,5 +594,26 @@
   </data>
   <data name="SplitSummary.Text" xml:space="preserve">
     <value>调整内容页面宽度横占比( 仅PC )</value>
+  </data>
+  <data name="DivideSwitch.Text" xml:space="preserve">
+    <value>分屏设置</value>
+  </data>
+  <data name="DivideSwitchSummary.Text" xml:space="preserve">
+    <value>在PC上开启左右分屏模式(仅PC)</value>
+  </data>
+  <data name="LNU_Index_CS" xml:space="preserve">
+    <value>选课日程</value>
+  </data>
+  <data name="LNU_Index_GCI" xml:space="preserve">
+    <value>辽宁大学通识课程简介</value>
+  </data>
+  <data name="LNU_Index_IPOGE" xml:space="preserve">
+    <value>辽宁大学通识教育实施方案</value>
+  </data>
+  <data name="LNU_Index_LS" xml:space="preserve">
+    <value>登陆与状态查询</value>
+  </data>
+  <data name="LNU_Index_SISP" xml:space="preserve">
+    <value>学生一体化服务平台</value>
   </data>
 </root>

@@ -277,7 +277,7 @@
 
         <SplitView Name="NavigationSplit" 
                    Grid.Column="0"
-                   DisplayMode="CompactInline"
+                   DisplayMode="CompactOverlay"
                    OpenPaneLength="300"
                    CompactPaneLength="70"
                    PaneClosed="NavigationSplit_PaneClosed">
@@ -325,7 +325,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <Button Name="SettingsButton" 
-                            Height="70" Margin="5,0,0,0"
+                            Height="70" Margin="3,0,0,0"
                             Click="SettingsButton_Click" 
                             RelativePanel.AlignBottomWithPanel="True"
                             Style="{StaticResource MainPageButtonBackHamburgerStyle}"
