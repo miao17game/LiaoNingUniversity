@@ -616,4 +616,52 @@
   <data name="LNU_Index_SISP" xml:space="preserve">
     <value>学生一体化服务平台</value>
   </data>
+  <data name="LNU_Index_CP" xml:space="preserve">
+    <value>修改密码</value>
+  </data>
+  <data name="LNU_Index_SC" xml:space="preserve">
+    <value>选定课程</value>
+  </data>
+  <data name="LNU_Index_SS" xml:space="preserve">
+    <value>课表显示</value>
+  </data>
+  <data name="LNU_Index_SSI" xml:space="preserve">
+    <value>学籍信息</value>
+  </data>
+  <data name="PureColorItem.Text" xml:space="preserve">
+    <value>纯色模式</value>
+  </data>
+  <data name="PureColorItemSummary.Text" xml:space="preserve">
+    <value>选择不在主面板显示Item背景图</value>
+  </data>
+  <data name="LNU_E_M.Text" xml:space="preserve">
+    <value>辽宁大学教务管理 For Windows10</value>
+  </data>
+  <data name="LNU_Index_CA" xml:space="preserve">
+    <value>选课公告</value>
+  </data>
+  <data name="LNU_Index_EH" xml:space="preserve">
+    <value>选课帮助</value>
+  </data>
+  <data name="LNU_Index_FC" xml:space="preserve">
+    <value>不及格课程</value>
+  </data>
+  <data name="LNU_Index_PC" xml:space="preserve">
+    <value>已修课程</value>
+  </data>
+  <data name="LNU_Index_ROTT" xml:space="preserve">
+    <value>本学期成绩</value>
+  </data>
+  <data name="LNU_Index_TEL" xml:space="preserve">
+    <value>教学评估登陆</value>
+  </data>
+  <data name="LNU_Index_TP" xml:space="preserve">
+    <value>教学计划</value>
+  </data>
+  <data name="LNU_Index_TSCQ" xml:space="preserve">
+    <value>本学期课程查询</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>辽宁大学教务管理 Win10</value>
+  </data>
 </root>

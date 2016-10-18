@@ -92,7 +92,8 @@
                         <Image x:Name="BackgroundImage" 
                                Grid.ColumnSpan="2"
                                Stretch="UniformToFill"
-                               Source="{Binding BackImage}"  >
+                               Source="{Binding BackImage}" 
+                               Loaded="BackgroundImage_Loaded">
                             <interactivity:Interaction.Behaviors>
                                 <behaviors:Blur x:Name="BlurBehavior"
                                                 Value="1.75"

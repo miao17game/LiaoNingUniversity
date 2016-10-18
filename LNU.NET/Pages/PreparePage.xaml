@@ -32,7 +32,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/61.jpg"/>
+                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/1.jpg"/>
                         <Setter Target="LogeImage.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>0,0,0,40</Thickness>
@@ -45,7 +45,7 @@
                         <AdaptiveTrigger MinWindowWidth="361"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/61.jpg"/>
+                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/1.jpg"/>
                         <Setter Target="LogeImage.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>0,0,0,60</Thickness>
@@ -76,7 +76,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Image Name="BackImage" 
-               Source="ms-appx:///Assets/bg7.jpg"
+               Source="ms-appx:///Assets/4.jpg"
                Grid.ColumnSpan="3"
                Grid.RowSpan="3"
                Stretch="UniformToFill"/>
@@ -88,13 +88,12 @@
             <Image Name="LogeImage" Stretch="Uniform" 
                    RelativePanel.AlignVerticalCenterWithPanel="True"
                    RelativePanel.AlignHorizontalCenterWithPanel="True"
-                   Source="ms-appx:///Assets/1240-1240-2.png" 
-                   Width="200"/>
+                   Source="ms-appx:///Assets/620_2.png" />
         </RelativePanel>
         <Grid Grid.Row="2" Grid.Column="1" >
             <ProgressBar Name="progressBar" Maximum="1000" Value="0" 
-                         Margin=" 30,0,30,0" Foreground="White"/>
-            <TextBlock x:Uid="LNU_Title" RelativePanel.Below="LogeImage"
+                         Margin=" 30,0,30,0" Foreground="{ThemeResource ENRZForeground02}"/>
+            <TextBlock x:Uid="LNU_E_M" RelativePanel.Below="LogeImage"
                        Foreground="White" FontSize="20" Margin="0,10,0,0"
                        HorizontalAlignment="Center"
                        FontFamily="{ThemeResource PhoneFontFamilySemiLight}"/>

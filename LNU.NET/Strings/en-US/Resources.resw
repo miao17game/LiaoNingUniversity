@@ -595,7 +595,7 @@
     <value>Change the width of content page(Only PC)</value>
   </data>
   <data name="DivideSwitch.Text" xml:space="preserve">
-    <value>Divide the screen</value>
+    <value>Divide The Screen</value>
   </data>
   <data name="DivideSwitchSummary.Text" xml:space="preserve">
     <value>Only on PC this mode is enabled</value>
@@ -614,5 +614,53 @@
   </data>
   <data name="LNU_Index_SISP" xml:space="preserve">
     <value>Student Integrated Service Platform</value>
+  </data>
+  <data name="LNU_Index_CP" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="LNU_Index_SC" xml:space="preserve">
+    <value>Selected Course</value>
+  </data>
+  <data name="LNU_Index_SS" xml:space="preserve">
+    <value>Show Schedule</value>
+  </data>
+  <data name="LNU_Index_SSI" xml:space="preserve">
+    <value>Student Status information</value>
+  </data>
+  <data name="PureColorItem.Text" xml:space="preserve">
+    <value>Pure Color Item </value>
+  </data>
+  <data name="PureColorItemSummary.Text" xml:space="preserve">
+    <value>If you want to make the item back-picture unvisible.</value>
+  </data>
+  <data name="LNU_E_M.Text" xml:space="preserve">
+    <value>LNU Education Management</value>
+  </data>
+  <data name="LNU_Index_CA" xml:space="preserve">
+    <value>Course Announcement</value>
+  </data>
+  <data name="LNU_Index_EH" xml:space="preserve">
+    <value>Elective Help</value>
+  </data>
+  <data name="LNU_Index_FC" xml:space="preserve">
+    <value>Failed Course</value>
+  </data>
+  <data name="LNU_Index_PC" xml:space="preserve">
+    <value>Passed Course</value>
+  </data>
+  <data name="LNU_Index_ROTT" xml:space="preserve">
+    <value>Results Of This Term</value>
+  </data>
+  <data name="LNU_Index_TEL" xml:space="preserve">
+    <value>Teaching Evaluation Login</value>
+  </data>
+  <data name="LNU_Index_TP" xml:space="preserve">
+    <value>Teaching Plan</value>
+  </data>
+  <data name="LNU_Index_TSCQ" xml:space="preserve">
+    <value>This Semester Course Quiry</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>LNU Education Management</value>
   </data>
 </root>

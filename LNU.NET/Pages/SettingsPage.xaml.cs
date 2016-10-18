@@ -116,6 +116,7 @@ namespace LNU.NET.Pages {
             VersionMessage.Text = GetUIString("VersionMessage") + Utils.GetAppVersion();
             ThemeSwitch.IsOn = (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsDarkThemeOrNot) ?? true;
             LanguageCombox.SelectedItem = GetComboItemFromTag((string)SettingsHelper.ReadSettingsValue(SettingsSelect.Language) ?? ConstFields.English_US);
+            PureItemSwitch.IsOn = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsPureColorItem) ?? false;
             ScreenSwitch.IsOn = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
             SplitSizeSlider.Value = 100 * ((double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6);
             ScreenSwitch.IsEnabled = !IsMobile;
@@ -144,6 +145,12 @@ namespace LNU.NET.Pages {
                     800,
                     (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
                     isDivideScreen: sender.IsOn);
+        }
+
+        private void OnPureItemSwitchToggled(ToggleSwitch sender) {
+            SettingsHelper.SaveSettingsValue(SettingsSelect.IsPureColorItem, sender.IsOn);
+            if (IndexPage.Current != null)
+                IndexPage.InsideMapHelper.ChangeImageVisibility(!sender.IsOn);
         }
 
         #endregion
@@ -242,13 +249,15 @@ namespace LNU.NET.Pages {
             public static ToggleSwitch GetSwitchInstance(string str) { return switchSettingsMaps.ContainsKey(str) ? switchSettingsMaps[str] : null; }
             static private Dictionary<string, ToggleSwitch> switchSettingsMaps = new Dictionary<string, ToggleSwitch> {
                 { Current.ThemeSwitch.Name,Current.ThemeSwitch},
-                {Current.ScreenSwitch.Name,Current.ScreenSwitch},
+                { Current.ScreenSwitch.Name,Current.ScreenSwitch},
+                { Current.PureItemSwitch.Name,Current.PureItemSwitch },
         };
 
             public static SwitchEventHandler GetSwitchHandler(string switchName) { return switchHandlerMaps.ContainsKey(switchName) ? switchHandlerMaps[switchName] : null; }
             static private Dictionary<string, SwitchEventHandler> switchHandlerMaps = new Dictionary<string, SwitchEventHandler> {
                 { Current.ThemeSwitch.Name, new SwitchEventHandler(instance=> { Current.OnThemeSwitchToggled(GetSwitchInstance(instance)); }) },
                 { Current.ScreenSwitch.Name, new SwitchEventHandler(instance=> { Current.OnScreenSwitchToggled(GetSwitchInstance(instance)); }) },
+                { Current.PureItemSwitch.Name, new SwitchEventHandler(instance=> { Current.OnPureItemSwitchToggled(GetSwitchInstance(instance)); }) },
         };
 
         }

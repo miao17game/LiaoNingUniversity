@@ -69,6 +69,21 @@
                         </Grid>
                         <Grid Margin="10,10,10,0" >
                             <StackPanel Orientation="Vertical">
+                                <TextBlock x:Uid="PureColorItem"
+                                   Style="{StaticResource TitleTextStyle}"/>
+                                <TextBlock x:Uid="PureColorItemSummary"
+                                   Style="{StaticResource SummaryTextStyle}"/>
+                            </StackPanel>
+                            <ToggleSwitch Name="PureItemSwitch" 
+                                      Style="{ThemeResource ThemeModeSwitch}" 
+                                      HorizontalAlignment="Right"
+                                      Margin="0,0,-100,0"
+                                      OnContent=" " 
+                                      OffContent=" " 
+                                      Toggled="Switch_Toggled" />
+                        </Grid>
+                        <Grid Margin="10,10,10,0" >
+                            <StackPanel Orientation="Vertical">
                                 <TextBlock x:Uid="DivideSwitch"
                                    Style="{StaticResource TitleTextStyle}"/>
                                 <TextBlock x:Uid="DivideSwitchSummary"
@@ -197,6 +212,12 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
+                            <Run Text="Version：1.0.4 / 2016.10.18" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="应用图标添加" /><LineBreak/>
+                            <Run Text="首屏UI及应用整体优化" /><LineBreak/>
+                            <Run Text="Items内容增加" /><LineBreak/>
+                            <Run Text="为上交商店做准备" /><LineBreak/><LineBreak/>
+                            
                             <Run Text="Version：1.0.3 / 2016.10.17" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="分屏模式开关加入" /><LineBreak/>
                             <Run Text="分屏尺寸调整功能加入" /><LineBreak/>
@@ -226,23 +247,35 @@
             <PivotItem Name="AboutENRZ" x:Uid="SettPageItem_AboutENRZ" >
                 <ScrollViewer>
                     <StackPanel>
+                        <Image Name="IconImage" MaxWidth="480"
+                               Source="/Assets/Square310x310Logo.scale-200.png" 
+                               Margin="0,-110"/>
+
+                        <TextBlock x:Uid="ENRZWebsites" FontWeight="ExtraBold" 
+                                   FontSize="18" HorizontalAlignment="Center"/>
                         <TextBlock Margin="10,5,10,5" FontSize="14" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
-                            <Run x:Uid="ENRZWebsites" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
-                            <LineBreak/>
                         <Run x:Uid="ENRZWebsites_mess01"/><LineBreak/>
                         <LineBreak/>
-                            <Run x:Uid="ENRZMagazine" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
-                            <LineBreak/>
+                        </TextBlock>
+
+                        <TextBlock x:Uid="ENRZMagazine" FontWeight="ExtraBold" 
+                                   FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Margin="10,5,10,5" FontSize="14" FontWeight="Thin"
+                               TextWrapping="WrapWholeWords">
                         <Run x:Uid="ENRZMagazine_mess01"/><LineBreak/>
                         <LineBreak/>
                         <Run x:Uid="ENRZMagazine_mess02"/><LineBreak/>
                         <LineBreak/>
-                            <Run x:Uid="ENRZGroupProfile" FontWeight="ExtraBold" FontSize="18"/><LineBreak/>
-                            <LineBreak/>
-                        <Run x:Uid="ENRZGroupProfile_mess01"/><LineBreak/>
-
                         </TextBlock>
+
+                        <TextBlock x:Uid="ENRZGroupProfile" FontWeight="ExtraBold" 
+                                   FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Margin="10,5,10,5" FontSize="14" FontWeight="Thin"
+                               TextWrapping="WrapWholeWords">
+                        <Run x:Uid="ENRZGroupProfile_mess01"/><LineBreak/>
+                        </TextBlock>
+                        
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

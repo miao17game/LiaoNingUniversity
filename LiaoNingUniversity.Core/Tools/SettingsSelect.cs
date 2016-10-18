@@ -7,5 +7,6 @@
         public const string IsFirstLoadApp = "IS_FIRST_LOAD_APP_OR_NOT";
         public const string SplitViewMode = "SPLITVIEW_WIDTH_MODE";
         public const string IsDivideScreen = "DIVIDE_SCREEN_MODE";
+        public const string IsPureColorItem = "PURE_COLOR_ITEM_MODE";
     }
 }
