@@ -1,5 +1,8 @@
-﻿using LNU.Core.Models;
+﻿using static Wallace.UWP.Helpers.Tools.UWPStates;
+
+using LNU.Core.Models;
 using LNU.Core.Tools;
+using LNU.NET.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,44 +19,36 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-using static Wallace.UWP.Helpers.Tools.UWPStates;
-
 namespace LNU.NET.Pages {
     
     public sealed partial class WebViewPage : Page {
         public WebViewPage() {
             this.InitializeComponent();
             Current = this;
-            MainPage.DivideWindowRange(
-                currentFramePage: this, 
-                rangeNum: 800, 
-                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6, 
-                isDivideScreen: (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true);
-            if (VisibleWidth > 800 && !IsMobile)
-                this.Margin = new Thickness(3, 0, 0, 0);
+            InitPageState();
         }
+
+        #region Events
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
             MainPage.Current.MainContentFrame.Content = null;
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
-            if ((sender as Grid).ActualWidth > 800 && !IsMobile)
-                this.Margin = new Thickness(3, 0, 0, 0);
-            else
-                this.Margin = new Thickness(0, 0, 0, 0);
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var args = e.Parameter as NavigateParameter;
+            if(args == null || args.PathUri == null) {
+                ReportHelper.ReportError(GetUIString("WebViewLoadError"));
+                return;
+            }
+            contentRing.IsActive = true;
             Scroll.Source = args.PathUri;
             if (args.MessageBag as string != null)
                 navigateTitlePath.Text = args.MessageBag as string;
-        }
-
-        private void Scroll_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
-
         }
 
         private void Scroll_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) {
@@ -65,11 +60,30 @@ namespace LNU.NET.Pages {
         }
 
         private void Scroll_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
-
+            
         }
+
+        private void Scroll_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
+            contentRing.IsActive = false;
+        }
+
+        #endregion
+
+        #region Mehods
+
+        private void InitPageState() {
+            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
+            MainPage.DivideWindowRange(
+                currentFramePage: this,
+                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                isDivideScreen: isDivideScreen);
+        }
+
+        #endregion
 
         #region Properties
         public static WebViewPage Current;
+        private bool isDivideScreen = true;
         #endregion
 
     }

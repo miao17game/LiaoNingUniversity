@@ -253,54 +253,6 @@
     <value>Error throws !</value>
     <comment>App.cs</comment>
   </data>
-  <data name="Art" xml:space="preserve">
-    <value>Art</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="A_B" xml:space="preserve">
-    <value>Party A Party B</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Beauty" xml:space="preserve">
-    <value>Beauty</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Car" xml:space="preserve">
-    <value>Car</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Cars" xml:space="preserve">
-    <value>Cars</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Collocation" xml:space="preserve">
-    <value>Collocation</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Complain" xml:space="preserve">
-    <value>Complain</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="CoverStars" xml:space="preserve">
-    <value>Cover stars</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Digital" xml:space="preserve">
-    <value>Digital</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Ent" xml:space="preserve">
-    <value>Entertainment</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Fashion" xml:space="preserve">
-    <value>Fashion</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Fashions" xml:space="preserve">
-    <value>Fashions</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="Feedback_Body" xml:space="preserve">
     <value>Description</value>
     <comment>SettingsPage</comment>
@@ -341,169 +293,21 @@
     <value>Error occurred when fetching data</value>
     <comment>DataProcess.cs</comment>
   </data>
-  <data name="Gallery" xml:space="preserve">
-    <value>Gallery</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="HotGossip" xml:space="preserve">
-    <value>Hot gossip</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Information" xml:space="preserve">
-    <value>Information</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="LoveOfHabit" xml:space="preserve">
-    <value>Love Of Habit</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="MaleCharacters" xml:space="preserve">
-    <value>Male Characters</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Mall" xml:space="preserve">
-    <value>Mall</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Men" xml:space="preserve">
-    <value>Men</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Men_large" xml:space="preserve">
-    <value>Men's large</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="mix" xml:space="preserve">
-    <value>Mix</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="NewsGirl" xml:space="preserve">
-    <value>News girl</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Outdoor" xml:space="preserve">
-    <value>Outdoor</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Photographic" xml:space="preserve">
-    <value>Photographic</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Photography" xml:space="preserve">
-    <value>Photography</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Plaything" xml:space="preserve">
-    <value>Plaything</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="RC" xml:space="preserve">
-    <value>RC</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="See" xml:space="preserve">
-    <value>See</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="SettingsString" xml:space="preserve">
     <value>Settings</value>
     <comment>SettingsPage</comment>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Show</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="SkinCare" xml:space="preserve">
-    <value>Skin care</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Sports" xml:space="preserve">
-    <value>Sports</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="SportsBaby" xml:space="preserve">
-    <value>Sports baby</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Stunner" xml:space="preserve">
-    <value>Stunner</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Swaths" xml:space="preserve">
-    <value>Swaths</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="TheGlobalVillage" xml:space="preserve">
-    <value>The global village</value>
-    <comment>DataProcess.cs</comment>
   </data>
   <data name="TimeOutError" xml:space="preserve">
     <value>Network timed out, please try again.</value>
     <comment>WebProcess.cs</comment>
   </data>
-  <data name="Topics" xml:space="preserve">
-    <value>Topics</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="Untitled" xml:space="preserve">
     <value>Untitled</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Watch" xml:space="preserve">
-    <value>Watch</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Wine" xml:space="preserve">
-    <value>Wine</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Yuppie" xml:space="preserve">
-    <value>Yuppie</value>
     <comment>DataProcess.cs</comment>
   </data>
   <data name="ClickTwiceToExit" xml:space="preserve">
     <value>Click back-button again to exit app</value>
     <comment>MainPage</comment>
-  </data>
-  <data name="Image_Ent.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Fashion.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Girl.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_More.Content" xml:space="preserve">
-    <value>More&gt;&gt;</value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Plaything.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Recommend.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Select.Text" xml:space="preserve">
-    <value />
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Picture_Next.Text" xml:space="preserve">
-    <value>NEXT</value>
-    <comment>PicturesPage</comment>
-  </data>
-  <data name="Picture_Previous.Text" xml:space="preserve">
-    <value>PREVIOUS</value>
-    <comment>PicturesPage</comment>
-  </data>
-  <data name="Picture_Recommend.Text" xml:space="preserve">
-    <value>RECOMMEND</value>
-    <comment>PicturesPage</comment>
   </data>
   <data name="Picture_Watch.Text" xml:space="preserve">
     <value>ENRZ.COM-PIC</value>
@@ -516,10 +320,6 @@
   <data name="SettingButton.Text" xml:space="preserve">
     <value>Settings</value>
     <comment>MainPage</comment>
-  </data>
-  <data name="Top5.Text" xml:space="preserve">
-    <value>Top5</value>
-    <comment>ImagePage</comment>
   </data>
   <data name="ValidToShow" xml:space="preserve">
     <value>content not supported display</value>
@@ -662,5 +462,8 @@
   </data>
   <data name="AppName" xml:space="preserve">
     <value>LNU Education Management</value>
+  </data>
+  <data name="WebViewLoadError" xml:space="preserve">
+    <value>Web Load Error：Parameter Invalid.</value>
   </data>
 </root>

@@ -77,6 +77,11 @@ namespace LNU.NET.Pages {
             new ToastSmooth(GetUIString("ReStartToChangeLanguage")).Show();
         }
 
+        /// <summary>
+        /// *(Important) Change divide percent value when slider action finished.
+        /// </summary>
+        /// <param name="sender">slider</param>
+        /// <param name="e">args</param>
         private void SplitSizeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
             isNeedSaveSliderValue = false;
             if (isInitSliderValueOrNot) {
@@ -124,6 +129,19 @@ namespace LNU.NET.Pages {
             await ShowCacheSize();
         }
 
+        private static void ChangeSplitViewWidth(double value) {
+            if (ContentPage.Current != null)
+                MainPage.DivideWindowRange(
+                    ContentPage.Current, 
+                    divideNum : value / 100, 
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
+            if (WebViewPage.Current != null)
+                MainPage.DivideWindowRange(
+                    WebViewPage.Current,
+                    divideNum : value / 100,
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
+        }
+
         #region Toggle Events
 
         private void OnThemeSwitchToggled(ToggleSwitch sender) {
@@ -134,16 +152,14 @@ namespace LNU.NET.Pages {
         private void OnScreenSwitchToggled(ToggleSwitch sender) {
             SettingsHelper.SaveSettingsValue(SettingsSelect.IsDivideScreen, sender.IsOn);
             if (WebViewPage.Current != null)
-                MainPage.DivideWindowRange( 
-                    WebViewPage.Current, 
-                    800, 
-                    (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6, 
-                    isDivideScreen : sender.IsOn);
+                MainPage.DivideWindowRange(
+                    WebViewPage.Current,
+                    divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    isDivideScreen: sender.IsOn);
             if (ContentPage.Current != null)
                 MainPage.DivideWindowRange(
                     ContentPage.Current,
-                    800,
-                    (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
                     isDivideScreen: sender.IsOn);
         }
 
@@ -155,20 +171,7 @@ namespace LNU.NET.Pages {
 
         #endregion
 
-        private static void ChangeSplitViewWidth(double value) {
-            if (ContentPage.Current != null)
-                MainPage.DivideWindowRange(
-                    ContentPage.Current, 
-                    800, 
-                    value / 100, 
-                    isDivideScreen: Current.ScreenSwitch.IsOn);
-            if (WebViewPage.Current != null)
-                MainPage.DivideWindowRange(
-                    WebViewPage.Current, 
-                    800, 
-                    value / 100,
-                    isDivideScreen: Current.ScreenSwitch.IsOn);
-        }
+        #region Cache Methods
 
         private async Task ShowCacheSize() {
             var localCF = ApplicationData.Current.LocalCacheFolder;
@@ -198,6 +201,9 @@ namespace LNU.NET.Pages {
             await ShowCacheSize();
         }
 
+        #endregion
+
+        #region Error Reporter
         /// <summary>
         /// ReportError Method
         /// </summary>
@@ -228,6 +234,8 @@ namespace LNU.NET.Pages {
             string to = "miao17game@qq.com";
             await Tasks.OpenEmailComposeAsync(to, subject, body);
         }
+
+        #endregion
 
         #endregion
 

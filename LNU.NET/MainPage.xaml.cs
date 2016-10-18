@@ -132,12 +132,22 @@ namespace LNU.NET {
             }
         }
 
+        /// <summary>
+        /// Change the page layout by the settings item : "Divide Screen Mode"
+        /// </summary>
+        /// <param name="currentFramePage">current child page instance</param>
+        /// <param name="rangeNum">default number of the range to divide, is 800</param>
+        /// <param name="divideNum">the percent value of divide</param>
+        /// <param name="defaultDivide">defalut percent value, is 0.6</param>
+        /// <param name="isDivideScreen">make sure if need to divide screen</param>
         public static void DivideWindowRange(
             Page currentFramePage, 
-            double rangeNum, 
-            double divideNum , 
+            double divideNum ,
+            double rangeNum = 800,
             double defaultDivide = 0.6 , 
             bool isDivideScreen = true) {
+
+            Current.SetChildPageMargin(  currentPage: currentFramePage, matchNumber: VisibleWidth, isDivideScreen: isDivideScreen);
 
             if (IsMobile) {
                 currentFramePage.Width = VisibleWidth;
@@ -163,10 +173,37 @@ namespace LNU.NET {
             NaviBarResouces.Source = HamburgerResList;
         }
 
+        /// <summary>
+        /// Make the page more adaptive to the settings item : "Divide Screen Mode"
+        /// </summary>
+        /// <param name="currentPage">current child page instance</param>
+        /// <param name="matchNumber">baseGrid's width of current page </param>
+        /// <param name="rangeNumber">default number of the range to divide, is 800</param>
+        /// <param name="isDivideScreen">make sure if need to divide screen</param>
+        private void SetChildPageMargin(
+            Page currentPage, 
+            double matchNumber,  
+            bool isDivideScreen , 
+            double rangeNumber = 800) {
+            if (matchNumber > rangeNumber && !IsMobile && isDivideScreen)
+                currentPage.Margin = new Thickness(3, 0, 0, 0);
+            else
+                currentPage.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+        /// <summary>
+        /// Change app title route string.
+        /// </summary>
+        /// <param name="value">the new value to be written into App title.</param>
         public static void ChangeTitlePath(string value) {
             Current.NavigateTitlePath.Text = value;
         }
 
+        /// <summary>
+        /// Change app title route string.
+        /// </summary>
+        /// <param name="number">the route point need to be changed</param>
+        /// <param name="value">value to be written into the target point</param>
         public static void ChangeTitlePath(uint number, string value) {
             if (number < 1 || number > 3)
                 return;
@@ -178,6 +215,9 @@ namespace LNU.NET {
             Current.NavigateTitlePath.Text = NaviPathTitle.RoutePath;
         }
 
+        /// <summary>
+        /// Start the dark animation when hamburger menu opened.
+        /// </summary>
         private void OnPaneIsOpened() {
             SetVisibility(DarkDivideBorder, true);
             EnterBorder.Begin();

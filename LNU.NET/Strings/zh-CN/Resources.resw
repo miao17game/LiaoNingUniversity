@@ -464,4 +464,7 @@
   <data name="AppName" xml:space="preserve">
     <value>辽宁大学教务管理 Win10</value>
   </data>
+  <data name="WebViewLoadError" xml:space="preserve">
+    <value>网页加载失败：参数错误</value>
+  </data>
 </root>
