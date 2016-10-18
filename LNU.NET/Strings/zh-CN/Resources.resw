@@ -254,54 +254,6 @@
     <value>发生错误</value>
     <comment>App.cs</comment>
   </data>
-  <data name="Art" xml:space="preserve">
-    <value>艺和团</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="A_B" xml:space="preserve">
-    <value>甲方乙方</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Beauty" xml:space="preserve">
-    <value>美女</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Car" xml:space="preserve">
-    <value>座驾</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Cars" xml:space="preserve">
-    <value>汽车</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Collocation" xml:space="preserve">
-    <value>搭配栏目</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Complain" xml:space="preserve">
-    <value>热辣吐槽</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="CoverStars" xml:space="preserve">
-    <value>封面明星</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Digital" xml:space="preserve">
-    <value>数码</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Ent" xml:space="preserve">
-    <value>娱乐</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Fashion" xml:space="preserve">
-    <value>时装</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Fashions" xml:space="preserve">
-    <value>时尚</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="Feedback_Body" xml:space="preserve">
     <value>问题描述</value>
     <comment>SettingsPage</comment>
@@ -342,169 +294,21 @@
     <value>获取数据发生错误</value>
     <comment>DataProcess.cs</comment>
   </data>
-  <data name="Gallery" xml:space="preserve">
-    <value>美图</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="HotGossip" xml:space="preserve">
-    <value>八卦热点</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Information" xml:space="preserve">
-    <value>资讯</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="LoveOfHabit" xml:space="preserve">
-    <value>恋物癖</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="MaleCharacters" xml:space="preserve">
-    <value>男性人物</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Mall" xml:space="preserve">
-    <value>商城</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Men" xml:space="preserve">
-    <value>男人帮</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Men_large" xml:space="preserve">
-    <value>男装大片</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="mix" xml:space="preserve">
-    <value>搭配</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="NewsGirl" xml:space="preserve">
-    <value>新闻女郎</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Outdoor" xml:space="preserve">
-    <value>户外</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Photographic" xml:space="preserve">
-    <value>性感写真</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Photography" xml:space="preserve">
-    <value>摄影</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Plaything" xml:space="preserve">
-    <value>玩物</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="RC" xml:space="preserve">
-    <value>香车美女</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="See" xml:space="preserve">
-    <value>猎奇</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="SettingsString" xml:space="preserve">
     <value>设置</value>
     <comment>SettingsPage</comment>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>秀场</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="SkinCare" xml:space="preserve">
-    <value>美容护肤</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Sports" xml:space="preserve">
-    <value>体育</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="SportsBaby" xml:space="preserve">
-    <value>体育宝贝</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Stunner" xml:space="preserve">
-    <value>尤物</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Swaths" xml:space="preserve">
-    <value>大片</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="TheGlobalVillage" xml:space="preserve">
-    <value>地球村</value>
-    <comment>DataProcess.cs</comment>
   </data>
   <data name="TimeOutError" xml:space="preserve">
     <value>网络超时，请重试</value>
     <comment>WebProcess.cs</comment>
   </data>
-  <data name="Topics" xml:space="preserve">
-    <value>专题</value>
-    <comment>DataProcess.cs</comment>
-  </data>
   <data name="Untitled" xml:space="preserve">
     <value>未知</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Watch" xml:space="preserve">
-    <value>腕表</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Wine" xml:space="preserve">
-    <value>美酒</value>
-    <comment>DataProcess.cs</comment>
-  </data>
-  <data name="Yuppie" xml:space="preserve">
-    <value>后雅皮</value>
     <comment>DataProcess.cs</comment>
   </data>
   <data name="ClickTwiceToExit" xml:space="preserve">
     <value>再按一次返回键退出</value>
     <comment>MainPage</comment>
-  </data>
-  <data name="Image_Ent.Text" xml:space="preserve">
-    <value>娱乐 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Fashion.Text" xml:space="preserve">
-    <value>时尚 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Girl.Text" xml:space="preserve">
-    <value>美女 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_More.Content" xml:space="preserve">
-    <value>更多&gt;&gt;</value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Plaything.Text" xml:space="preserve">
-    <value>玩物 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Recommend.Text" xml:space="preserve">
-    <value>编辑推荐 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Image_Select.Text" xml:space="preserve">
-    <value>精选 </value>
-    <comment>ImagePage</comment>
-  </data>
-  <data name="Picture_Next.Text" xml:space="preserve">
-    <value>下一个图集</value>
-    <comment>PicturesPage</comment>
-  </data>
-  <data name="Picture_Previous.Text" xml:space="preserve">
-    <value>上一个图集</value>
-    <comment>PicturesPage</comment>
-  </data>
-  <data name="Picture_Recommend.Text" xml:space="preserve">
-    <value>精彩推荐</value>
-    <comment>PicturesPage</comment>
   </data>
   <data name="Picture_Watch.Text" xml:space="preserve">
     <value>ENRZ.COM-看图</value>
@@ -517,10 +321,6 @@
   <data name="SettingButton.Text" xml:space="preserve">
     <value>设置</value>
     <comment>MainPage</comment>
-  </data>
-  <data name="Top5.Text" xml:space="preserve">
-    <value>每日热图TOP5</value>
-    <comment>ImagePage</comment>
   </data>
   <data name="ValidToShow" xml:space="preserve">
     <value>部分内容暂不支持显示</value>

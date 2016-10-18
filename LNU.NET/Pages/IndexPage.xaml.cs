@@ -1,4 +1,8 @@
-﻿using LNU.Core.Models;
+﻿#region Using
+using static Wallace.UWP.Helpers.Tools.UWPStates;
+using static LNU.NET.Pages.IndexPage.InsideMapHelper;
+
+using LNU.Core.Models;
 using Wallace.UWP.Helpers.Tools;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
@@ -17,13 +21,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-
-using static Wallace.UWP.Helpers.Tools.UWPStates;
-using static LNU.NET.Pages.IndexPage.InsideMapHelper;
 using LNU.Core.Models.IndexModels;
 using Windows.UI;
 using Wallace.UWP.Helpers.Helpers;
 using LNU.Core.Tools;
+#endregion
 
 namespace LNU.NET.Pages {
     
