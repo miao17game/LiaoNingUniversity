@@ -155,7 +155,7 @@
         </Storyboard>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource LNUBackground01}" >
+    <Grid Background="{ThemeResource LNUBackground02}" >
 
         <!--#region StateTriggers-->
         <VisualStateManager.VisualStateGroups>

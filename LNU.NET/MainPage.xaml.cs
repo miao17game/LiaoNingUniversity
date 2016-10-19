@@ -180,7 +180,7 @@ namespace LNU.NET {
         /// <param name="matchNumber">baseGrid's width of current page </param>
         /// <param name="rangeNumber">default number of the range to divide, is 800</param>
         /// <param name="isDivideScreen">make sure if need to divide screen</param>
-        private void SetChildPageMargin(
+        public void SetChildPageMargin(
             Page currentPage, 
             double matchNumber,  
             bool isDivideScreen , 
@@ -279,6 +279,7 @@ namespace LNU.NET {
         /// </summary>
         public static class InnerResources {
 
+            #region Hamburger resources
             public static List<NavigationBar> HamburgerResList { get { return navigationListMap; } }
             static private List<NavigationBar> navigationListMap = new List<NavigationBar> {
                 new NavigationBar {
@@ -291,7 +292,7 @@ namespace LNU.NET {
                     Title = GetUIString("LNU_Search_Query"),
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),
                     NaviType = NavigateType.Index,
-                    FetchType = DataFetchType.LNU_Course_Mark,
+                    FetchType = DataFetchType.LNU_CourseMark,
                 },
                 new NavigationBar {
                     Title = GetUIString("LNU_For_Teacher"),
@@ -359,6 +360,7 @@ namespace LNU.NET {
                     NaviType = NavigateType.Webview
                 },
             };
+            #endregion
 
             public static Type GetPageType(NavigateType type) { return pagesMaps.ContainsKey(type) ? pagesMaps[type] : null; }
             static private Dictionary<NavigateType, Type> pagesMaps = new Dictionary<NavigateType, Type> {

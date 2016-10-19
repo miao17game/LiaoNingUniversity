@@ -15,7 +15,7 @@ namespace LNU.NET.Tools {
             });
         }
 
-        public static async void ReportException(string erroeMessage) {
+        public static async void ReportAttention(string erroeMessage) {
             await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 new ToastSmooth(erroeMessage).Show();
             });

@@ -54,7 +54,7 @@ namespace LNU.NET.Pages {
                 return;
             MainPage.Current.NavigateToBase?.Invoke(
                 sender, 
-                new NavigateParameter { PathUri = args.PathUri, MessageBag = args.ItemTitle }, 
+                new NavigateParameter { PathUri = args.PathUri, MessageBag = args.ItemTitle , DataType = args.DataType,}, 
                 MainPage.InnerResources.GetFrameInstance(args.NaviType), 
                 MainPage.InnerResources.GetPageType(args.NaviType));
         }
@@ -140,6 +140,7 @@ namespace LNU.NET.Pages {
                     ItemTitle =GetUIString("LNU_Index_LS"),
                     Description = null,
                     NaviType = NavigateType.Webview,
+                    DataType = DataFetchType.LNU_Index_Login,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 255, 67, 63)),
                     IconForeground = new SolidColorBrush(Colors.White),
@@ -289,7 +290,7 @@ namespace LNU.NET.Pages {
             /// </summary>
             static private Dictionary<DataFetchType, List<AdaptiveItem>> resourcesDic = new Dictionary<DataFetchType, List<AdaptiveItem>> {
                 { DataFetchType.LNU_Index, IndexResList },
-                { DataFetchType.LNU_Course_Mark, CourseMarkResList },
+                { DataFetchType.LNU_CourseMark, CourseMarkResList },
             };
             #endregion
 

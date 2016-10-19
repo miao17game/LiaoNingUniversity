@@ -8,6 +8,7 @@ namespace LNU.Core.Models {
     public enum DataFetchType {
         NULL = 0,
         LNU_Index = 1,
-        LNU_Course_Mark = 2,
+        LNU_CourseMark = 2,
+        LNU_Index_Login = 3,
     }
 }

@@ -212,7 +212,11 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.0.4 / 2016.10.18" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1002.* / 2016.10.19" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="登陆页面本地化" /><LineBreak/>
+                            <Run Text="登录信息页面加入" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1001.1741 / 2016.10.18" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="应用图标添加" /><LineBreak/>
                             <Run Text="首屏UI及应用整体优化" /><LineBreak/>
                             <Run Text="Items内容增加" /><LineBreak/>

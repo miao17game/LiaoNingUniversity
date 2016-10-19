@@ -96,7 +96,10 @@ namespace LNU.NET.Pages {
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
-
+            MainPage.Current.SetChildPageMargin(
+                currentPage: this,
+                matchNumber: VisibleWidth,
+                isDivideScreen: isDivideScreen);
         }
 
         #endregion
