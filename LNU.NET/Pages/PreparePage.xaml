@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="using:Wallace.UWP.Helpers.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -79,8 +81,16 @@
                Source="ms-appx:///Assets/4.jpg"
                Grid.ColumnSpan="3"
                Grid.RowSpan="3"
-               Stretch="UniformToFill"/>
-        <Rectangle Name="BackREC" Fill="Black" 
+               Stretch="UniformToFill">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior"
+                                                Value="15.75"
+                                                Duration="3500"
+                                                Delay="0"
+                                                AutomaticallyStart="True"/>
+            </interactivity:Interaction.Behaviors>
+        </Image>
+            <Rectangle Name="BackREC" Fill="Black" 
                    Opacity="0.4"
                    Grid.ColumnSpan="3"
                    Grid.RowSpan="3"/>
@@ -91,8 +101,13 @@
                    Source="ms-appx:///Assets/620_2.png" />
         </RelativePanel>
         <Grid Grid.Row="2" Grid.Column="1" >
-            <ProgressBar Name="progressBar" Maximum="1000" Value="0" 
-                         Margin=" 30,0,30,0" Foreground="{ThemeResource ENRZForeground02}"/>
+            <ProgressBar Name="progressBar" 
+                         Maximum="1000" 
+                         Value="0" 
+                         Margin=" 30,0,30,0" 
+                         MinHeight="1"
+                         Height="2"
+                         Foreground="{ThemeResource ENRZForeground02}"/>
             <TextBlock x:Uid="LNU_E_M" RelativePanel.Below="LogeImage"
                        Foreground="White" FontSize="20" Margin="0,10,0,0"
                        HorizontalAlignment="Center"

@@ -104,6 +104,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BaseContentPage.cs" />
     <Compile Include="Controls\ToastSmooth.xaml.cs">
       <DependentUpon>ToastSmooth.xaml</DependentUpon>
     </Compile>

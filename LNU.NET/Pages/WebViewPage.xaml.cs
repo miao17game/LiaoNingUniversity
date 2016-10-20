@@ -30,11 +30,12 @@ using Windows.Security.Cryptography.DataProtection;
 using System.Text;
 using System.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
+using LNU.NET.Controls;
 #endregion
 
 namespace LNU.NET.Pages {
 
-    public sealed partial class WebViewPage : Page {
+    public sealed partial class WebViewPage : BaseContentPage {
 
         #region Constructor
 
@@ -69,6 +70,7 @@ namespace LNU.NET.Pages {
                 navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
             if (thisPageType == DataFetchType.LNU_Index_Login) { // if need login, do something...
                 SetVisibility(Scroll, false);
+                Submit.IsEnabled = Abort.IsEnabled = false;
                 if (!MainPage.LoginCache.IsInsert || IsMoreThan30Minutes(MainPage.LoginCache.CacheMiliTime, DateTime.Now))  // need to login.
                     SetVisibility(MainPopupGrid, true);
                 else { // don not need to login but only get the login-message from mainpage.
@@ -161,7 +163,7 @@ namespace LNU.NET.Pages {
         #region Button Events
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
-            MainPage.Current.MainContentFrame.Content = null;
+            PageSlideOutStart(VisibleWidth > 800 ? false : true);
         }
 
         /// <summary>
@@ -174,6 +176,8 @@ namespace LNU.NET.Pages {
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e) {
+            StatusRing.IsActive = true;
+            LogOutButton.IsEnabled = false;
             Scroll.NavigationCompleted += Scroll_NavigationCompleted;
             MainPage.LoginCache.IsInsert = false;
             Scroll.Source = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.Logout");
@@ -287,9 +291,10 @@ namespace LNU.NET.Pages {
                 AutoLoginCheckBox.IsChecked = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsAutoLogin) ?? false;
                 AutoLoginCheckBox.IsChecked = PasswordCheckBox.IsChecked ?? false ? AutoLoginCheckBox.IsChecked : false;
                 AutoLoginCheckBox.IsEnabled = PasswordCheckBox.IsChecked ?? false;
+
                 EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
 
-                try { // message decryption over here.
+                try { // password decryption over here.
                     var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
                     if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
                         SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
@@ -307,10 +312,12 @@ namespace LNU.NET.Pages {
                     Debug.WriteLine(e.StackTrace);
                     SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
                 }
+
                 Scroll.ScriptNotify += OnScriNotifypt;
             }
             try {
                 if (isFristNavigate) { // if first comes, auto-login if need.
+                    Submit.IsEnabled = Abort.IsEnabled = true;
                     if (AutoLoginCheckBox.IsChecked ?? false)
                         await ClickSubmitButtonIfAuto();
                     return;
@@ -493,7 +500,7 @@ namespace LNU.NET.Pages {
 
         #endregion
 
-        #region Properties
+        #region Properties and state
         public static WebViewPage Current;
         private bool isDivideScreen = true;
         private DataFetchType thisPageType;
