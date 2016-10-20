@@ -8,5 +8,7 @@
         public const string SplitViewMode = "SPLITVIEW_WIDTH_MODE";
         public const string IsDivideScreen = "DIVIDE_SCREEN_MODE";
         public const string IsPureColorItem = "PURE_COLOR_ITEM_MODE";
+        public const string IsSavePassword = "SAVE_PASSWORD_MODE";
+        public const string IsAutoLogin = "AUTO_LOGIN_MODE";
     }
 }

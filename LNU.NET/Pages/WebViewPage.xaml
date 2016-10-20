@@ -493,20 +493,22 @@
                             <!--#region CheckBox-->
                             <CheckBox Name="PasswordCheckBox" 
                                       Checked="PasswordCheckBox_Checked"
+                                      Click="PasswordCheckBox_Click"
                                       Style="{ThemeResource SpecialCheckBox}"
                                       Background="{ThemeResource ENRZForeground02}"
                                       x:Uid="LNU_Login_SavePassword"
                                       RelativePanel.Below="PasswordGrid"
                                       Margin="8,10"
-                                      IsEnabled="False"/>
+                                      IsEnabled="True"/>
                             <CheckBox Name="AutoLoginCheckBox" 
                                       Checked="AutoLoginCheckBox_Checked"
+                                      Click="AutoLoginCheckBox_Click"
                                       Style="{ThemeResource SpecialCheckBox}"
                                       Background="{ThemeResource ENRZForeground02}"
                                       x:Uid="LNU_Login_AutoLogin"
                                       RelativePanel.Below="PasswordCheckBox"
                                       Margin="8,10"
-                                      IsEnabled="False"/>
+                                      IsEnabled="True"/>
                             <!--#endregion-->
                             
                             <!--#region Buttons-->
@@ -573,6 +575,7 @@
         </Grid>
         <!--#endregion-->
 
+        <!--#region Status-->
         <Grid Name="StatusGrid" Visibility="Collapsed" Margin="0,70,0,0"
               Background="{ThemeResource LNUBackground01}">
             <StackPanel Margin="30,10,30,0" MaxWidth="500" >
@@ -705,6 +708,7 @@
 
             </StackPanel>
         </Grid>
+        <!--#endregion-->
 
     </Grid>
 </Page>
