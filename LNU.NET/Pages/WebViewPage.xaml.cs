@@ -22,16 +22,23 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using HtmlAgilityPack;
+using System.Text.RegularExpressions;
+using Windows.UI.Xaml.Media.Imaging;
 #endregion
 
 namespace LNU.NET.Pages {
     
     public sealed partial class WebViewPage : Page {
+
+        #region Constructor
+
         public WebViewPage() {
             this.InitializeComponent();
             Current = this;
             InitPageState();
         }
+
+        #endregion
 
         #region Events
 
@@ -49,18 +56,29 @@ namespace LNU.NET.Pages {
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var args = e.Parameter as NavigateParameter;
-            if(args == null || args.PathUri == null) {
-                ReportHelper.ReportError(GetUIString("WebViewLoadError"));
+            if(args == null || args.PathUri == null) { // make sure the navigation action is right.
+                ReportHelper.ReportAttention(GetUIString("WebViewLoadError"));
                 return;
             }
             contentRing.IsActive = true;
             currentUri = args.PathUri;
             thisPageType = args.DataType;
-            if (args.MessageBag as string != null)
+            if (args.MessageBag as string != null) // if there is a title to be saved, save it.
                 navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
-            if (thisPageType == DataFetchType.LNU_Index_Login) {
-                SetVisibility(MainPopupGrid, true);
+            if (thisPageType == DataFetchType.LNU_Index_Login) { // if need login, do something...
                 SetVisibility(Scroll, false);
+                if (!MainPage.LoginCache.IsInsert || IsMoreThan30Minutes ( MainPage.LoginCache.CacheMiliTime, DateTime.Now ))  // need to login.
+                    SetVisibility(MainPopupGrid, true);
+                else { // don not need to login but only get the login-message from mainpage.
+                    UserName.Text = MainPage.LoginCache.UserName;
+                    UserID.Text = MainPage.LoginCache.UserID;
+                    UserDepartment.Text = MainPage.LoginCache.UserDepartment;
+                    UserCourse.Text = MainPage.LoginCache.UserCourse;
+                    UserTime.Text = MainPage.LoginCache.UserTime;
+                    UserIP.Text = MainPage.LoginCache.UserIP;
+                    SetVisibility(StatusGrid, true);
+                    return; // if don not need to login, must return here or the events will go wrong!
+                }
             }
             Scroll.Source = currentUri;
         }
@@ -72,7 +90,20 @@ namespace LNU.NET.Pages {
 
         #region Web Events
 
+        /// <summary>
+        /// for log-out action completed check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void Scroll_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) {
+            Scroll.NavigationCompleted -= Scroll_NavigationCompleted;
+            ReportHelper.ReportAttention(GetUIString("LogOut_Success"));
+            isFristNavigate = true;
+            MainPage.Current.NavigateToBase?.Invoke(
+                this,
+                new NavigateParameter { DataType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, PathUri = currentUri },
+                MainPage.InnerResources.GetFrameInstance(NavigateType.Webview),
+                typeof(WebViewPage));
         }
 
         private void Scroll_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
@@ -100,7 +131,6 @@ namespace LNU.NET.Pages {
         /// <param name="e"></param>
         private void OnScriNotifypt(object sender, NotifyEventArgs e) {
             Scroll.ScriptNotify -= OnScriNotifypt;
-            Scroll.NavigationCompleted -= Scroll_NavigationCompleted;
             Submit.IsEnabled = Abort.IsEnabled = true;
             SubitRing.IsActive = false;
             CheckIfLoginSucceed(JsonHelper.FromJson<string[]>(e.Value)[1]);
@@ -126,6 +156,11 @@ namespace LNU.NET.Pages {
         }
         #endregion
 
+        /// <summary>
+        /// send login-command to the target web or apis.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Submit_Click(object sender, RoutedEventArgs e) {
             Submit.IsEnabled = Abort.IsEnabled = false;
             SubitRing.IsActive = true;
@@ -140,7 +175,15 @@ namespace LNU.NET.Pages {
 
             SettingsHelper.SaveSettingsValue(SettingsConstants.Email, user);
             //SettingsHelper.SaveSettingsValue(SettingsConstants.PasswordDisqus, buffProtected.ToArray());
+
+            //if(new Regex("{d}"))
             await InsertLoginMessage(user, pass);
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e) {
+            Scroll.NavigationCompleted += Scroll_NavigationCompleted;
+            MainPage.LoginCache.IsInsert = false;
+            Scroll.Source = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.Logout");
         }
 
         private void PasswordCheckBox_Checked(object sender, RoutedEventArgs e) {
@@ -153,7 +196,7 @@ namespace LNU.NET.Pages {
 
         #endregion
 
-        #region Mehods
+        #region Methods
 
         private void InitPageState() {
             isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
@@ -161,6 +204,26 @@ namespace LNU.NET.Pages {
                 currentFramePage: this,
                 divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
                 isDivideScreen: isDivideScreen);
+        }
+
+        /// <summary>
+        /// Open methods to change state when the theme mode changed.
+        /// </summary>
+        public static void ChangeStateByRequestTheme() {
+            
+        }
+
+        /// <summary>
+        /// well....you can know what i am doing by the name of the method......
+        /// </summary>
+        /// <param name="oldTime"></param>
+        /// <param name="newTime"></param>
+        /// <returns></returns>
+        private bool IsMoreThan30Minutes(DateTime oldTime, DateTime newTime) {
+            return 
+                newTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds - 
+                oldTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds >= 
+                1800;
         }
 
         /// <summary>
@@ -174,7 +237,6 @@ namespace LNU.NET.Pages {
 
                 EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
                 
-                Scroll.NavigationCompleted += Scroll_NavigationCompleted;
                 Scroll.ScriptNotify += OnScriNotifypt;
             }
             try {
@@ -208,8 +270,8 @@ namespace LNU.NET.Pages {
                                              <script language='JavaScript1.2' src='nocache.js'></script >
                                              </head><body>" + htmlBodyContent + "</body></html>");
             var rootNode = doc.DocumentNode;
-            var item = rootNode.SelectSingleNode("//span[@class='t']");
-            if (item == null) {
+            var studentStatus = rootNode.SelectSingleNode("//span[@class='t']");
+            if (studentStatus == null) {
                 ReportHelper.ReportAttention(GetUIString("Login_Failed"));
                 isFristNavigate = true;
                 //Scroll.Source = currentUri;
@@ -220,20 +282,30 @@ namespace LNU.NET.Pages {
                     MainPage.InnerResources.GetFrameInstance(NavigateType.Webview),
                     typeof(WebViewPage));
             } else {
-                var message = item.InnerText.Replace(" ", "@").Replace(",", "@");
-                var mess = message.Split('@');
-                ReportHelper.ReportAttention(GetUIString("Login_Success"));
-                var stringColl = mess[2].Replace("(", "@").Replace(")", "@").Split('@');
-                UserName.Text = stringColl[0];
-                UserID.Text = stringColl[1];
-                UserDepartment.Text = mess[0].Substring(1, mess[0].Length - 1);
-                UserCourse.Text = mess[1];
-                UserTime.Text = mess[3];
-                UserIP.Text = mess[4].Substring(5, mess[4].Length - 5);
+                SaveLoginStatus(studentStatus);
                 SetVisibility(StatusGrid, true);
                 SetVisibility(MainPopupGrid, false);
                 LoginPopup.IsOpen = false;
             }
+        }
+
+        /// <summary>
+        /// save status message in MainPage to be controlled.
+        /// </summary>
+        /// <param name="item"></param>
+        private void SaveLoginStatus(HtmlNode item) {
+            var message = item.InnerText.Replace(" ", "@").Replace(",", "@");
+            var mess = message.Split('@');
+            ReportHelper.ReportAttention(GetUIString("Login_Success"));
+            var stringColl = mess[2].Replace("(", "@").Replace(")", "@").Split('@');
+            MainPage.LoginCache.IsInsert = true;
+            MainPage.LoginCache.UserName = UserName.Text = stringColl[0];
+            MainPage.LoginCache.UserID = UserID.Text = stringColl[1];
+            MainPage.LoginCache.UserDepartment = UserDepartment.Text = mess[0].Substring(1, mess[0].Length - 1);
+            MainPage.LoginCache.UserCourse = UserCourse.Text = mess[1].Substring(0, mess[1].Length - 2);
+            MainPage.LoginCache.UserTime = UserTime.Text = mess[3] + GetUIString("TimeAnoutation");
+            MainPage.LoginCache.UserIP = UserIP.Text = new Regex("\n").Replace(mess[4].Substring(5, mess[4].Length - 5), "");
+            MainPage.LoginCache.CacheMiliTime = DateTime.Now;
         }
 
         #region Founctions Cab

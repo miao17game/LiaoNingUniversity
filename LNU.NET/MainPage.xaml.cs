@@ -465,6 +465,17 @@ namespace LNU.NET {
             public string RoutePath { get { return Route02 != null ? Route03 != null ? Route01 + "-" + Route02 + "-" + Route03 : Route01 + "-" + Route02 : Route01; } }
         }
         public static PathTitle NaviPathTitle = new PathTitle();
+        public struct LoginCookies {
+            public string UserName { get; set; }
+            public string UserID { get; set; }
+            public string UserDepartment { get; set; }
+            public string UserCourse { get; set; }
+            public string UserIP { get; set; }
+            public string UserTime { get; set; }
+            public DateTime CacheMiliTime { get; set; }
+            public bool IsInsert { get; set; }
+        }
+        public static LoginCookies LoginCache = new LoginCookies { IsInsert = false };
         private const string HomeHost = "http://jwgl.lnu.edu.cn/";
         private const string HomeHostInsert = "http://jwgl.lnu.edu.cn";
         #endregion

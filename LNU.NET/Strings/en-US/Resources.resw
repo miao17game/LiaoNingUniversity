@@ -464,7 +464,7 @@
     <value>LNU Education Management</value>
   </data>
   <data name="WebViewLoadError" xml:space="preserve">
-    <value>Web Load Error：Parameter Invalid.</value>
+    <value>Page Loading Error：Parameter Invalid.</value>
   </data>
   <data name="LNU_Login_Abort.Content" xml:space="preserve">
     <value>Next Time</value>
@@ -476,7 +476,7 @@
     <value>ID</value>
   </data>
   <data name="LNU_Login_LoginTitle.Text" xml:space="preserve">
-    <value>Login</value>
+    <value>LNU Edu Management</value>
   </data>
   <data name="LNU_Login_Password.Text" xml:space="preserve">
     <value>Password</value>
@@ -507,5 +507,32 @@
   </data>
   <data name="SettPageItem_PrivacyPolicy.Header" xml:space="preserve">
     <value>Privacy Policy</value>
+  </data>
+  <data name="TimeAnoutation" xml:space="preserve">
+    <value>(Server Time)</value>
+  </data>
+  <data name="LogOut_Success" xml:space="preserve">
+    <value>Log Out Successful</value>
+  </data>
+  <data name="Status_Department.Text" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Status_ID.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Status_IP.Text" xml:space="preserve">
+    <value>IP Adress</value>
+  </data>
+  <data name="Status_LogInTime.Text" xml:space="preserve">
+    <value>Log-In Time</value>
+  </data>
+  <data name="Status_Major.Text" xml:space="preserve">
+    <value>Major</value>
+  </data>
+  <data name="Status_Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Log_Out.Content" xml:space="preserve">
+    <value>Log out</value>
   </data>
 </root>

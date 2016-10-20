@@ -465,7 +465,7 @@
     <value>辽宁大学教务管理 Win10</value>
   </data>
   <data name="WebViewLoadError" xml:space="preserve">
-    <value>网页加载失败：参数错误</value>
+    <value>页面加载失败：参数错误</value>
   </data>
   <data name="LNU_Login_Abort.Content" xml:space="preserve">
     <value>下次再说吧</value>
@@ -477,7 +477,7 @@
     <value>学号</value>
   </data>
   <data name="LNU_Login_LoginTitle.Text" xml:space="preserve">
-    <value>登陆</value>
+    <value>教务管理登陆</value>
   </data>
   <data name="LNU_Login_Password.Text" xml:space="preserve">
     <value>密码</value>
@@ -508,5 +508,32 @@
   </data>
   <data name="SettPageItem_PrivacyPolicy.Header" xml:space="preserve">
     <value>隐私政策</value>
+  </data>
+  <data name="TimeAnoutation" xml:space="preserve">
+    <value>（以服务器时间为准）</value>
+  </data>
+  <data name="LogOut_Success" xml:space="preserve">
+    <value>退出登陆成功</value>
+  </data>
+  <data name="Status_Department.Text" xml:space="preserve">
+    <value>学院</value>
+  </data>
+  <data name="Status_ID.Text" xml:space="preserve">
+    <value>学号</value>
+  </data>
+  <data name="Status_IP.Text" xml:space="preserve">
+    <value>IP地址</value>
+  </data>
+  <data name="Status_LogInTime.Text" xml:space="preserve">
+    <value>登陆时间</value>
+  </data>
+  <data name="Status_Major.Text" xml:space="preserve">
+    <value>专业</value>
+  </data>
+  <data name="Status_Name.Text" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="Log_Out.Content" xml:space="preserve">
+    <value>注销登录</value>
   </data>
 </root>

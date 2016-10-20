@@ -217,6 +217,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
 
+                        <Setter Target="Title.(TextBlock.FontSize)" Value="32"/>
                         <Setter Target="navigateTitlePath.(FrameworkElement.MaxWidth)" Value="200"/>
                         <Setter Target="BasePartBorder.(FrameworkElement.Height)" Value="70"/>
                         <Setter Target="navigateTitlePath.(FrameworkElement.Margin)" >
@@ -236,7 +237,7 @@
                         <Setter Target="LoginPopup.(Grid.ColumnSpan)" Value="3"/>
                         <Setter Target="LoginPopup.(FrameworkElement.Margin)">
                             <Setter.Value>
-                                <Thickness>15,0</Thickness>
+                                <Thickness>-5,0,-5,-40</Thickness>
                             </Setter.Value>
                         </Setter>
                         <Setter Target="relativePanel.(Grid.Column)" Value="0"/>
@@ -257,6 +258,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
 
+                        <Setter Target="Title.(TextBlock.FontSize)" Value="36"/>
                         <Setter Target="navigateTitlePath.(FrameworkElement.MaxWidth)" Value="300"/>
                         <Setter Target="BasePartBorder.(FrameworkElement.Height)" Value="70"/>
                         <Setter Target="navigateTitlePath.(FrameworkElement.Margin)" >
@@ -275,7 +277,7 @@
                         <Setter Target="LoginPopup.(Grid.ColumnSpan)" Value="3"/>
                         <Setter Target="LoginPopup.(FrameworkElement.Margin)">
                             <Setter.Value>
-                                <Thickness>35,0</Thickness>
+                                <Thickness>-5,0,-5,-40</Thickness>
                             </Setter.Value>
                         </Setter>
 
@@ -381,7 +383,9 @@
                                FontWeight="SemiBold" 
                                HorizontalAlignment="Center" 
                                VerticalAlignment="Top"
-                               Grid.Column="1" Margin="0,-70,0,0"/>
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="3"
+                               Margin="0,-70,0,0"/>
                     <!--#endregion-->
                     
                     <RelativePanel x:Name="relativePanel" Margin="5,25,5,25" Grid.Column="1" >
@@ -392,17 +396,15 @@
                                        RelativePanel.AlignBottomWithPanel="True">
                             
                             <!--#region Title Image-->
-                            <Grid Name="EllipseGrid" 
+                            <Border Name="EllipseGrid" 
                                   RelativePanel.AlignHorizontalCenterWithPanel="True">
-                                <Ellipse Width="80" 
-                                         Height="80" 
-                                         Fill="White"/>
-                                <Image Source="/Assets/300_1.png"
+                                <Image Name="LNU_Image"
+                                       Source="/Assets/300_1.png"
                                        Stretch="UniformToFill"
                                        Width="100" 
                                        Height=" 100" 
                                        Margin="-10"/>
-                            </Grid>
+                            </Border>
                             <TextBlock Name="AccText" 
                                        x:Uid="LNU_Login_Title"
                                        Foreground="{ThemeResource LNUTextColor01}" 
@@ -583,100 +585,123 @@
                 </Ellipse>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5" Margin="0,20,0,0">
+                        BorderBrush="#909090"
+                        BorderThickness="0.5" 
+                        Margin="0,20,0,0">
                     <Grid Margin="10,10,10,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="姓名"
+                            <TextBlock x:Uid="Status_Name"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserName" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5">
+                        BorderBrush="#909090" 
+                        BorderThickness="0.5" 
+                        Margin="0,-0.5,0,0">
                     <Grid Margin="10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="学号"
+                            <TextBlock x:Uid="Status_ID"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserID" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5">
+                        BorderBrush="#909090" 
+                        BorderThickness="0.5"
+                        Margin="0,-0.5,0,0">
                     <Grid Margin="10,10,10,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="学院"
+                            <TextBlock x:Uid="Status_Department"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserDepartment" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5">
+                        BorderBrush="#909090" 
+                        Margin="0,-0.5,0,0"
+                        BorderThickness="0.5">
                     <Grid Margin="10,10,10,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="专业"
+                            <TextBlock x:Uid="Status_Major"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserCourse" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5">
+                        BorderBrush="#909090"
+                        Margin="0,-0.5,0,0"
+                        BorderThickness="0.5">
                     <Grid Margin="10,10,10,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="登录时间"
+                            <TextBlock x:Uid="Status_LogInTime"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserTime" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
 
                 <Border Background="{ThemeResource LNUBackground02}" 
-                        BorderBrush="#909090" BorderThickness="0.5">
+                        BorderBrush="#909090" 
+                        Margin="0,-0.5,0,0"
+                        BorderThickness="0.5">
                     <Grid Margin="10,10,10,10" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="IP地址"
+                            <TextBlock x:Uid="Status_IP"
                                    Style="{StaticResource TitleTextStyle}"/>
                         </StackPanel>
                         <TextBlock Name="UserIP" Grid.Column="1"
-                               Text="我是你爹" Style="{StaticResource SummaryTextStyle}"/>
+                               Text="" Style="{StaticResource SummaryTextStyle}"/>
                     </Grid>
                 </Border>
+
+                <Button Name="LogOutButton" 
+                        x:Uid="Log_Out"
+                        Foreground="#CC333333" 
+                        Background="{ThemeResource ENRZForeground01}"
+                        Style="{ThemeResource SpecialButtonAbort}"
+                        HorizontalAlignment="Center"
+                        Margin="0,60,0,0"
+                        MinHeight="60"
+                        MinWidth="160"
+                        Click="LogOutButton_Click"/>
 
             </StackPanel>
         </Grid>
