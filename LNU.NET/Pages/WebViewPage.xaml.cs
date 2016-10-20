@@ -27,6 +27,9 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.DataProtection;
+using System.Text;
+using System.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 #endregion
 
 namespace LNU.NET.Pages {
@@ -130,7 +133,7 @@ namespace LNU.NET.Pages {
         /// <param name="e"></param>
         private void OnScriNotifypt(object sender, NotifyEventArgs e) {
             Scroll.ScriptNotify -= OnScriNotifypt;
-            Submit.IsEnabled = Abort.IsEnabled = true;
+            Submit.IsEnabled = true;
             SubitRing.IsActive = false;
             CheckIfLoginSucceed(JsonHelper.FromJson<string[]>(e.Value)[1]);
         }
@@ -243,23 +246,31 @@ namespace LNU.NET.Pages {
         /// </summary>
         /// <returns></returns>
         private async Task ClickSubmitButtonIfAuto() {
-            Submit.IsEnabled = Abort.IsEnabled = false;
+            Submit.IsEnabled  = false;
             SubitRing.IsActive = true;
             var user = EmailBox.Text;
             var pass = PasswordBox.Password;
 
-            // Protect a message to the local user.
-            IBuffer buffProtected = await this.ProtectAsync(
-                pass,
-                userForPasswordLocal,
-                BinaryStringEncoding.Utf8);
-
             SettingsHelper.SaveSettingsValue(SettingsConstants.Email, user);
-            if (PasswordCheckBox.IsChecked ?? false)
-                SettingsHelper.SaveSettingsValue(SettingsConstants.Password, buffProtected.ToArray());
 
-            PasswordBox.Focus(FocusState.Keyboard);
+            if (PasswordCheckBox.IsChecked ?? false) {
+                try { // password encryption is over here.
+                    var finalToSave = CipherEncryption(
+                        pass,
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        256,
+                        out binaryStringEncoding,
+                        out ibufferVector,
+                        out cryptographicKey);
 
+                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, finalToSave.ToArray());
+
+                } catch(Exception e) { // if any error throws, report in debug range and do nothing in the foreground.
+                    Debug.WriteLine(e.StackTrace);
+                }
+            }
+            // set the abort button with keybord-focus, so that the vitual keyboad in the mobile device with disappear.
+            Abort.Focus(FocusState.Keyboard);
             await InsertLoginMessage(user, pass);
         }
 
@@ -277,30 +288,39 @@ namespace LNU.NET.Pages {
                 AutoLoginCheckBox.IsChecked = PasswordCheckBox.IsChecked ?? false ? AutoLoginCheckBox.IsChecked : false;
                 AutoLoginCheckBox.IsEnabled = PasswordCheckBox.IsChecked ?? false;
                 EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
-                var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
-                if (Password != null) {
-                    IBuffer buffer = CryptographicBuffer.CreateFromByteArray(Password);
 
-                    // Decrypt the previously protected message.
-                    PasswordBox.Password = await this.UnprotectAsync(
-                        buffer,
-                        BinaryStringEncoding.Utf8);
+                try { // message decryption over here.
+                    var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
+                    if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
+                        SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+                        cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(collForKeyAndIv));
+                        ibufferVector = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
+
+                        PasswordBox.Password = CipherDecryption( // decryption the message.
+                            SymmetricAlgorithmNames.AesCbcPkcs7,
+                            CryptographicBuffer.CreateFromByteArray(Password),
+                            ibufferVector,
+                            BinaryStringEncoding.Utf8,
+                            cryptographicKey);
+                    }
+                } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
+                    Debug.WriteLine(e.StackTrace);
+                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
                 }
-
                 Scroll.ScriptNotify += OnScriNotifypt;
             }
             try {
-                if (isFristNavigate) {
+                if (isFristNavigate) { // if first comes, auto-login if need.
                     if (AutoLoginCheckBox.IsChecked ?? false)
                         await ClickSubmitButtonIfAuto();
                     return;
-                }
+                } // if not, ask the webview to send message back to window.
                 await AskWebViewToCallback();
-            } catch (Exception e) {
+            } catch (Exception e) { // if any error throws, toast to foreground and clear the auto-login cache to prevent more errors.
                 Debug.WriteLine(e.StackTrace);
                 ReportHelper.ReportAttention(GetUIString("UnhandledError"));
                 SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
-            } finally {
+            } finally { // anyway, mark the flag that the first coming is over, this page state will go to next step for receiving message from webview.
                 isFristNavigate = false;
             }
         }
@@ -321,18 +341,16 @@ namespace LNU.NET.Pages {
                                              </head><body>" + htmlBodyContent + "</body></html>");
             var rootNode = doc.DocumentNode;
             var studentStatus = rootNode.SelectSingleNode("//span[@class='t']");
-            if (studentStatus == null) {
+            if (studentStatus == null) { // login failed, redirect to the login page.
                 ReportHelper.ReportAttention(GetUIString("Login_Failed"));
                 SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
                 isFristNavigate = true;
-                //Scroll.Source = currentUri;
-                //Scroll.Refresh();
                 MainPage.Current.NavigateToBase?.Invoke(
                     this,
                     new NavigateParameter { DataType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, PathUri = currentUri },
                     MainPage.InnerResources.GetFrameInstance(NavigateType.Webview),
                     typeof(WebViewPage));
-            } else {
+            } else { // login successful, save login status and show it.
                 SaveLoginStatus(studentStatus);
                 SetVisibility(StatusGrid, true);
                 SetVisibility(MainPopupGrid, false);
@@ -370,7 +388,7 @@ namespace LNU.NET.Pages {
         /// <param name="pass">your cache password</param>
         /// <returns></returns>
         private async Task InsertLoginMessage(string user, string pass) {
-            try {
+            try { // insert js and run it, so that we can insert message into the target place and click the submit button.
                 var newJSFounction = $@"
                             var node_list = document.getElementsByTagName('input');
                                 for (var i = 0; i < node_list.length; i++) {"{"}
@@ -383,8 +401,8 @@ namespace LNU.NET.Pages {
                                         node.innerText = '{pass}';
                                 {"}"} ";
                 await Scroll.InvokeScriptAsync("eval", new[] { newJSFounction });
-            } catch (Exception) {
-                Submit.IsEnabled = Abort.IsEnabled = true;
+            } catch ( Exception ) { // if any error throws, reset the UI and report errer.
+                Submit.IsEnabled = true;
                 SubitRing.IsActive = false;
                 ReportHelper.ReportAttention("Error");
             }
@@ -394,7 +412,7 @@ namespace LNU.NET.Pages {
         /// send message to windows so that we can get message of login-success whether or not.
         /// </summary>
         /// <returns></returns>
-        private async Task AskWebViewToCallback() {
+        private async Task AskWebViewToCallback() { // js to callback
             var js = @"window.external.notify(
                                     JSON.stringify(
                                         new Array (
@@ -405,43 +423,70 @@ namespace LNU.NET.Pages {
 
         #endregion
 
-        #region Protect Password
+        #region Password Encryption - AES CBC PKCS7
 
-        public async Task<IBuffer> ProtectAsync(
+        public IBuffer CipherEncryption(
             string strMsg,
-            string strDescriptor,
-            BinaryStringEncoding encoding) {
-            // Create a DataProtectionProvider object for the specified descriptor.
-            DataProtectionProvider Provider = new DataProtectionProvider(strDescriptor);
-
-            // Encode the plaintext input message to a buffer.
+            string strAlgName,
+            uint keyLength,
+            out BinaryStringEncoding encoding,
+            out IBuffer iv,
+            out CryptographicKey key) { 
+            iv = null;  // Initialize the initialization vector because some type encryptions do not need it.
             encoding = BinaryStringEncoding.Utf8;
+
             IBuffer buffMsg = CryptographicBuffer.ConvertStringToBinary(strMsg, encoding);
 
-            // Encrypt the message.
-            IBuffer buffProtected = await Provider.ProtectAsync(buffMsg);
+            // Open a symmetric algorithm provider for the specified algorithm. 
+            var objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(strAlgName);
 
-            // Execution of the SampleProtectAsync function resumes here
-            // after the awaited task (Provider.ProtectAsync) completes.
-            return buffProtected;
+            // Determine whether the message length is a multiple of the block length.
+            // This is not necessary for PKCS #7 algorithms which automatically pad the
+            // message to an appropriate length.
+            if (!strAlgName.Contains("PKCS7")) 
+                if ((buffMsg.Length % objAlg.BlockLength) != 0) 
+                    throw new Exception("Message buffer length must be multiple of block length.");
+
+            // Create a symmetric key.
+            // IBuffer keyMaterial = CryptographicBuffer.GenerateRandom(keyLength);
+            IBuffer keyMaterial = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
+            key = objAlg.CreateSymmetricKey(keyMaterial);
+
+            // CBC algorithms require an initialization vector. Here, a random number is used for the vector.
+            if (strAlgName.Contains("CBC")) 
+                //iv = CryptographicBuffer.GenerateRandom(objAlg.BlockLength);   // drop it.
+                iv = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
+
+            // Encrypt the data and return.
+            IBuffer buffEncrypt = CryptographicEngine.Encrypt(key, buffMsg, iv);
+            return buffEncrypt;
         }
 
-        public async Task<string> UnprotectAsync(
-            IBuffer buffProtected,
-            BinaryStringEncoding encoding) {
-            // Create a DataProtectionProvider object.
-            DataProtectionProvider Provider = new DataProtectionProvider();
 
-            // Decrypt the protected message specified on input.
-            IBuffer buffUnprotected = await Provider.UnprotectAsync(buffProtected);
+        public string CipherDecryption(
+            string strAlgName,
+            IBuffer buffEncrypt,
+            IBuffer iv,
+            BinaryStringEncoding encoding,
+            CryptographicKey key) {
+            // Declare a buffer to contain the decrypted data.
+            IBuffer buffDecrypted;
 
-            // Execution of the SampleUnprotectData method resumes here
-            // after the awaited task (Provider.UnprotectAsync) completes
-            // Convert the unprotected message from an IBuffer object to a string.
-            string strClearText = CryptographicBuffer.ConvertBinaryToString(encoding, buffUnprotected);
+            // Open an symmetric algorithm provider for the specified algorithm. 
+            SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(strAlgName);
 
-            // Return the plaintext string.
-            return strClearText;
+            // The input key must be securely shared between the sender of the encrypted message
+            // and the recipient. The initialization vector must also be shared but does not
+            // need to be shared in a secure manner. If the sender encodes a message string 
+            // to a buffer, the binary encoding method must also be shared with the recipient.
+            buffDecrypted = CryptographicEngine.Decrypt(key, buffEncrypt, iv);
+
+            // Convert the decrypted buffer to a string (for display). If the sender created the
+            // original message buffer from a string, the sender must tell the recipient what 
+            // BinaryStringEncoding value was used. Here, BinaryStringEncoding.Utf8 is used to
+            // convert the message to a buffer before encryption and to convert the decrypted
+            // buffer back to the original plaintext.
+            return CryptographicBuffer.ConvertBinaryToString(encoding, buffDecrypted);
         }
 
         #endregion
@@ -451,11 +496,14 @@ namespace LNU.NET.Pages {
         #region Properties
         public static WebViewPage Current;
         private bool isDivideScreen = true;
-        private const string userForPasswordLocal = "LOCAL=user";
         private DataFetchType thisPageType;
         private bool isFristNavigate = true;
         private string navigateTitle;
         private Uri currentUri;
+        private BinaryStringEncoding binaryStringEncoding;
+        private IBuffer ibufferVector;
+        private CryptographicKey cryptographicKey;
+        private byte[] collForKeyAndIv = new byte[16] { 234, 123, 231, 44, 25, 16, 7, 68, 11, 206, 137, 44, 95, 67, 173, 108 };
         #endregion
 
     }

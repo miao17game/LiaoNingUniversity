@@ -10,5 +10,7 @@
         public const string IsPureColorItem = "PURE_COLOR_ITEM_MODE";
         public const string IsSavePassword = "SAVE_PASSWORD_MODE";
         public const string IsAutoLogin = "AUTO_LOGIN_MODE";
+        public const string PasswordKey = "PASSWORD_KEY";
+        public const string PasswordVector = "PASSWORD_VECTOR";
     }
 }
