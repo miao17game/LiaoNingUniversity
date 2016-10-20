@@ -113,6 +113,14 @@ namespace LNU.NET.Pages {
             ClearRing.IsActive = false;
         }
 
+        private void WebView_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
+            PolicyRing.IsActive = true;
+        }
+
+        private void WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
+            PolicyRing.IsActive = false;
+        }
+
         #endregion
 
         #region Methods

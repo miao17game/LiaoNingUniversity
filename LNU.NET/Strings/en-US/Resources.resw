@@ -505,4 +505,7 @@
   <data name="UnhandledError" xml:space="preserve">
     <value>Unknown Error.</value>
   </data>
+  <data name="SettPageItem_PrivacyPolicy.Header" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
 </root>

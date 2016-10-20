@@ -395,7 +395,20 @@
                 </ScrollViewer>
             </PivotItem>
             <!--#endregion-->
-            
+
+            <!--#region Privacy Policy -->
+            <PivotItem Name="PrivacyPolicy" x:Uid="SettPageItem_PrivacyPolicy" >
+                <Grid>
+                    <WebView Source="http://noodlesblog.azurewebsites.net/post/2016/10/20/lnu-education-management"
+                         DefaultBackgroundColor="{ThemeResource LNUBackground01}"
+                             ContentLoading="WebView_ContentLoading" 
+                             DOMContentLoaded="WebView_DOMContentLoaded"/>
+                    <ProgressRing Name="PolicyRing" Width="50" Height="50" IsActive="False"
+                                  Foreground="{ThemeResource ENRZForeground01}"/>
+                </Grid>
+            </PivotItem>
+            <!--#endregion-->
+
         </Pivot>
     </Grid>
 </Page>

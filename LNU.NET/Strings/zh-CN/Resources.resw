@@ -506,4 +506,7 @@
   <data name="UnhandledError" xml:space="preserve">
     <value>发生未知错误</value>
   </data>
+  <data name="SettPageItem_PrivacyPolicy.Header" xml:space="preserve">
+    <value>隐私政策</value>
+  </data>
 </root>
