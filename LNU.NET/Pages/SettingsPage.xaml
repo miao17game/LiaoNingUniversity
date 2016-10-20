@@ -212,7 +212,13 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1002.* / 2016.10.19" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1003.* / 2016.10.20" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="可以保存账户和密码" /><LineBreak/>
+                            <Run Text="登陆页面自动化增加" /><LineBreak/>
+                            <Run Text="登录信息状态保存" /><LineBreak/>
+                            <Run Text="设置页面引入隐私政策" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1002.2219 / 2016.10.19" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="登陆页面本地化" /><LineBreak/>
                             <Run Text="登录信息页面加入" /><LineBreak/><LineBreak/>
                             
