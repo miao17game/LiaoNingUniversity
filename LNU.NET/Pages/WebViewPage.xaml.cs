@@ -42,7 +42,6 @@ namespace LNU.NET.Pages {
         public WebViewPage() {
             this.InitializeComponent();
             Current = this;
-            InitPageState();
         }
 
         #endregion
@@ -64,7 +63,7 @@ namespace LNU.NET.Pages {
                 return;
             }
             if (args.MessageBag as string != null)
-                navigateTitlePath.Text = args.MessageBag as string;
+                navigateTitle =  navigateTitlePath.Text = args.MessageBag as string;
             contentRing.IsActive = true;
             currentUri = args.ToUri;
             thisPageType = args.ToFetchType;
@@ -111,14 +110,6 @@ namespace LNU.NET.Pages {
 
         #region Methods
 
-        private void InitPageState() {
-            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
-            MainPage.DivideWindowRange(
-                currentFramePage: this,
-                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
-                isDivideScreen: isDivideScreen);
-        }
-
         /// <summary>
         /// Open methods to change state when the theme mode changed.
         /// </summary>
@@ -145,10 +136,6 @@ namespace LNU.NET.Pages {
 
         #region Properties and state
         public static WebViewPage Current;
-        private bool isDivideScreen = true;
-        private DataFetchType thisPageType;
-        private NavigateType thisNaviType;
-        private Uri currentUri;
         #endregion
 
     }

@@ -467,7 +467,7 @@
     <value>Page Loading Error：Parameter Invalid.</value>
   </data>
   <data name="LNU_Login_Abort.Content" xml:space="preserve">
-    <value>Next Time</value>
+    <value>Remind me later</value>
   </data>
   <data name="LNU_Login_Anounce.Text" xml:space="preserve">
     <value>*We will save them in the local cache.</value>
@@ -536,13 +536,13 @@
     <value>Log out</value>
   </data>
   <data name="LNU_Change_Pass01.Text" xml:space="preserve">
-    <value>Old One</value>
+    <value>Old </value>
   </data>
   <data name="LNU_Change_Pass02.Text" xml:space="preserve">
-    <value>New One</value>
+    <value>New </value>
   </data>
   <data name="LNU_Change_Pass03.Text" xml:space="preserve">
-    <value>Re-confirm</value>
+    <value>Confirm</value>
   </data>
   <data name="AbandonModify.Content" xml:space="preserve">
     <value>Abandon</value>

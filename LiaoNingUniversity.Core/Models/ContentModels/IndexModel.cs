@@ -5,6 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LNU.Core.Models.ContentModels {
-    public class IndexModel {
+    public class ScheduleItem {
+        public string Title { get; set; }
+        public string Lecturer { get; set; }
+        public string Description { get; set; }
+        public string CourseID { get; set; }
+        public string SerialNumber { get; set; }
+        public string CourceProperty { get; set; }
+        public string ExamType { get; set; }
+        public string Place { get; set; }
+        public string Time { get; set; }
+        public string WeeklyRound { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace LNU.NET.Pages.FeaturesPages {
         public ChangePassPage() {
             this.InitializeComponent();
             Current = this;
-            InitPageState();
         }
 
         #region Events
@@ -43,13 +42,14 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
+            Submit.IsEnabled = MainPage.LoginCache.IsInsert;
             var args = e.Parameter as NavigateParameter;
             if (args == null || args.ToUri == null) { // make sure the navigation action is right.
                 ReportHelper.ReportAttention(GetUIString("WebViewLoadError"));
                 return;
             }
             if (args.MessageBag as string != null)
-                navigateTitlePath.Text = args.MessageBag as string;
+                navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
             contentRing.IsActive = true;
             currentUri = args.ToUri;
             thisPageType = args.ToFetchType;
@@ -138,19 +138,16 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Methods
 
-        private void InitPageState() {
-            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
-            MainPage.DivideWindowRange(
-                currentFramePage: this,
-                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
-                isDivideScreen: isDivideScreen);
-        }
-
+        /// <summary>
+        /// if need, redirect to login popup because you have no access to do this . you need login to get the access.
+        /// </summary>
+        /// <param name="rootNode"></param>
         private void RedirectToLoginIfNeed(HtmlNode rootNode) {
             var changePostForm = rootNode.SelectSingleNode("//form[@method='POST']");
-            if (changePostForm == null) {
-                ReportHelper.ReportAttention(GetUIString("Login_First"));
+            if (changePostForm == null) { // cancel the flag of login-status so that we can login again ( when someone login on another device it may be useful).
+                MainPage.LoginCache.IsInsert = false;
                 MainPage.ReLoginIfStatusIsInvalid(currentUri, thisPageType, navigateTitlePath.Text, thisNaviType);
+                ReportHelper.ReportAttention(GetUIString("Login_First"));
             } else {
                 // do something? still have no idea......
             }
@@ -243,11 +240,6 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Properties
         public static ChangePassPage Current;
-        private bool isFirstLoaded = true;
-        private bool isDivideScreen = true;
-        private DataFetchType thisPageType;
-        private NavigateType thisNaviType;
-        private Uri currentUri;
         #endregion
 
     }

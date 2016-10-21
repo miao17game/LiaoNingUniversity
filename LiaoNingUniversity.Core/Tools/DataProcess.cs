@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 using static Wallace.UWP.Helpers.Tools.UWPStates;
 using LNU.Core.Models.NavigationModel;
+using LNU.Core.Models.ContentModels;
 
 namespace LNU.Core.Tools {
     public static class DataProcess {
@@ -35,10 +36,30 @@ namespace LNU.Core.Tools {
 
         public static Uri ConvertToUri(string str) { return !string.IsNullOrEmpty(str) ? new Uri(str) : null; }
 
-        public static List<NavigationBar> FetchLNUIndexFromHtml(string htmlResources) {
-            
-            var list = new List<NavigationBar>();
-
+        public static List<ScheduleItem> FetchScheduleListFromHtml(string htmlResources) {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(htmlResources);
+            var rootNode = doc.DocumentNode;
+            var target = rootNode.SelectNodes("table[@bgcolor='#f2edf8']").ElementAt(1).SelectSingleNode("tbody").SelectNodes("tr");
+            var list = new List<ScheduleItem>();
+            int num = 0;
+            foreach(var tr in target) {
+                if(num > 0) {
+                    var tds = tr.SelectNodes("td").ToList();
+                    list.Add(new ScheduleItem {
+                        Title = tds[0].InnerText,
+                        Description = tds[1].SelectSingleNode("font").InnerText,
+                        CourseID = tds[2].InnerText,
+                        SerialNumber = tds[3].InnerText,
+                        CourceProperty = tds[4].InnerText,
+                        ExamType = tds[5].InnerText,
+                        Place = tds[6].InnerText,
+                        Time = tds[7].InnerText,
+                        WeeklyRound = tds[8].InnerText,
+                    });
+                }
+                num++;
+            }
             return list;
         }
 

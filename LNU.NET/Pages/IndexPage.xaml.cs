@@ -184,7 +184,7 @@ namespace LNU.NET.Pages {
                     ItemIcon = char.ConvertFromUtf32(0xE1DC),
                     ItemTitle =GetUIString("LNU_Index_SS"),
                     Description = null,
-                    NaviType = NavigateType.Webview,
+                    NaviType = NavigateType.Schedule,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/xk.CourseView"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 255, 63, 138)),
                     IconForeground = new SolidColorBrush(Colors.White),

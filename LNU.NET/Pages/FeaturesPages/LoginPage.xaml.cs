@@ -42,7 +42,6 @@ namespace LNU.NET.Pages.FeaturesPages {
         public LoginPage() {
             this.InitializeComponent();
             Current = this;
-            InitPageState();
         }
 
         #endregion
@@ -121,7 +120,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         private void Scroll_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) {
             Scroll.NavigationCompleted -= Scroll_NavigationCompleted;
             ReportHelper.ReportAttention(GetUIString("LogOut_Success"));
-            isFristNavigate = true;
+            isFirstLoaded = true;
             MainPage.Current.NavigateToBase?.Invoke(
                 this,
                 new NavigateParameter { ToFetchType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, ToUri = currentUri , NaviType = NavigateType.Login},
@@ -241,14 +240,6 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Methods
 
-        private void InitPageState() {
-            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
-            MainPage.DivideWindowRange(
-                currentFramePage: this,
-                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
-                isDivideScreen: isDivideScreen);
-        }
-
         /// <summary>
         /// make ui of popup right anyway.
         /// </summary>
@@ -257,6 +248,8 @@ namespace LNU.NET.Pages.FeaturesPages {
                 if (VisibleWidth <= 800 || IsMobile) {
                     this.Width = VisibleWidth - 60;
                     this.Height = VisibleHeight - 60;
+                } else {
+                    this.MaxHeight = 1000;
                 }
         }
 
@@ -290,7 +283,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// </summary>
         /// <returns></returns>
         private async Task SetLoginPageStateIfNeed() {
-            if (( thisPageType == DataFetchType.LNU_Index_Login || thisPageType == DataFetchType.LNU_Index_ReLogin ) && isFristNavigate) {
+            if (( thisPageType == DataFetchType.LNU_Index_Login || thisPageType == DataFetchType.LNU_Index_ReLogin ) && isFirstLoaded) {
 
                 // DO ASYNC WORK ... MAYBE AWAIT
 
@@ -305,7 +298,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 Scroll.ScriptNotify += OnScriNotifypt;
             }
             try {
-                if (isFristNavigate) { // if first comes, auto-login if need.
+                if (isFirstLoaded) { // if first comes, auto-login if need.
                     Submit.IsEnabled = Abort.IsEnabled = true;
                     if (AutoLoginCheckBox.IsChecked ?? false)
                         await ClickSubmitButtonIfAuto();
@@ -317,7 +310,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 ReportHelper.ReportAttention(GetUIString("UnhandledError"));
                 SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
             } finally { // anyway, mark the flag that the first coming is over, this page state will go to next step for receiving message from webview.
-                isFristNavigate = false;
+                isFirstLoaded = false;
             }
         }
 
@@ -384,7 +377,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             if (studentStatus == null) { // login failed, redirect to the login page.
                 ReportHelper.ReportAttention(GetUIString("Login_Failed"));
                 SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
-                isFristNavigate = true;
+                isFirstLoaded = true;
                 RedirectToLoginAgain();
             } else { // login successful, save login status and show it.
                 SaveLoginStatus(studentStatus);
@@ -581,20 +574,20 @@ namespace LNU.NET.Pages.FeaturesPages {
         #endregion
 
         #region Properties and state
+
         public static LoginPage Current;
-        private bool isDivideScreen = true;
-        private bool isFristNavigate = true;
-        private Uri currentUri;
-        private DataFetchType thisPageType;
-        private string navigateTitle;
-        private Uri fromUri;
-        private DataFetchType fromPageType;
-        private string fromNavigateTitle;
-        private NavigateType fromNaviType;
         private BinaryStringEncoding binaryStringEncoding;
         private IBuffer ibufferVector;
         private CryptographicKey cryptographicKey;
         private byte[] collForKeyAndIv = new byte[16] { 234, 123, 231, 44, 25, 16, 7, 68, 11, 206, 137, 44, 95, 67, 173, 108 };
+
+        #region Fields for return
+        private Uri fromUri;
+        private DataFetchType fromPageType;
+        private string fromNavigateTitle;
+        private NavigateType fromNaviType;
+        #endregion
+
         #endregion
 
     }

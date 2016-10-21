@@ -1,8 +1,11 @@
-﻿using System;
+﻿using LNU.Core.Models;
+using LNU.Core.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wallace.UWP.Helpers.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,12 +17,18 @@ namespace LNU.NET.Controls {
         public BaseContentPage() {
             transToSideGrid = this.RenderTransform as TranslateTransform;
             if (transToSideGrid == null) this.RenderTransform = transToSideGrid = new TranslateTransform();
+            InitPageState();
         }
 
-        private Storyboard storyToSideGrid = new Storyboard();
-        public Storyboard storyToSideGridOut = new Storyboard();
-        TranslateTransform transToSideGrid;
-        DoubleAnimation doubleAnimation;
+        protected virtual void InitPageState() {
+            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
+            MainPage.DivideWindowRange(
+                currentFramePage: this,
+                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                isDivideScreen: isDivideScreen);
+        }
+
+        #region Page Animations
 
         public void InitSlideInBoard() {
             doubleAnimation = new DoubleAnimation() {
@@ -69,8 +78,20 @@ namespace LNU.NET.Controls {
             InitSlideInBoard();
             storyToSideGrid.Begin();
         }
+        #endregion
 
-        public virtual void ClearThisPage() { GC.Collect(); }
+        #region Properties
+        internal bool isFirstLoaded = true;
+        internal bool isDivideScreen = true;
+        internal string navigateTitle;
+        internal DataFetchType thisPageType;
+        internal NavigateType thisNaviType;
+        internal Uri currentUri;
+        private Storyboard storyToSideGrid = new Storyboard();
+        public Storyboard storyToSideGridOut = new Storyboard();
+        TranslateTransform transToSideGrid;
+        DoubleAnimation doubleAnimation;
+        #endregion
 
     }
 }

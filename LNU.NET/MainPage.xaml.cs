@@ -396,6 +396,7 @@ namespace LNU.NET {
                 { NavigateType.Login,typeof(LoginPage)},
                 { NavigateType.ReLogin,typeof(LoginPage)},
                 { NavigateType.ChangePassword,typeof(ChangePassPage)},
+                { NavigateType.Schedule,typeof(SchedulePage)},
             };
 
             public static Frame GetFrameInstance(NavigateType type) { return frameMaps.ContainsKey(type) ? frameMaps[type] : null; }
@@ -408,6 +409,7 @@ namespace LNU.NET {
                 { NavigateType.Login,Current.ContentFrame},
                 { NavigateType.ReLogin,Current.LoginPopupFrame},
                 { NavigateType.ChangePassword,Current.ContentFrame},
+                { NavigateType.Schedule,Current.ContentFrame},
             };
 
             public static void AddBaseListPageInstance(string key, BaseListPage instance) { if (!baseListPageMap.ContainsKey(key)) { baseListPageMap.Add(key, instance); } }
