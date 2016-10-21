@@ -412,7 +412,7 @@
             <Border Name="ImagePopupBorder"
                     Width="{Binding ActualWidth, ElementName=ImagePopup, Mode=OneWay}" 
                     Height="{Binding ActualHeight, ElementName=ImagePopup, Mode=OneWay}" 
-                    Background="{ThemeResource DQDPopupBackColor}">
+                    Background="#90000000">
                 <Grid>
                     <Frame Name="LoginPopupFrame" Margin="30"/>
                 </Grid>

@@ -397,10 +397,10 @@
               Background="{ThemeResource LNUBackground01}">
             <StackPanel Margin="30,10,30,0" MaxWidth="500" >
                 
-                <Ellipse Name="Ellipse" Width="150" Height="150" Margin="10,10,10,10" 
+                <Ellipse Name="Ellipse" Width="150" Height="150" Margin="10,40,10,30" 
                          VerticalAlignment="Top" >
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="/Assets/huaji.jpg" />
+                        <ImageBrush ImageSource="/Assets/pao.jpg" />
                     </Ellipse.Fill>
                 </Ellipse>
 

@@ -269,7 +269,13 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1003.* / 2016.10.20" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1004.* / 2016.10.21" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="强化自动登录" /><LineBreak/>
+                            <Run Text="允许修改密码" /><LineBreak/>
+                            <Run Text="目前仅完成部分页面" /><LineBreak/>
+                            <Run Text="动画补齐" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1003.2147 / 2016.10.20" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="可以保存账户和密码" /><LineBreak/>
                             <Run Text="登陆页面自动化增加" /><LineBreak/>
                             <Run Text="登录信息状态保存" /><LineBreak/>

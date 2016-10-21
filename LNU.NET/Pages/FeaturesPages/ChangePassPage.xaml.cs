@@ -28,6 +28,7 @@ namespace LNU.NET.Pages.FeaturesPages {
     public sealed partial class ChangePassPage : BaseContentPage {
         public ChangePassPage() {
             this.InitializeComponent();
+            Current = this;
             InitPageState();
         }
 
@@ -241,6 +242,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         #endregion
 
         #region Properties
+        public static ChangePassPage Current;
         private bool isFirstLoaded = true;
         private bool isDivideScreen = true;
         private DataFetchType thisPageType;

@@ -184,6 +184,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
             if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
                 MainPage.Current.ReLoginPopup.IsOpen = false;
+                MainPage.Current.MainContentFrame.Content = null;
                 return;
             }
             PageSlideOutStart(VisibleWidth > 800 ? false : true);

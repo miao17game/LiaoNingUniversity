@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="64530WallaceSun.63926DCBB04CE" Publisher="CN=F20CB244-5466-4E73-B935-8A83BABDE8FA" Version="1.1003.2147.0" />
+  <Identity Name="64530WallaceSun.63926DCBB04CE" Publisher="CN=F20CB244-5466-4E73-B935-8A83BABDE8FA" Version="1.1004.1908.0" />
   <mp:PhoneIdentity PhoneProductId="870818cf-6eb6-480d-96c0-3b1b96d1671e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>辽宁大学教务管理</DisplayName>
