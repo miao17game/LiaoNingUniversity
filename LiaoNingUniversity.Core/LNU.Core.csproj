@@ -114,6 +114,7 @@
     <Compile Include="Models\NavigateParameter.cs" />
     <Compile Include="Models\NavigateType.cs" />
     <Compile Include="Models\NavigationModel\NavigationBar.cs" />
+    <Compile Include="Models\ReturnParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\ConstFields.cs" />
     <Compile Include="Tools\DataProcess.cs" />

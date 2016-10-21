@@ -11,5 +11,7 @@ namespace LNU.Core.Models {
         Settings = 2,
         Webview = 3,
         Index = 4,
+        Login = 5,
+        ReLogin = 6,
     }
 }

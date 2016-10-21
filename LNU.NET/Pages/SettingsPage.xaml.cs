@@ -25,6 +25,7 @@ using LNU.NET.Controls;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using LNU.NET.Tools;
+using LNU.NET.Pages.FeaturesPages;
 #endregion
 
 namespace LNU.NET.Pages {
@@ -46,15 +47,9 @@ namespace LNU.NET.Pages {
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            //if ((sender as Pivot).SelectedIndex == 0) {
-            //    MainPage.ChangeTitlePath(3, null);
-            //    return;
-            //}
-            //MainPage.ChangeTitlePath(
-            //    3, 
-            //    (e.AddedItems.FirstOrDefault() as PivotItem).Header as string != GetUIString("SettingsString") ? 
-            //    (e.AddedItems.FirstOrDefault() as PivotItem).Header as string :
-            //    null);
+            var item = (sender as Pivot).SelectedItem as PivotItem;
+            if (item.Name == PrivacyPolicy.Name)
+                PolicyRing.IsActive = true;
         }
 
         private async void FeedBackBtn_Click(object sender, RoutedEventArgs e) {
@@ -113,12 +108,17 @@ namespace LNU.NET.Pages {
             ClearRing.IsActive = false;
         }
 
+        private void WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
+            
+        }
+
         private void WebView_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
             PolicyRing.IsActive = true;
         }
 
         private void WebView_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
             PolicyRing.IsActive = false;
+            SetVisibility(PolicyRing, false);
         }
 
         #endregion
@@ -143,9 +143,9 @@ namespace LNU.NET.Pages {
                     ContentPage.Current, 
                     divideNum : value / 100, 
                     isDivideScreen: Current.ScreenSwitch.IsOn);
-            if (WebViewPage.Current != null)
+            if (LoginPage.Current != null)
                 MainPage.DivideWindowRange(
-                    WebViewPage.Current,
+                    LoginPage.Current,
                     divideNum : value / 100,
                     isDivideScreen: Current.ScreenSwitch.IsOn);
         }
@@ -159,9 +159,9 @@ namespace LNU.NET.Pages {
 
         private void OnScreenSwitchToggled(ToggleSwitch sender) {
             SettingsHelper.SaveSettingsValue(SettingsSelect.IsDivideScreen, sender.IsOn);
-            if (WebViewPage.Current != null)
+            if (LoginPage.Current != null)
                 MainPage.DivideWindowRange(
-                    WebViewPage.Current,
+                    LoginPage.Current,
                     divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
                     isDivideScreen: sender.IsOn);
             if (ContentPage.Current != null)

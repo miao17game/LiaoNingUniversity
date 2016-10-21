@@ -45,7 +45,7 @@ namespace LNU.NET.Pages {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             var args = e.Parameter as NavigateParameter;
-            GridViewResources.Source = GetResourcesInstance(args.DataType);
+            GridViewResources.Source = GetResourcesInstance(args.ToFetchType);
         }
 
         private void AdaptiveGridView_ItemClick(object sender, ItemClickEventArgs e) {
@@ -54,7 +54,7 @@ namespace LNU.NET.Pages {
                 return;
             MainPage.Current.NavigateToBase?.Invoke(
                 sender, 
-                new NavigateParameter { PathUri = args.PathUri, MessageBag = args.ItemTitle , DataType = args.DataType,}, 
+                new NavigateParameter { ToUri = args.PathUri, MessageBag = args.ItemTitle , ToFetchType = args.DataType, NaviType = args.NaviType, }, 
                 MainPage.InnerResources.GetFrameInstance(args.NaviType), 
                 MainPage.InnerResources.GetPageType(args.NaviType));
         }
@@ -139,7 +139,7 @@ namespace LNU.NET.Pages {
                     ItemIcon = char.ConvertFromUtf32(0xE187),
                     ItemTitle =GetUIString("LNU_Index_LS"),
                     Description = null,
-                    NaviType = NavigateType.Webview,
+                    NaviType = NavigateType.Login,
                     DataType = DataFetchType.LNU_Index_Login,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 255, 67, 63)),

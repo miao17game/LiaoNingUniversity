@@ -465,7 +465,8 @@
                     <WebView Source="http://noodlesblog.azurewebsites.net/post/2016/10/20/lnu-education-management"
                          DefaultBackgroundColor="{ThemeResource LNUBackground01}"
                              ContentLoading="WebView_ContentLoading" 
-                             DOMContentLoaded="WebView_DOMContentLoaded"/>
+                             DOMContentLoaded="WebView_DOMContentLoaded"
+                             NavigationStarting="WebView_NavigationStarting"/>
                     <ProgressRing Name="PolicyRing" Width="50" Height="50" IsActive="False"
                                   Foreground="{ThemeResource ENRZForeground01}"/>
                 </Grid>

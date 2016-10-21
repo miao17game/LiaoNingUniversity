@@ -155,7 +155,7 @@
         </Storyboard>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource LNUBackground02}" >
+    <Grid Background="{ThemeResource LNUBackground02}" SizeChanged="Grid_SizeChanged">
 
         <!--#region StateTriggers-->
         <VisualStateManager.VisualStateGroups>
@@ -236,6 +236,10 @@
                         <Setter Target="SlideAnimaRec.(FrameworkElement.Margin)" >
                             <Setter.Value>70,120,0,70</Setter.Value>
                         </Setter>
+                        <Setter Target="LoginPopupFrame.(FrameworkElement.Margin)">
+                            <Setter.Value>70,30,70,30</Setter.Value>
+                        </Setter>
+                        <Setter Target="LoginPopupFrame.(FrameworkElement.MaxWidth)" Value="800"/>
 
                     </VisualState.Setters>
                 </VisualState>
@@ -250,6 +254,9 @@
                             <Setter.Value>70,120,0,70</Setter.Value>
                         </Setter>
                         <Setter Target="SlideAnimaRec.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="LoginPopupFrame.(FrameworkElement.Margin)">
+                            <Setter.Value>70,30,70,30</Setter.Value>
+                        </Setter>
 
                     </VisualState.Setters>
                 </VisualState>
@@ -262,6 +269,9 @@
                         <Setter Target="BaseHamburgerButton.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="SlideAnimaRec.(FrameworkElement.Margin)" >
                             <Setter.Value>70,120,0,70</Setter.Value>
+                        </Setter>
+                        <Setter Target="LoginPopupFrame.(FrameworkElement.Margin)">
+                            <Setter.Value>30,50,30,50</Setter.Value>
                         </Setter>
 
                     </VisualState.Setters>
@@ -396,6 +406,18 @@
         <Grid Name="ContentGrid" Grid.Column="1">
             <Frame Name="ContentFrame"/>
         </Grid>
+
+        <Popup x:Name="ImagePopup" IsOpen="False" Grid.ColumnSpan="2"
+               SizeChanged="ImagePopup_SizeChanged">
+            <Border Name="ImagePopupBorder"
+                    Width="{Binding ActualWidth, ElementName=ImagePopup, Mode=OneWay}" 
+                    Height="{Binding ActualHeight, ElementName=ImagePopup, Mode=OneWay}" 
+                    Background="{ThemeResource DQDPopupBackColor}">
+                <Grid>
+                    <Frame Name="LoginPopupFrame" Margin="30"/>
+                </Grid>
+            </Border>
+        </Popup>
 
         <Frame Name="PrepareFrame" Grid.ColumnSpan="2"/>
         

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace LNU.Core.Models {
     public class NavigateParameter {
-        public Uri PathUri { get; set; }
-        public DataFetchType DataType { get; set; }
+        public Uri ToUri { get; set; }
+        public DataFetchType ToFetchType { get; set; }
         public List<BarItemModel> Items { get; set; }
         public object MessageBag { get; set; }
+        public NavigateType NaviType { get; set; }
+        public ReturnParameter MessageToReturn { get; set; }
     }
 }

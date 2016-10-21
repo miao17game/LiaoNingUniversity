@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using LNU.NET.Pages.FeaturesPages;
 #endregion
 
 namespace LNU.NET {
@@ -75,6 +76,16 @@ namespace LNU.NET {
             HamburgerListBox.SelectedIndex = -1;
         }
 
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
+            ImagePopup.Width = (sender as Grid).ActualWidth;
+            ImagePopup.Height = (sender as Grid).ActualHeight;
+        }
+
+        private void ImagePopup_SizeChanged(object sender, SizeChangedEventArgs e) {
+            ImagePopupBorder.Width = (sender as Popup).ActualWidth;
+            ImagePopupBorder.Height = (sender as Popup).ActualHeight;
+        }
+
         private void HamburgerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             baseListRing.IsActive = false;
             var model = e.AddedItems.FirstOrDefault() as NavigationBar;
@@ -89,7 +100,7 @@ namespace LNU.NET {
             }
             NavigateToBase?.Invoke(
                 sender,
-                new NavigateParameter { PathUri = model.PathUri, MessageBag = model.Title, DataType = model.FetchType, },
+                new NavigateParameter { ToUri = model.PathUri, MessageBag = model.Title, ToFetchType = model.FetchType, NaviType = NavigateType.Webview},
                 GetFrameInstance(model.NaviType),
                 GetPageType(model.NaviType));
         }
@@ -112,7 +123,9 @@ namespace LNU.NET {
         private void SetControlAccessEnabled() {
             HamburgerBox = this.HamburgerListBox;
             MainContentFrame = this.ContentFrame;
+            ReLoginPopupFrame = this.LoginPopupFrame;
             BaseListRing = this.baseListRing;
+            ReLoginPopup = this.ImagePopup;
             NavigateTitlePath = this.navigateTitlePath;
         }
 
@@ -130,6 +143,19 @@ namespace LNU.NET {
                 AppView.VisibleBoundsChanged += (s, e) => { AdapteVitualNavigationBarWithoutStatusBar(this); };
                 AdapteVitualNavigationBarWithoutStatusBar(this);
             }
+        }
+
+        /// <summary>
+        /// well....you can know what i am doing by the name of the method......
+        /// </summary>
+        /// <param name="oldTime"></param>
+        /// <param name="newTime"></param>
+        /// <returns></returns>
+        public static bool IsMoreThan30Minutes(DateTime oldTime, DateTime newTime) {
+            return
+                newTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds -
+                oldTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds >=
+                1800;
         }
 
         /// <summary>
@@ -216,6 +242,40 @@ namespace LNU.NET {
         }
 
         /// <summary>
+        /// If you have not login, this method will redirect you to re-login popup to finish login-action.
+        /// </summary>
+        /// <param name="fromUri">return-to</param>
+        /// <param name="fromFetchType">return-dataType</param>
+        /// <param name="returnMessage">return-messageBag</param>
+        /// <param name="fromNaviType">return-navigateType</param>
+        public static void ReLoginIfStatusIsInvalid(
+            Uri fromUri, 
+            DataFetchType fromFetchType = DataFetchType.NULL, 
+            object returnMessage = null, 
+            NavigateType fromNaviType = NavigateType.Webview) {
+
+            if (LoginCache.IsInsert && !IsMoreThan30Minutes(LoginCache.CacheMiliTime, DateTime.Now))
+                return;
+            Current.ReLoginPopup.IsOpen = true;
+            Current.NavigateToBase?.Invoke(
+                null,
+                new NavigateParameter {
+                    ToFetchType = DataFetchType.LNU_Index_ReLogin,
+                    ToUri = new Uri(LoginPath),
+                    MessageBag = GetUIString("LNU_Index_LS"),
+                    NaviType = NavigateType.ReLogin,
+                    MessageToReturn = new ReturnParameter {
+                        FromUri = fromUri,
+                        FromFetchType = fromFetchType,
+                        ReturnMessage = returnMessage,
+                        FromNaviType = fromNaviType,
+                    },
+                },
+                GetFrameInstance(NavigateType.ReLogin),
+                GetPageType(NavigateType.ReLogin));
+        }
+
+        /// <summary>
         /// Start the dark animation when hamburger menu opened.
         /// </summary>
         private void OnPaneIsOpened() {
@@ -223,59 +283,11 @@ namespace LNU.NET {
             EnterBorder.Begin();
         }
 
-        public static void ShowImageInScreen(Uri imageSource) {
-            //Current.PopupImageUri = imageSource;
-            //Current.ImageScreen.Source = new BitmapImage(imageSource);
-            //Current.ImagePopup.IsOpen = true;
-        }
-
-        //private async Task<SoftwareBitmap> DownloadImage(string url) {
-        //    try {
-        //        HttpClient hc = new HttpClient();
-        //        HttpResponseMessage resp = await hc.GetAsync(new Uri(url));
-        //        resp.EnsureSuccessStatusCode();
-        //        IInputStream inputStream = await resp.Content.ReadAsInputStreamAsync();
-        //        IRandomAccessStream memStream = new InMemoryRandomAccessStream();
-        //        await RandomAccessStream.CopyAsync(inputStream, memStream);
-        //        BitmapDecoder decoder = await BitmapDecoder.CreateAsync(memStream);
-        //        SoftwareBitmap softBmp = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-        //        return softBmp;
-        //    } catch (Exception) {
-        //        return null;
-        //    }
-        //}
-
-        //public async Task<string> WriteToFile(SoftwareBitmap softwareBitmap) {
-        //    string fileName = "ENRZ" +
-        //        Guid.NewGuid().GetHashCode().ToString() + "FR" +
-        //        DateTime.Now.Year.ToString() + "GR" +
-        //        DateTime.Now.Month.ToString() + "VE" +
-        //        DateTime.Now.Day.ToString() + "JU" +
-        //        DateTime.Now.Hour.ToString() + "SW" +
-        //        DateTime.Now.Minute.ToString() + "VJ" +
-        //        DateTime.Now.Second.ToString() + "MQ" +
-        //        DateTime.Now.Millisecond.ToString() + ".jpg";
-
-        //    if (softwareBitmap != null) {
-        //        // save image file to cache
-        //        StorageFile file = await (
-        //            await KnownFolders.PicturesLibrary.CreateFolderAsync("ENRZ", CreationCollisionOption.OpenIfExists))
-        //            .CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-        //        using (IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.ReadWrite)) {
-        //            BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
-        //            encoder.SetSoftwareBitmap(softwareBitmap);
-        //            await encoder.FlushAsync();
-        //        }
-        //    }
-
-        //    return fileName;
-        //}
-
         #endregion
 
-        #region Inner Resources class
+        #region Inner Resources class and Structs
         /// <summary>
-        /// Resources Helper
+        /// Resources Helper 
         /// </summary>
         public static class InnerResources {
 
@@ -369,15 +381,19 @@ namespace LNU.NET {
                 { NavigateType.Settings,typeof(SettingsPage)},
                 { NavigateType.Webview,typeof(WebViewPage)},
                 { NavigateType.Index,typeof(IndexPage)},
+                { NavigateType.Login,typeof(LoginPage)},
+                { NavigateType.ReLogin,typeof(LoginPage)},
             };
 
             public static Frame GetFrameInstance(NavigateType type) { return frameMaps.ContainsKey(type) ? frameMaps[type] : null; }
             static private Dictionary<NavigateType, Frame> frameMaps = new Dictionary<NavigateType, Frame> {
                 { NavigateType.BaseList,Current.BasePartFrame},
-                { NavigateType.Index,Current.BasePartFrame},
                 { NavigateType.Settings,Current.ContentFrame},
                 { NavigateType.Content,Current.ContentFrame},
                 { NavigateType.Webview,Current.ContentFrame},
+                { NavigateType.Index,Current.BasePartFrame},
+                { NavigateType.Login,Current.ContentFrame},
+                { NavigateType.ReLogin,Current.LoginPopupFrame},
             };
 
             public static void AddBaseListPageInstance(string key, BaseListPage instance) { if (!baseListPageMap.ContainsKey(key)) { baseListPageMap.Add(key, instance); } }
@@ -387,6 +403,31 @@ namespace LNU.NET {
             };
 
         }
+
+        /// <summary>
+        /// struct for route title saving.
+        /// </summary>
+        public struct PathTitle {
+            public string Route01 { get; set; }
+            public string Route02 { get; set; }
+            public string Route03 { get; set; }
+            public string RoutePath { get { return Route02 != null ? Route03 != null ? Route01 + "-" + Route02 + "-" + Route03 : Route01 + "-" + Route02 : Route01; } }
+        }
+
+        /// <summary>
+        ///  struct for login status saving.
+        /// </summary>
+        public struct LoginCookies {
+            public string UserName { get; set; }
+            public string UserID { get; set; }
+            public string UserDepartment { get; set; }
+            public string UserCourse { get; set; }
+            public string UserIP { get; set; }
+            public string UserTime { get; set; }
+            public DateTime CacheMiliTime { get; set; }
+            public bool IsInsert { get; set; }
+        }
+
         #endregion
 
         #region Slide Animations
@@ -452,32 +493,18 @@ namespace LNU.NET {
         public static MainPage Current;
         public TextBlock NavigateTitlePath;
         public Frame MainContentFrame;
+        public Frame ReLoginPopupFrame;
         public ProgressRing BaseListRing;
         public ListBox HamburgerBox;
+        public Popup ReLoginPopup;
         private bool isNeedClose = false;
-        private Uri PopupImageUri;
         public delegate void NavigationEventHandler(object sender, NavigateParameter parameter, Frame frame, Type type);
         public NavigationEventHandler NavigateToBase = (sender, parameter, frame, type) => { frame.Navigate(type, parameter); };
-        public struct PathTitle {
-            public string Route01 { get; set; }
-            public string Route02 { get; set; }
-            public string Route03 { get; set; }
-            public string RoutePath { get { return Route02 != null ? Route03 != null ? Route01 + "-" + Route02 + "-" + Route03 : Route01 + "-" + Route02 : Route01; } }
-        }
         public static PathTitle NaviPathTitle = new PathTitle();
-        public struct LoginCookies {
-            public string UserName { get; set; }
-            public string UserID { get; set; }
-            public string UserDepartment { get; set; }
-            public string UserCourse { get; set; }
-            public string UserIP { get; set; }
-            public string UserTime { get; set; }
-            public DateTime CacheMiliTime { get; set; }
-            public bool IsInsert { get; set; }
-        }
         public static LoginCookies LoginCache = new LoginCookies { IsInsert = false };
-        private const string HomeHost = "http://jwgl.lnu.edu.cn/";
-        private const string HomeHostInsert = "http://jwgl.lnu.edu.cn";
+        public const string HomeHost = "http://jwgl.lnu.edu.cn/";
+        public const string HomeHostInsert = "http://jwgl.lnu.edu.cn";
+        public const string LoginPath = "http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html";
         #endregion
 
     }
