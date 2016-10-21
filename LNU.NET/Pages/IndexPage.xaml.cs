@@ -151,7 +151,7 @@ namespace LNU.NET.Pages {
                     ItemIcon = char.ConvertFromUtf32(0xE192),
                     ItemTitle =GetUIString("LNU_Index_CP"),
                     Description = null,
-                    NaviType = NavigateType.Webview,
+                    NaviType = NavigateType.ChangePassword,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.NewPass"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 97, 17, 171)),
                     IconForeground = new SolidColorBrush(Colors.White),

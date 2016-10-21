@@ -389,7 +389,6 @@ namespace LNU.NET.Pages.FeaturesPages {
                 SaveLoginStatus(studentStatus);
                 LoginPopup.IsOpen = false;
                 SetVisibility(MainPopupGrid, false);
-                Debug.WriteLine(fromNaviType);
                 if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
                     RedirectToPageBefore();
                     return;
@@ -421,7 +420,13 @@ namespace LNU.NET.Pages.FeaturesPages {
                         ToFetchType = DataFetchType.LNU_Index_ReLogin,
                         MessageBag = navigateTitle,
                         ToUri = currentUri,
-                        NaviType = NavigateType.ReLogin
+                        NaviType = NavigateType.ReLogin,
+                        MessageToReturn = new ReturnParameter {
+                            FromUri = fromUri,
+                            FromFetchType = fromPageType,
+                            FromNaviType = fromNaviType,
+                            ReturnMessage = fromNavigateTitle,
+                        },
                     },
                     MainPage.InnerResources.GetFrameInstance(NavigateType.ReLogin),
                     typeof(LoginPage));

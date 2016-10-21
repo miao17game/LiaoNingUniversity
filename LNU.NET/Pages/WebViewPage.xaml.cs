@@ -95,11 +95,12 @@ namespace LNU.NET.Pages {
 
         private async void Scroll_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
             contentRing.IsActive = false;
-            Scroll.ScriptNotify += oNnOTIFY;
+            Scroll.ScriptNotify += OnNotify;
             await AskWebViewToCallback();
         }
 
-        private void oNnOTIFY(object sender, NotifyEventArgs e) {
+        private void OnNotify(object sender, NotifyEventArgs e) {
+            Scroll.ScriptNotify -= OnNotify;
             var result = JsonHelper.FromJson<string[]>(e.Value);
             result.ToList().ForEach(i => Debug.WriteLine(i + "\n#################\n"));
         }
@@ -130,12 +131,14 @@ namespace LNU.NET.Pages {
         /// </summary>
         /// <returns></returns>
         private async Task AskWebViewToCallback() { // js to callback
-            var js = @"window.external.notify(
+            try {
+                var js = @"window.external.notify(
                                     JSON.stringify(
                                         new Array (
                                             document.body.innerText,
                                             document.body.innerHTML)));";
-            await Scroll.InvokeScriptAsync("eval", new[] { js });
+                await Scroll.InvokeScriptAsync("eval", new[] { js });
+            } catch { Debug.WriteLine("JS Error"); }
         }
 
         #endregion

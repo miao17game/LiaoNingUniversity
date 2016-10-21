@@ -535,4 +535,34 @@
   <data name="Log_Out.Content" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="LNU_Change_Pass01.Text" xml:space="preserve">
+    <value>Old One</value>
+  </data>
+  <data name="LNU_Change_Pass02.Text" xml:space="preserve">
+    <value>New One</value>
+  </data>
+  <data name="LNU_Change_Pass03.Text" xml:space="preserve">
+    <value>Re-confirm</value>
+  </data>
+  <data name="AbandonModify.Content" xml:space="preserve">
+    <value>Abandon</value>
+  </data>
+  <data name="ConfirmModify.Content" xml:space="preserve">
+    <value>Confirm Modify</value>
+  </data>
+  <data name="Login_First" xml:space="preserve">
+    <value>You need to login first.</value>
+  </data>
+  <data name="Login_Pass_Changed" xml:space="preserve">
+    <value>Password changed successfully.</value>
+  </data>
+  <data name="Login_Pass_Input_Error" xml:space="preserve">
+    <value>Password input error. </value>
+  </data>
+  <data name="Login_Reconfirm_Failed" xml:space="preserve">
+    <value>Password re-confirm check failed.</value>
+  </data>
+  <data name="Login_Uhandled_Error" xml:space="preserve">
+    <value>Unhandled error throws.</value>
+  </data>
 </root>

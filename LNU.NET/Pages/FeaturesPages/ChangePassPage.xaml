@@ -1,0 +1,210 @@
+﻿<base:BaseContentPage
+    x:Class="LNU.NET.Pages.FeaturesPages.ChangePassPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LNU.NET.Pages.FeaturesPages"
+    xmlns:base="using:LNU.NET.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource LNUBackground01}" SizeChanged="Grid_SizeChanged">
+
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromHorizontalOffset="400"/>
+            </TransitionCollection>
+        </Grid.Transitions>
+
+        <Border Name="BasePartBorder" 
+                Background="{ThemeResource ENRZForeground01}" 
+                Height="70" 
+                VerticalAlignment="Top">
+            <TextBlock Name="navigateTitlePath"
+                       MaxWidth="500"
+                       Text="Change Password"
+                       FontSize="20"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       Foreground="White"/>
+        </Border>
+        <Button Name="BaseHamburgerButton"
+                            VerticalAlignment="Top"
+                            Content="&#xE26C;"
+                            Width="70"
+                            Height="70"
+                            Click="BaseHamburgerButton_Click"
+                            Foreground="White"
+                            Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
+
+        <WebView Name="Scroll" 
+                 Visibility="Collapsed"
+                 Margin="0,70,0,0"
+                 DefaultBackgroundColor="{ThemeResource ENRZForeground01}" 
+                 DOMContentLoaded="Scroll_DOMContentLoaded"
+                 NavigationStarting="Scroll_NavigationStarting"
+                 ContentLoading="Scroll_ContentLoading"/>
+
+        <RelativePanel Margin=" 50,0,50,0" MaxWidth="600" 
+                       VerticalAlignment="Center" MinHeight="320">
+            
+            <!--#region Password01-->
+            <Grid Name="PG01" 
+                                  Height=" 55" 
+                                  Margin="5,5,5,10" 
+                                  RelativePanel.AlignLeftWithPanel="True"
+                                  RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <Border Background="{ThemeResource ENRZBackground}" 
+                                            CornerRadius="3,3,3,3" 
+                                            Name="PasswordBorderness01"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppScrollViewerForeground02}"/>
+                </Grid>
+                <TextBlock Foreground="{ThemeResource AppPersonalTextColorPure02}" 
+                                           FontSize="17" 
+                                           x:Uid="LNU_Change_Pass01" 
+                                           Margin="10,5,5,5" 
+                                           Width=" 70"
+                                           VerticalAlignment="Center" 
+                                           Grid.Column="0"/>
+                <PasswordBox Background="Transparent" 
+                                             VerticalAlignment="Center"
+                                             Margin="10,5,10,5" 
+                                             Grid.Column="1" 
+                                             FontWeight="SemiBold"
+                                             Style="{StaticResource SpecialPassBox}" 
+                                             Name="PB_Old"
+                                             GotFocus="PasswordBox01_GotFocus" 
+                                             LostFocus="PasswordBox01_LostFocus"/>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Password02-->
+            <Grid Name="PG02" 
+                                  RelativePanel.Below="PG01"
+                                  Height=" 55" 
+                                  Margin="5,5,5,10" 
+                                  RelativePanel.AlignLeftWithPanel="True"
+                                  RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <Border Background="{ThemeResource ENRZBackground}" 
+                                            CornerRadius="3,3,3,3" 
+                                            Name="PasswordBorderness02"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppScrollViewerForeground02}"/>
+                </Grid>
+                <TextBlock Foreground="{ThemeResource AppPersonalTextColorPure02}" 
+                                           FontSize="17" 
+                                           x:Uid="LNU_Change_Pass02" 
+                                           Margin="10,5,5,5" 
+                                           Width=" 70"
+                                           VerticalAlignment="Center" 
+                                           Grid.Column="0"/>
+                <PasswordBox Background="Transparent" 
+                                             VerticalAlignment="Center"
+                                             Margin="10,5,10,5" 
+                                             Grid.Column="1" 
+                                             FontWeight="SemiBold"
+                                             Style="{StaticResource SpecialPassBox}" 
+                                             Name="PB_New"
+                                             GotFocus="PasswordBox02_GotFocus" 
+                                             LostFocus="PasswordBox02_LostFocus"/>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Password03-->
+            <Grid Name="PG03" 
+                                  RelativePanel.Below="PG02"
+                                  Height=" 55" 
+                                  Margin="5,5,5,10" 
+                                  RelativePanel.AlignLeftWithPanel="True"
+                                  RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <Border Background="{ThemeResource ENRZBackground}" 
+                                            CornerRadius="3,3,3,3" 
+                                            Name="PasswordBorderness03"
+                                            BorderThickness="1" 
+                                            BorderBrush="{ThemeResource AppScrollViewerForeground02}"/>
+                </Grid>
+                <TextBlock Foreground="{ThemeResource AppPersonalTextColorPure02}" 
+                                           FontSize="17" 
+                                           x:Uid="LNU_Change_Pass03" 
+                                           Margin="10,5,5,5" 
+                                           Width=" 70"
+                                           VerticalAlignment="Center" 
+                                           Grid.Column="0"/>
+                <PasswordBox Background="Transparent" 
+                                             VerticalAlignment="Center"
+                                             Margin="10,5,10,5" 
+                                             Grid.Column="1" 
+                                             FontWeight="SemiBold"
+                                             Style="{StaticResource SpecialPassBox}" 
+                                             Name="PB_Recofirm"
+                                             GotFocus="PasswordBox03_GotFocus" 
+                                             LostFocus="PasswordBox03_LostFocus"/>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Buttons-->
+            <Grid Name="ButtonsGrid" 
+                  Padding=" 5,12,5,0" 
+                  Height="60"
+                  Margin="0,30,0,0"
+                  RelativePanel.AlignLeftWithPanel="True" 
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.AlignBottomWithPanel="True">
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" 
+                                        x:Uid="ConfirmModify" 
+                                        Margin="0,0,10,0"
+                                        Style="{StaticResource SpecialButtonSubmit}" 
+                                        Name="Submit"
+                                        Background="{ThemeResource ENRZForeground02}"
+                                        HorizontalAlignment="Stretch" 
+                                        Click="Submit_Click"
+                                        VerticalAlignment="Stretch">
+                </Button>
+                <ProgressRing Name="SubitRing" 
+                                              Grid.Column="0" 
+                                              IsActive="False"
+                                              Foreground="{ThemeResource ENRZForeground01}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                <Button Grid.Column="1" 
+                                        x:Uid="AbandonModify" 
+                                        Margin="10,0,0,0"
+                                        Background="{ThemeResource AppScrollViewerForeground02}"
+                                        Style="{StaticResource SpecialButtonAbort}" 
+                                        Name="Abort"
+                                        HorizontalAlignment="Stretch" 
+                                        Click="BaseHamburgerButton_Click"
+                                        VerticalAlignment="Stretch"/>
+            </Grid>
+            <!--#endregion-->
+
+        </RelativePanel>
+
+        <ProgressRing Name="contentRing" 
+                      Width="70" 
+                      Height=" 70"
+                      IsActive="False"
+                      Foreground="{ThemeResource ENRZForeground01}"/>
+
+    </Grid>
+</base:BaseContentPage>

@@ -536,4 +536,34 @@
   <data name="Log_Out.Content" xml:space="preserve">
     <value>注销登录</value>
   </data>
+  <data name="LNU_Change_Pass01.Text" xml:space="preserve">
+    <value>原密码</value>
+  </data>
+  <data name="LNU_Change_Pass02.Text" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="LNU_Change_Pass03.Text" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="AbandonModify.Content" xml:space="preserve">
+    <value>放弃</value>
+  </data>
+  <data name="ConfirmModify.Content" xml:space="preserve">
+    <value>确认修改</value>
+  </data>
+  <data name="Login_First" xml:space="preserve">
+    <value>你需要先登录</value>
+  </data>
+  <data name="Login_Pass_Changed" xml:space="preserve">
+    <value>你已经改变了你的密码</value>
+  </data>
+  <data name="Login_Pass_Input_Error" xml:space="preserve">
+    <value>密码输入有误</value>
+  </data>
+  <data name="Login_Reconfirm_Failed" xml:space="preserve">
+    <value>新密码输入不一致</value>
+  </data>
+  <data name="Login_Uhandled_Error" xml:space="preserve">
+    <value>出现未知错误</value>
+  </data>
 </root>

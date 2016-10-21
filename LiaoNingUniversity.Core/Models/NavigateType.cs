@@ -13,5 +13,6 @@ namespace LNU.Core.Models {
         Index = 4,
         Login = 5,
         ReLogin = 6,
+        ChangePassword = 7,
     }
 }
