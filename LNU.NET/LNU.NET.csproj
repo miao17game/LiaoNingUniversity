@@ -105,6 +105,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BaseContentPage.cs" />
+    <Compile Include="Controls\ScheduleTip.xaml.cs">
+      <DependentUpon>ScheduleTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToastSmooth.xaml.cs">
       <DependentUpon>ToastSmooth.xaml</DependentUpon>
     </Compile>
@@ -227,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ScheduleTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ToastSmooth.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

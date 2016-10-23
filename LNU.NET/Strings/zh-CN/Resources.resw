@@ -569,4 +569,58 @@
   <data name="Internet_Failed" xml:space="preserve">
     <value>登陆初始化失败，请检查网络</value>
   </data>
+  <data name="Friday" xml:space="preserve">
+    <value>星期五</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>星期一</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>星期六</value>
+  </data>
+  <data name="ScheduleTableTitle.Text" xml:space="preserve">
+    <value>课程表</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>星期日</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>星期四</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>星期二</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>星期三</value>
+  </data>
+  <data name="ScheduleListTitle.Text" xml:space="preserve">
+    <value>课程列表</value>
+  </data>
+  <data name="Course_ID.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Course_Place.Text" xml:space="preserve">
+    <value>教室</value>
+  </data>
+  <data name="Course_Time.Text" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="Course_Title.Text" xml:space="preserve">
+    <value>课程名</value>
+  </data>
+  <data name="Course_Type.Text" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Course_Lecture.Text" xml:space="preserve">
+    <value>讲师</value>
+  </data>
+  <data name="Course_Property.Text" xml:space="preserve">
+    <value>课程属性</value>
+  </data>
+  <data name="Course_Serial.Text" xml:space="preserve">
+    <value>课序号</value>
+  </data>
+  <data name="Course_Weekly.Text" xml:space="preserve">
+    <value>上课周次</value>
+  </data>
 </root>

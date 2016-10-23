@@ -26,6 +26,7 @@ using Windows.Storage;
 using Windows.Storage.FileProperties;
 using LNU.NET.Tools;
 using LNU.NET.Pages.FeaturesPages;
+using LNU.Core.Models;
 #endregion
 
 namespace LNU.NET.Pages {
@@ -148,6 +149,21 @@ namespace LNU.NET.Pages {
                     LoginPage.Current,
                     divideNum : value / 100,
                     isDivideScreen: Current.ScreenSwitch.IsOn);
+            if (WebViewPage.Current != null)
+                MainPage.DivideWindowRange(
+                    WebViewPage.Current,
+                    divideNum: value / 100,
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
+            if (ChangePassPage.Current != null)
+                MainPage.DivideWindowRange(
+                    ChangePassPage.Current,
+                    divideNum: value / 100,
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
+            if (SchedulePage.Current != null)
+                MainPage.DivideWindowRange(
+                    SchedulePage.Current,
+                    divideNum: value / 100,
+                    isDivideScreen: Current.ScreenSwitch.IsOn);
         }
 
         #region Toggle Events
@@ -155,6 +171,19 @@ namespace LNU.NET.Pages {
         private void OnThemeSwitchToggled(ToggleSwitch sender) {
             SettingsHelper.SaveSettingsValue(SettingsConstants.IsDarkThemeOrNot, sender.IsOn);
             MainPage.Current.RequestedTheme = sender.IsOn ? ElementTheme.Dark : ElementTheme.Light;
+            if (isInitViewOrNot)
+                return;
+            if (SchedulePage.Current != null)
+                MainPage.Current.NavigateToBase?.Invoke(
+                    this,
+                    new NavigateParameter {
+                        MessageBag = GetUIString("LNU_Index_SC"),
+                        NaviType = NavigateType.Schedule,
+                        ToFetchType = DataFetchType.NULL,
+                        ToUri = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/xk.CourseView")
+                    }, 
+                    MainPage.InnerResources.GetFrameInstance(NavigateType.Schedule),
+                    MainPage.InnerResources .GetPageType( NavigateType.Schedule));
         }
 
         private void OnScreenSwitchToggled(ToggleSwitch sender) {
@@ -167,6 +196,21 @@ namespace LNU.NET.Pages {
             if (ContentPage.Current != null)
                 MainPage.DivideWindowRange(
                     ContentPage.Current,
+                    divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    isDivideScreen: sender.IsOn);
+            if (WebViewPage.Current != null)
+                MainPage.DivideWindowRange(
+                    WebViewPage.Current,
+                    divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    isDivideScreen: sender.IsOn);
+            if (ChangePassPage.Current != null)
+                MainPage.DivideWindowRange(
+                    ChangePassPage.Current,
+                    divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
+                    isDivideScreen: sender.IsOn);
+            if (SchedulePage.Current != null)
+                MainPage.DivideWindowRange(
+                    SchedulePage.Current,
                     divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
                     isDivideScreen: sender.IsOn);
         }

@@ -148,13 +148,6 @@
                             Foreground="White"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
 
-        <!--<WebView Name="Scroll" 
-                 Margin="0,70,0,0"
-                 DefaultBackgroundColor="{ThemeResource ENRZForeground01}" 
-                 DOMContentLoaded="Scroll_DOMContentLoaded"
-                 NavigationStarting="Scroll_NavigationStarting"
-                 ContentLoading="Scroll_ContentLoading"/>-->
-
         <ProgressRing Name="contentRing" 
                       Width="70" 
                       Height=" 70"

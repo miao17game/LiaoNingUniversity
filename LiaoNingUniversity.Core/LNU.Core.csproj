@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BarItemModel.cs" />
-    <Compile Include="Models\ContentModels\IndexModel.cs" />
+    <Compile Include="Models\ContentModels\ScheduleItem.cs" />
     <Compile Include="Models\DataFetchType.cs" />
     <Compile Include="Models\IndexModels\AdaptiveItem.cs" />
     <Compile Include="Models\LoginReturnBag.cs" />
@@ -119,7 +119,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\ConstFields.cs" />
     <Compile Include="Tools\DataProcess.cs" />
+    <Compile Include="Tools\PersonalExpressions\EscapeReplace.cs" />
     <Compile Include="Tools\LNUWebProcess.cs" />
+    <Compile Include="Tools\CipherEncryptionHelper.cs" />
     <Compile Include="Tools\SettingsSelect.cs" />
     <EmbeddedResource Include="Properties\LiaoNingUniversity.Core.rd.xml" />
   </ItemGroup>

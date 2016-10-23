@@ -28,6 +28,14 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using LNU.NET.Pages.FeaturesPages;
 using Windows.Web.Http;
+using LNU.Core.Tools;
+using Windows.Security.Cryptography.Core;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
+using System.Diagnostics;
+using HtmlAgilityPack;
+using LNU.NET.Tools;
+using System.Text.RegularExpressions;
 #endregion
 
 namespace LNU.NET {
@@ -135,6 +143,23 @@ namespace LNU.NET {
             LoginClient = UnRedirectHttpClient;
             IfNeedAdapteVitualNavigationBar();
             InitSlideRecState();
+            AutoLoginIfNeed();
+        }
+
+        /// <summary>
+        /// redirect to login when login-error throws.
+        /// </summary>
+        private void RedirectToLoginAgain() {
+            NavigateToBase?.Invoke(
+                this,
+                new NavigateParameter {
+                    ToFetchType = DataFetchType.LNU_Index_ReLogin,
+                    MessageBag = GetUIString("LNU_Index_LS"),
+                    ToUri = new Uri(LoginPath),
+                    NaviType = NavigateType.ReLogin
+                },
+                GetFrameInstance(NavigateType.ReLogin),
+                typeof(LoginPage));
         }
 
         private void SetControlAccessEnabled() {
@@ -174,6 +199,90 @@ namespace LNU.NET {
             SetVisibility(DarkDivideBorder, true);
             EnterBorder.Begin();
         }
+
+        #region Login Methods
+
+        /// <summary>
+        /// login whwn app start, of course, if need.
+        /// </summary>
+        private async void AutoLoginIfNeed() {
+            if ((bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsAutoLogin) ?? false) {
+                var user = SettingsHelper.ReadSettingsValue(SettingsConstants.Email) as string;
+                var pass = PasswordDecryption();
+                if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(pass)) {
+                    var loginReturn = await PostLNULoginCallback(LoginClient, user, pass);
+                    if (loginReturn != null) {
+                        var doc = new HtmlDocument();
+                        if (loginReturn.HtmlResouces == null) { // login failed, redirect to the login page.
+                            ReportHelper.ReportAttention(GetUIString("Login_Failed"));
+                            SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
+                            RedirectToLoginAgain();
+                            return;
+                        }
+                        doc.LoadHtml(loginReturn.HtmlResouces);
+                        var rootNode = doc.DocumentNode;
+                        var studentStatus = rootNode.SelectSingleNode("//span[@class='t']");
+                        if (studentStatus == null) { // login failed, redirect to the login page.
+                            ReportHelper.ReportAttention(GetUIString("Login_Failed"));
+                            SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
+                            RedirectToLoginAgain();
+                            return;
+                        } else { // login successful, save status and do nothing.
+                            SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
+                        }
+                    } else
+                        ReportHelper.ReportAttention(GetUIString("Internet_Failed"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// save status message in MainPage to be controlled.
+        /// </summary>
+        /// <param name="item"></param>
+        public void SaveLoginStatus(HtmlNode item, HttpCookie cookie) {
+            var message = item.InnerText.Replace(" ", "@").Replace(",", "@");
+            var mess = message.Split('@');
+            var stringColl = mess[2].Replace("(", "@").Replace(")", "@").Split('@');
+            LoginCache.IsInsert = true;
+            LoginCache.UserName = stringColl[0];
+            LoginCache.UserID = stringColl[1];
+            LoginCache.UserDepartment = mess[0].Substring(1, mess[0].Length - 1);
+            LoginCache.UserCourse  = mess[1].Substring(0, mess[1].Length - 2);
+            LoginCache.UserTime =  mess[3] + GetUIString("TimeAnoutation");
+            LoginCache.UserIP =  new Regex("\n").Replace(mess[4].Substring(5, mess[4].Length - 5), "");
+            LoginCache.CacheMiliTime = DateTime.Now;
+            LoginCache.Cookie = cookie;
+        }
+
+        #endregion
+
+        #region Password Decryption
+
+        private string PasswordDecryption() {
+            try { // password decryption over here.
+                var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
+                if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
+                    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+                    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv));
+                    ibufferVector = CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv);
+
+                    return CipherEncryptionHelper.CipherDecryption( // decryption the message.
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        CryptographicBuffer.CreateFromByteArray(Password),
+                        ibufferVector,
+                        BinaryStringEncoding.Utf8,
+                        cryptographicKey);
+                }
+                return null;
+            } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
+                Debug.WriteLine(e.StackTrace);
+                SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
+                return null;
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -406,6 +515,7 @@ namespace LNU.NET {
             #region Type
 
             public static Type GetPageType(NavigateType type) { return pagesMaps.ContainsKey(type) ? pagesMaps[type] : null; }
+            public static Dictionary<NavigateType, Type> PageTypeCollection { get { return pagesMaps; } }
             static private Dictionary<NavigateType, Type> pagesMaps = new Dictionary<NavigateType, Type> {
                 { NavigateType.BaseList,typeof(BaseListPage)},
                 { NavigateType.Content,typeof(ContentPage)},
@@ -564,7 +674,11 @@ namespace LNU.NET {
         public static PathTitle NaviPathTitle = new PathTitle();
         public static LoginCookies LoginCache = new LoginCookies { IsInsert = false };
 
-    #endregion
+        private BinaryStringEncoding binaryStringEncoding;
+        private IBuffer ibufferVector;
+        private CryptographicKey cryptographicKey;
 
-}
+        #endregion
+
+    }
 }

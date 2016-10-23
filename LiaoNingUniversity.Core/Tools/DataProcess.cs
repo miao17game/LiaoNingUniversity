@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using static Wallace.UWP.Helpers.Tools.UWPStates;
 using LNU.Core.Models.NavigationModel;
 using LNU.Core.Models.ContentModels;
+using DQD.Core.Tools.PersonalExpressions;
 
 namespace LNU.Core.Tools {
     public static class DataProcess {
@@ -37,164 +38,80 @@ namespace LNU.Core.Tools {
         public static Uri ConvertToUri(string str) { return !string.IsNullOrEmpty(str) ? new Uri(str) : null; }
 
         public static List<ScheduleItem> FetchScheduleListFromHtml(string htmlResources) {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(htmlResources);
-            var rootNode = doc.DocumentNode;
-            var target = rootNode.SelectNodes("table[@bgcolor='#f2edf8']").ElementAt(1).SelectSingleNode("tbody").SelectNodes("tr");
             var list = new List<ScheduleItem>();
-            int num = 0;
-            foreach(var tr in target) {
-                if(num > 0) {
+            try {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(EscapeReplace.ToEscape(htmlResources));
+                var rootNode = doc.DocumentNode;
+                var target = rootNode
+                    .SelectSingleNode("//body[@topmargin='5']")
+                    .SelectNodes("table[@bgcolor='#EAE2F3']").ElementAt(1)
+                    .SelectSingleNode("tr")
+                    .SelectSingleNode("td")
+                    .SelectSingleNode("table[@bgcolor='#F2EDF8']")
+                    .SelectNodes("tr");
+                
+                foreach (var tr in target) {
                     var tds = tr.SelectNodes("td").ToList();
-                    list.Add(new ScheduleItem {
-                        Title = tds[0].InnerText,
-                        Description = tds[1].SelectSingleNode("font").InnerText,
-                        CourseID = tds[2].InnerText,
-                        SerialNumber = tds[3].InnerText,
-                        CourceProperty = tds[4].InnerText,
-                        ExamType = tds[5].InnerText,
-                        Place = tds[6].InnerText,
-                        Time = tds[7].InnerText,
-                        WeeklyRound = tds[8].InnerText,
-                    });
+                    try {
+                        list.Add(new ScheduleItem {
+                            Title = tds[0].InnerText,
+                            Description = tds[1].InnerText,
+                            CourseID = tds[2].InnerText,
+                            SerialNumber = tds[3].InnerText,
+                            CourceProperty = tds[4].InnerText,
+                            ExamType = tds[5].InnerText,
+                            Place = tds[6].InnerText,
+                            Time = tds[7].InnerText,
+                            WeeklyRound = tds[8].InnerText,
+                        });
+                    } catch { /* ignore */ }
                 }
-                num++;
+            } catch (Exception ex) {
+                Debug.WriteLine(ex.StackTrace);
+                return list;
             }
             return list;
         }
 
-        #region Inner Methods
-        private static string ToGlobalization(string input) {
-            var result = default(string);
-            switch (input) {
-                case "首页":
-                    result = "ENRZ.COM";
-                    break;
-                case "尤物":
-                    result = GetUIString("Stunner");
-                    break;
-                case "资讯":
-                    result = GetUIString("Information");
-                    break;
-                case "恋物癖":
-                    result = GetUIString("LoveOfHabit");
-                    break;
-                case "时装":
-                    result = GetUIString("Fashion");
-                    break;
-                case "男性人物":
-                    result = GetUIString("MaleCharacters");
-                    break;
-                case "专题":
-                    result = GetUIString("Topics");
-                    break;
-                case "美图":
-                    result = GetUIString("Gallery");
-                    break;
-                case "商城":
-                    result = GetUIString("Mall");
-                    break;
-                case "封面明星":
-                    result = GetUIString("CoverStars");
-                    break;
-                case "新闻女郎":
-                    result = GetUIString("NewsGirl");
-                    break;
-                case "猎奇":
-                    result = GetUIString("See");
-                    break;
-                case "体育":
-                    result = GetUIString("Sports");
-                    break;
-                case "地球村":
-                    result = GetUIString("TheGlobalVillage");
-                    break;
-                case "艺和团":
-                    result = GetUIString("Art");
-                    break;
-                case "汽车":
-                    result = GetUIString("Cars");
-                    break;
-                case "数码":
-                    result = GetUIString("Digital");
-                    break;
-                case "腕表":
-                    result = GetUIString("Watch");
-                    break;
-                case "美酒":
-                    result = GetUIString("Wine");
-                    break;
-                case "户外":
-                    result = GetUIString("Outdoor");
-                    break;
-                case "搭配栏目":
-                    result = GetUIString("Collocation");
-                    break;
-                case "男装大片":
-                    result = GetUIString("Men_large");
-                    break;
-                case "美容护肤":
-                    result = GetUIString("SkinCare");
-                    break;
-                case "后雅皮":
-                    result = GetUIString("Yuppie");
-                    break;
-                case "男人帮":
-                    result = GetUIString("Men");
-                    break;
-                case "甲方乙方":
-                    result = GetUIString("A_B");
-                    break;
-                case "美女":
-                    result = GetUIString("Beauty");
-                    break;
-                case "性感写真":
-                    result = GetUIString("Photographic");
-                    break;
-                case "香车美女":
-                    result = GetUIString("RC");
-                    break;
-                case "体育宝贝":
-                    result = GetUIString("SportsBaby");
-                    break;
-                case "时尚":
-                    result = GetUIString("Fashions");
-                    break;
-                case "秀场":
-                    result = GetUIString("Show");
-                    break;
-                case "大片":
-                    result = GetUIString("Swaths");
-                    break;
-                case "搭配":
-                    result = GetUIString("mix");
-                    break;
-                case "娱乐":
-                    result = GetUIString("Ent");
-                    break;
-                case "八卦热点":
-                    result = GetUIString("HotGossip");
-                    break;
-                case "热辣吐槽":
-                    result = GetUIString("Complain");
-                    break;
-                case "玩物":
-                    result = GetUIString("Plaything");
-                    break;
-                case "座驾":
-                    result = GetUIString("Car");
-                    break;
-                case "摄影":
-                    result = GetUIString("Photography");
-                    break;
-                default:
-                    result = input;
-                    break;
-            }
-            return result;
-        }
+        public static List<ScheduleTip> FetchScheduleTableFromHtml(string htmlResources) {
+            var list = new List<ScheduleTip>();
+            try {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(EscapeReplace.ToEscape(htmlResources));
+                var rootNode = doc.DocumentNode;
 
-        #endregion
+                var target = rootNode
+                    .SelectSingleNode("//body[@topmargin='5']")
+                    .SelectNodes("table[@bgcolor='#EAE2F3']").ElementAt(0)
+                    .SelectSingleNode("tr")
+                    .SelectSingleNode("td")
+                    .SelectSingleNode("table[@bgcolor='#F2EDF8']")
+                    .SelectNodes("tr");
+
+                int num = 0;
+                foreach (var tr in target) {
+                    var tds = tr.SelectNodes("td").ToList();
+                    int lick = 0;
+                    if (num > 0) 
+                        foreach (var td in tds) 
+                            try { if (lick > 0) 
+                                    if(td.InnerText!="" && td.InnerText.Substring(1, td.InnerText.Length-1)!="")
+                                        list.Add(new ScheduleTip {
+                                            WholeTitle = td.InnerText.Substring(1, td.InnerText.Length - 2),
+                                            Row = num,
+                                            Column = lick
+                                        });
+                                lick++;
+                            } catch { /* ignore */ }
+                    num++;
+                }
+            } catch (Exception ex) {
+                Debug.WriteLine(ex.StackTrace);
+                return list;
+            }
+            return list;
+        }
 
     }
 }

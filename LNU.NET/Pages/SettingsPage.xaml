@@ -269,7 +269,13 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1004.* / 2016.10.21" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1005.* / 2016.10.21" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="重写登陆API调用" /><LineBreak/>
+                            <Run Text="加入课程表显示" /><LineBreak/>
+                            <Run Text="修复部分小问题" /><LineBreak/>
+                            <Run Text="功能缓慢完善" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1004.1908 / 2016.10.21" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="强化自动登录" /><LineBreak/>
                             <Run Text="允许修改密码" /><LineBreak/>
                             <Run Text="目前仅完成部分页面" /><LineBreak/>

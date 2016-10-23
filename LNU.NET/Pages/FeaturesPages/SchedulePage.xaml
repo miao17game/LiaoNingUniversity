@@ -8,6 +8,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <base:BaseContentPage.Resources>
+        <Style x:Key="HeaderTestStyle" TargetType="TextBlock" >
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="SummaryTestStyle" TargetType="TextBlock" >
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" >
+                <Setter.Value>50,0,0,0</Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Name="EnterBorder">
+            <FadeInThemeAnimation Storyboard.TargetName="popupBorder" />
+        </Storyboard>
+        <Storyboard x:Name="OutBorder">
+            <FadeOutThemeAnimation Storyboard.TargetName="popupBorder" />
+        </Storyboard>
+    </base:BaseContentPage.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Grid_SizeChanged">
 
         <!--#region StateTriggers-->
@@ -30,6 +54,11 @@
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
+                        <Setter Target="TableGrid.(FrameworkElement.MinWidth)" Value="500"/>
+                        <Setter Target="TableGrid.(FrameworkElement.MinHeight)" Value="500"/>
+                        <Setter Target="popup.(FrameworkElement.Margin)">
+                            <Setter.Value>0,160,0,0</Setter.Value>
+                        </Setter>
 
                     </VisualState.Setters>
                 </VisualState>
@@ -50,6 +79,11 @@
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
+                        <Setter Target="TableGrid.(FrameworkElement.MinWidth)" Value="650"/>
+                        <Setter Target="TableGrid.(FrameworkElement.MinHeight)" Value="600"/>
+                        <Setter Target="popup.(FrameworkElement.Margin)">
+                            <Setter.Value>0,250,0,0</Setter.Value>
+                        </Setter>
 
                     </VisualState.Setters>
                 </VisualState>
@@ -108,11 +142,212 @@
                             Foreground="White"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
 
+        <ScrollViewer Margin=" 0,70,0,0">
+            <RelativePanel >
+
+                <!--#region Schedule Table-->
+                <Border Height="50" Name="TableTitle"
+                        Background="#20EEEEEE"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True">
+                    <TextBlock x:Uid="ScheduleTableTitle"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                </Border>
+                <Grid RelativePanel.Below="TableTitle" Name="OutTableGrid">
+                    <Image Name="TableBackImage" 
+                           Stretch="UniformToFill" 
+                           Source="/Assets/15.jpg"/>
+                    <ScrollViewer Name="TableScroll" 
+                              HorizontalScrollBarVisibility="Visible"
+                              HorizontalScrollMode="Enabled"
+                              IsHorizontalRailEnabled="True"
+                              IsHorizontalScrollChainingEnabled="True"
+                              VerticalScrollBarVisibility="Disabled"
+                              VerticalScrollMode="Disabled"
+                              IsVerticalScrollChainingEnabled="False"
+                              IsVerticalRailEnabled="False"
+                              >
+                        <Grid Name="TableGrid" MinWidth="1000" MinHeight="800">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Course List-->
+                <Border Height="50" Name="ListTitle"
+                        Background="#20EEEEEE"
+                        RelativePanel.Below="OutTableGrid"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True">
+                    <TextBlock x:Uid="ScheduleListTitle"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                </Border>
+                <Grid Height="30" 
+                      Name="ListTitle2"
+                        Background="#30EEEEEE"
+                        RelativePanel.Below="ListTitle"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Uid="Course_Title"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Margin="6,3,3,3"/>
+                    <TextBlock x:Uid="Course_ID"
+                                           Grid.Column="1" 
+                                           VerticalAlignment="Center"/>
+                    <TextBlock x:Uid="Course_Place" 
+                                           Grid.Column="2"
+                                           VerticalAlignment="Center"/>
+                    <TextBlock x:Uid="Course_Type"
+                                           Grid.Column="3"
+                                           VerticalAlignment="Center"/>
+                    <TextBlock x:Uid="Course_Time" 
+                                           Grid.Column="4" 
+                                           HorizontalAlignment="Right" 
+                                           VerticalAlignment="Center"
+                                           Margin="3,3,6,3"/>
+                </Grid>
+                <ListView Name="CourseListView" 
+                          RelativePanel.Below="ListTitle2"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.AlignRightWithPanel="True"
+                          ItemContainerStyle="{ThemeResource SpecialListViewItemExpanded}"
+                          SelectionMode="None"
+                          IsItemClickEnabled="True"
+                          ItemClick="ListView_ItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.6*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Title}" 
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Margin="3"/>
+                                <TextBlock Text="{Binding CourseID}" 
+                                           Grid.Column="1" 
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Place}" 
+                                           Grid.Column="2"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ExamType}" 
+                                           Grid.Column="3"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Time}" 
+                                           Grid.Column="4" 
+                                           HorizontalAlignment="Right" 
+                                           VerticalAlignment="Center"
+                                           Margin="3"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!--#endregion-->
+
+            </RelativePanel>
+        </ScrollViewer>
+
         <ProgressRing Name="contentRing" 
                       Width="70" 
                       Height=" 70"
                       IsActive="False"
                       Foreground="{ThemeResource ENRZForeground01}"/>
+
+        <Border Name="popupBorder" Visibility="Collapsed"
+                Background="{ThemeResource DQDPopupBackColor}"/>
+
+        <!--#region Popup-->
+        <Popup x:Name="popup" 
+                   Margin="0,450,0,0"
+                   IsOpen="False"
+                   Closed="popup_Closed"
+                   IsLightDismissEnabled="True" 
+                   SizeChanged="popup_SizeChanged">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PopupThemeTransition 
+                        FromHorizontalOffset="0" 
+                        FromVerticalOffset="400"/>
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Grid Name="grid" Background="{ThemeResource ENRZForeground02}"
+                      Width="{Binding ActualWidth, ElementName=popup, Mode=OneWay}"
+                      Height="{Binding ActualHeight, ElementName=popup, Mode=OneWay}"
+                      Padding="20,15,20,15">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Uid="Course_Title" Style="{StaticResource HeaderTestStyle}" Grid.Row="0" />
+                <TextBlock x:Uid="Course_Lecture" Style="{StaticResource HeaderTestStyle}" Grid.Row="1" />
+                <TextBlock x:Uid="Course_ID" Style="{StaticResource HeaderTestStyle}" Grid.Row="2" />
+                <TextBlock x:Uid="Course_Serial" Style="{StaticResource HeaderTestStyle}" Grid.Row="3" />
+                <TextBlock x:Uid="Course_Property" Style="{StaticResource HeaderTestStyle}" Grid.Row="4" />
+                <TextBlock x:Uid="Course_Type" Style="{StaticResource HeaderTestStyle}" Grid.Row="5" />
+                <TextBlock x:Uid="Course_Place" Style="{StaticResource HeaderTestStyle}" Grid.Row="6" />
+                <TextBlock x:Uid="Course_Time" Style="{StaticResource HeaderTestStyle}" Grid.Row="7" />
+                <TextBlock x:Uid="Course_Weekly" Style="{StaticResource HeaderTestStyle}" Grid.Row="8" />
+                <TextBlock Name="TX01" Style="{StaticResource SummaryTestStyle}" Grid.Row="0" Grid.Column="1"/>
+                <TextBlock Name="TX02" Style="{StaticResource SummaryTestStyle}" Grid.Row="1" Grid.Column="1"/>
+                <TextBlock Name="TX03" Style="{StaticResource SummaryTestStyle}" Grid.Row="2" Grid.Column="1"/>
+                <TextBlock Name="TX04" Style="{StaticResource SummaryTestStyle}" Grid.Row="3" Grid.Column="1"/>
+                <TextBlock Name="TX05" Style="{StaticResource SummaryTestStyle}" Grid.Row="4" Grid.Column="1"/>
+                <TextBlock Name="TX06" Style="{StaticResource SummaryTestStyle}" Grid.Row="5" Grid.Column="1"/>
+                <TextBlock Name="TX07" Style="{StaticResource SummaryTestStyle}" Grid.Row="6" Grid.Column="1"/>
+                <TextBlock Name="TX08" Style="{StaticResource SummaryTestStyle}" Grid.Row="7" Grid.Column="1"/>
+                <TextBlock Name="TX09" Style="{StaticResource SummaryTestStyle}" Grid.Row="8" Grid.Column="1"/>
+            </Grid>
+        </Popup>
+        <!--#endregion-->
 
     </Grid>
 </base:BaseContentPage>
