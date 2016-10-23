@@ -76,12 +76,22 @@ namespace LNU.NET {
                 if (ReLoginPopup.IsOpen) {
                     ReLoginPopup.IsOpen = false;
                 } else {
-                    if (WebViewPage.Current != null)
+                    if (WebViewPage.Current != null) {
                         WebViewPage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
-                    if (ChangePassPage.Current != null)
+                        WebViewPage.Current = null;
+                    }
+                    if (ChangePassPage.Current != null) {
                         ChangePassPage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
-                    if (LoginPage.Current != null)
+                        ChangePassPage.Current = null;
+                    }
+                    if (LoginPage.Current != null) {
                         LoginPage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
+                        LoginPage.Current = null;
+                    }
+                    if (SchedulePage.Current != null) {
+                        SchedulePage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
+                        SchedulePage.Current = null;
+                    }
                     if (ContentPage.Current != null)
                         MainContentFrame.Content = null;
                 }

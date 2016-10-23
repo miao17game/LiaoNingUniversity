@@ -24,6 +24,7 @@ using LNU.Core.Tools;
 using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using Wallace.UWP.Helpers.Helpers;
 
 namespace LNU.NET.Pages.FeaturesPages {
 
@@ -65,7 +66,10 @@ namespace LNU.NET.Pages.FeaturesPages {
             thisPageType = args.ToFetchType;
             thisNaviType = args.NaviType;
 
-            var htmlResources = await LNUWebProcess.LNULogOutCallback(MainPage.LoginClient, args.ToUri.ToString());
+            var cache = await CacheHelpers.ReadSpecificCacheValue(MainPage.LoginCache.UserID);
+            var htmlResources = cache ?? await LNUWebProcess.GetLNUFromLeftRequest(MainPage.LoginClient, args.ToUri.ToString());
+            if (cache == null && htmlResources != null)
+                await CacheHelpers.SaveSpecificCacheValue(MainPage.LoginCache.UserID, htmlResources);
             var nameList = DataProcess.FetchScheduleTableFromHtml(htmlResources);
 
             // Show the schedule table
@@ -85,21 +89,46 @@ namespace LNU.NET.Pages.FeaturesPages {
         
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
             PageSlideOutStart(VisibleWidth > 800 ? false : true);
+            Current = null;
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
             var item = e.ClickedItem as ScheduleItem;
+            PopupBackground.Background = Application.Current.Resources["ENRZForeground02"] as Brush;
             SetPopupOpenStatus(item);
         }
 
         private void popup_SizeChanged(object sender, SizeChangedEventArgs e) {
-            grid.Width = (sender as Popup).ActualWidth;
-            grid.Height = (sender as Popup).ActualHeight;
+            PopupBackground.Width = (sender as Popup).ActualWidth;
+            PopupBackground.Height = (sender as Popup).ActualHeight;
         }
 
         private void popup_Closed(object sender, object e) {
             SetVisibility(popupBorder, false);
             OutBorder.Begin();
+        }
+
+        private async void Refresh_Click(object sender, RoutedEventArgs e) {
+            contentRing.IsActive = true;
+
+            var htmlResources = await LNUWebProcess.GetLNUFromLeftRequest(MainPage.LoginClient, currentUri.ToString());
+            await CacheHelpers.SaveSpecificCacheValue(MainPage.LoginCache.UserID, htmlResources);
+            var nameList = DataProcess.FetchScheduleTableFromHtml(htmlResources);
+
+            TableGrid.Children.Clear();
+            // Show the schedule table
+            InitTableView(nameList);
+
+            var list = DataProcess.FetchScheduleListFromHtml(htmlResources);
+            ScheduleQueue.Clear();
+            ScheduleQueue.AddRange(list);
+            nameList.ForEach(item => { // finish lecture message into ScheduleQueue items .
+                ScheduleQueue.FindAll(i => i.Title == GetSingleTitle(item.WholeTitle)).ForEach(s => { if (s.Lecturer == null) s.Lecturer = GetLecturerName(item.WholeTitle); });
+            });
+
+            CourseListView.ItemsSource = ScheduleQueue;
+
+            contentRing.IsActive = false;
         }
 
         #endregion
@@ -130,10 +159,13 @@ namespace LNU.NET.Pages.FeaturesPages {
                             TipTitle = GetSingleTitle(nameList[find].WholeTitle),
                             TipLecture = GetLecturerName(nameList[find].WholeTitle),
                             ClickVisible = Visibility.Visible,
+                            Tag = column + "-" + row,
                         };
                     if (find != -1) {
+                        newTip.InnerButton.CommandParameter = newTip.Tag;
                         newTip.InnerButton.Click += (sender, args) => {
-                            SetPopupOpenStatus(ScheduleQueue.Find(i => { return i.Title == newTip.TipTitle; }));
+                            PopupBackground.Background = newTip.Background;
+                            SetPopupOpenStatus(ScheduleQueue.Find(i => { return i.Time == (sender as Button).CommandParameter as string; }));
                         };
                     }
                     if (column == 0)

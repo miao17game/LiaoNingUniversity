@@ -10,14 +10,16 @@
 
     <base:BaseContentPage.Resources>
         <Style x:Key="HeaderTestStyle" TargetType="TextBlock" >
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
         <Style x:Key="SummaryTestStyle" TargetType="TextBlock" >
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Thin"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="Margin" >
@@ -157,6 +159,15 @@
                                FontWeight="SemiBold"/>
                 </Border>
                 <Grid RelativePanel.Below="TableTitle" Name="OutTableGrid">
+                    <Button Name="Refresh" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" 
+                            Width="50" Height="50"
+                            Style="{StaticResource MainPageButtonBackHamburgerStyle}"
+                            Content="&#xE117;"
+                            FontWeight="ExtraBold"
+                            Margin="0,-50,0,0"
+                            Click="Refresh_Click"/>
                     <Image Name="TableBackImage" 
                            Stretch="UniformToFill" 
                            Source="/Assets/15.jpg"/>
@@ -308,7 +319,7 @@
                         FromVerticalOffset="400"/>
                 </TransitionCollection>
             </Popup.ChildTransitions>
-            <Grid Name="grid" Background="{ThemeResource ENRZForeground02}"
+            <Grid Name="PopupBackground" Background="{ThemeResource ENRZForeground02}"
                       Width="{Binding ActualWidth, ElementName=popup, Mode=OneWay}"
                       Height="{Binding ActualHeight, ElementName=popup, Mode=OneWay}"
                       Padding="20,15,20,15">
