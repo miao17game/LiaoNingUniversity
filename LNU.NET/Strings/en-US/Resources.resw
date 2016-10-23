@@ -565,4 +565,7 @@
   <data name="Login_Uhandled_Error" xml:space="preserve">
     <value>Unhandled error throws.</value>
   </data>
+  <data name="Internet_Failed" xml:space="preserve">
+    <value>Try login failed, please check your Internet connect.</value>
+  </data>
 </root>

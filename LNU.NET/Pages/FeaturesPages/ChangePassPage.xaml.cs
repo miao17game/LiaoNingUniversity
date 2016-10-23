@@ -1,4 +1,5 @@
 ﻿using static Wallace.UWP.Helpers.Tools.UWPStates;
+using static LNU.Core.Tools.LNUWebProcess;
 
 using LNU.NET.Controls;
 using System;
@@ -50,11 +51,11 @@ namespace LNU.NET.Pages.FeaturesPages {
             }
             if (args.MessageBag as string != null)
                 navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
-            contentRing.IsActive = true;
             currentUri = args.ToUri;
             thisPageType = args.ToFetchType;
             thisNaviType = args.NaviType;
-            Scroll.Source = currentUri;
+            if (MainPage.IsNeedLoginOrNot)
+                RedirectToLogin();
         }
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
@@ -62,49 +63,25 @@ namespace LNU.NET.Pages.FeaturesPages {
         }
 
         private async void Submit_Click(object sender, RoutedEventArgs e) {
+            contentRing.IsActive = true;
+
             var oldPass = PB_Old.Password;
             var newPass = PB_New.Password;
             var confirm = PB_Recofirm.Password;
 
-            await InsertLoginMessage(oldPass, newPass, confirm);
+            var returnMessage = await PostLNUChangePassword(
+                MainPage.LoginClient,
+                string.Format(
+                    "http://jwgl.lnu.edu.cn/pls/wwwbks//bks_login2.ChangePass?p_oldpass={0}&p_newpass1={1}&p_newpass2={2}",
+                    oldPass,
+                    newPass,
+                    confirm));
+
+            if (returnMessage == null)
+                RedirectToLogin();
+            else
+                ChangePasswordAndReport(returnMessage);
         }
-
-        #region WebView Events
-
-        private async void Scroll_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
-            contentRing.IsActive = false;
-            Scroll.ScriptNotify += OnNotify;
-            await AskWebViewToCallback();
-        }
-
-        private void Scroll_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
-
-        }
-
-        private void Scroll_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
-
-        }
-
-        private void OnNotify(object sender, NotifyEventArgs e) {
-            Scroll.ScriptNotify -= OnNotify;
-            var result = JsonHelper.FromJson<string[]>(e.Value);
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(@"<html>
-                                             <head>
-                                             <title>......</title >
-                                             <link href='style.css' rel='stylesheet' type='text/css'>
-                                             <script language='JavaScript1.2' src='nocache.js'></script >
-                                             </head><body>" + result[1] + "</body></html>");
-            var rootNode = doc.DocumentNode;
-
-            if (isFirstLoaded) 
-                RedirectToLoginIfNeed(rootNode);
-            else 
-                ChangePasswordAndReport(rootNode);
-        }
-
-        #endregion
 
         #region Focus Events
 
@@ -142,32 +119,28 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// if need, redirect to login popup because you have no access to do this . you need login to get the access.
         /// </summary>
         /// <param name="rootNode"></param>
-        private void RedirectToLoginIfNeed(HtmlNode rootNode) {
-            var changePostForm = rootNode.SelectSingleNode("//form[@method='POST']");
-            if (changePostForm == null) { // cancel the flag of login-status so that we can login again ( when someone login on another device it may be useful).
-                MainPage.LoginCache.IsInsert = false;
-                MainPage.ReLoginIfStatusIsInvalid(currentUri, thisPageType, navigateTitlePath.Text, thisNaviType);
-                ReportHelper.ReportAttention(GetUIString("Login_First"));
-            } else {
-                // do something? still have no idea......
-            }
-            isFirstLoaded = false;
+        private void RedirectToLogin() {
+            MainPage.LoginCache.IsInsert = false;
+            MainPage.ReLoginIfStatusIsInvalid(currentUri, thisPageType, navigateTitlePath.Text, thisNaviType);
+            ReportHelper.ReportAttention(GetUIString("Login_First"));
         }
 
-        private void ChangePasswordAndReport(HtmlNode rootNode) {
+        private void ChangePasswordAndReport(string returnMessage) {
+            contentRing.IsActive = false;
+            var doc = new HtmlDocument();
+            doc.LoadHtml(returnMessage);
+            var rootNode = doc.DocumentNode;
             var requestResult = rootNode.SelectSingleNode("//span[@class='t']");
             if (requestResult != null) {
                 switch (requestResult.InnerText.Substring(1, requestResult.InnerText.Length - 2)) {
                     case "新密码输入不一致!":
                         isFirstLoaded = true;
-                        Scroll.Source = currentUri;
                         PB_New.Password = "";
                         PB_Recofirm.Password = "";
                         ReportHelper.ReportAttention(GetUIString("Login_Reconfirm_Failed"));
                         break;
                     case "密码输入有误!":
                         isFirstLoaded = true;
-                        Scroll.Source = currentUri;
                         ReportHelper.ReportAttention(GetUIString("Login_Pass_Input_Error"));
                         break;
                     case "你已经改变了你的密码!":
@@ -176,7 +149,6 @@ namespace LNU.NET.Pages.FeaturesPages {
                         break;
                     default:
                         isFirstLoaded = true;
-                        Scroll.Source = currentUri;
                         ReportHelper.ReportAttention(GetUIString("Login_Uhandled_Error"));
                         break;
                 }
@@ -184,57 +156,6 @@ namespace LNU.NET.Pages.FeaturesPages {
                 // e...oh...
             }
         }
-
-        #region JS Founctions Cab
-
-        /// <summary>
-        /// insert id and password into webview from popup, and after that, click the submit button.
-        /// </summary>
-        /// <param name="user">your cache id</param>
-        /// <param name="pass">your cache password</param>
-        /// <returns></returns>
-        private async Task InsertLoginMessage(string oldPass, string newPass, string cofirm) {
-            try { // insert js and run it, so that we can insert message into the target place and click the submit button.
-                var js001 = $@"document.getElementsByName('p_oldpass')[0].innerText = '{oldPass}' ;";
-                await Scroll.InvokeScriptAsync("eval", new[] { js001 });
-                var js002 = $@"document.getElementsByName('p_newpass1')[0].innerText = '{newPass}' ;";
-                await Scroll.InvokeScriptAsync("eval", new[] { js002 });
-                var js003 = $@"document.getElementsByName('p_newpass2')[0].innerText = '{cofirm}' ;";
-                await Scroll.InvokeScriptAsync("eval", new[] { js003 });
-                var newJSFounction = $@"
-                            var node_list = document.getElementsByTagName('input');
-                                for (var i = 0; i < node_list.length; i++) {"{"}
-                                var node = node_list[i];
-                                    if (node.getAttribute('type') == 'submit') 
-                                        node.click();
-                                {"}"} ";
-                await Scroll.InvokeScriptAsync("eval", new[] { newJSFounction });
-            } catch (Exception e) { // if any error throws, reset the UI and report errer.
-                Submit.IsEnabled = true;
-                SubitRing.IsActive = false;
-                ReportHelper.ReportAttention("Error");
-                Debug.WriteLine(e.StackTrace);
-            }
-        }
-
-        /// <summary>
-        /// send message to windows so that we can get message of login-success whether or not.
-        /// </summary>
-        /// <returns></returns>
-        private async Task AskWebViewToCallback() { // js to callback
-            try {
-                var js = @"window.external.notify(
-                                    JSON.stringify(
-                                        new Array (
-                                            document.body.innerText,
-                                            document.body.innerHTML)));";
-                await Scroll.InvokeScriptAsync("eval", new[] { js });
-            } catch {
-                Debug.WriteLine("JS Error");
-            } 
-        }
-
-        #endregion
 
         #endregion
 

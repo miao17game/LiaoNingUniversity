@@ -1,5 +1,6 @@
 ﻿#region Using
 using static Wallace.UWP.Helpers.Tools.UWPStates;
+using static LNU.Core.Tools.LNUWebProcess;
 using static LNU.NET.MainPage.InnerResources;
 
 using LNU.Core.Models;
@@ -26,6 +27,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using LNU.NET.Pages.FeaturesPages;
+using Windows.Web.Http;
 #endregion
 
 namespace LNU.NET {
@@ -121,6 +123,8 @@ namespace LNU.NET {
 
         #region Methods
 
+        #region Methods for this
+
         private void InitMainPageState() {
             NavigateManager.BackRequested += OnBackRequested;
             var isDarkOrNot = (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsDarkThemeOrNot) ?? true;
@@ -128,6 +132,7 @@ namespace LNU.NET {
             ChangeTitlePath(1, navigateTitlePath.Text);
             StatusBarInit.InitInnerDesktopStatusBar(true);
             Window.Current.SetTitleBar(BasePartBorder);
+            LoginClient = UnRedirectHttpClient;
             IfNeedAdapteVitualNavigationBar();
             InitSlideRecState();
         }
@@ -157,13 +162,32 @@ namespace LNU.NET {
             }
         }
 
+        private void GetResources() {
+            NaviBarResouces.Source = HamburgerResList;
+        }
+
+
+        /// <summary>
+        /// Start the dark animation when hamburger menu opened.
+        /// </summary>
+        private void OnPaneIsOpened() {
+            SetVisibility(DarkDivideBorder, true);
+            EnterBorder.Begin();
+        }
+
+        #endregion
+
+        #region Global methods
+
+        public static bool IsNeedLoginOrNot { get { return !LoginCache.IsInsert || IsMoreThan30Minutes(LoginCache.CacheMiliTime, DateTime.Now); } }
+
         /// <summary>
         /// well....you can know what i am doing by the name of the method......
         /// </summary>
         /// <param name="oldTime"></param>
         /// <param name="newTime"></param>
         /// <returns></returns>
-        public static bool IsMoreThan30Minutes(DateTime oldTime, DateTime newTime) {
+        private static bool IsMoreThan30Minutes(DateTime oldTime, DateTime newTime) {
             return
                 newTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds -
                 oldTime.Subtract(new DateTime(1970, 1, 1, 8, 0, 0)).TotalSeconds >=
@@ -207,10 +231,6 @@ namespace LNU.NET {
             }
         }
 
-        private void GetResources() { 
-            NaviBarResouces.Source = HamburgerResList;
-        }
-
         /// <summary>
         /// Make the page more adaptive to the settings item : "Divide Screen Mode"
         /// </summary>
@@ -219,9 +239,9 @@ namespace LNU.NET {
         /// <param name="rangeNumber">default number of the range to divide, is 800</param>
         /// <param name="isDivideScreen">make sure if need to divide screen</param>
         public void SetChildPageMargin(
-            Page currentPage, 
-            double matchNumber,  
-            bool isDivideScreen , 
+            Page currentPage,
+            double matchNumber,
+            bool isDivideScreen,
             double rangeNumber = 800) {
             if (matchNumber > rangeNumber && !IsMobile && isDivideScreen)
                 currentPage.Margin = new Thickness(3, 0, 0, 0);
@@ -261,12 +281,12 @@ namespace LNU.NET {
         /// <param name="returnMessage">return-messageBag</param>
         /// <param name="fromNaviType">return-navigateType</param>
         public static void ReLoginIfStatusIsInvalid(
-            Uri fromUri, 
-            DataFetchType fromFetchType = DataFetchType.NULL, 
-            object returnMessage = null, 
+            Uri fromUri,
+            DataFetchType fromFetchType = DataFetchType.NULL,
+            object returnMessage = null,
             NavigateType fromNaviType = NavigateType.Webview) {
 
-            if (LoginCache.IsInsert && !IsMoreThan30Minutes(LoginCache.CacheMiliTime, DateTime.Now))
+            if (!IsNeedLoginOrNot)
                 return;
             Current.ReLoginPopup.IsOpen = true;
             Current.NavigateToBase?.Invoke(
@@ -287,17 +307,14 @@ namespace LNU.NET {
                 GetPageType(NavigateType.ReLogin));
         }
 
-        /// <summary>
-        /// Start the dark animation when hamburger menu opened.
-        /// </summary>
-        private void OnPaneIsOpened() {
-            SetVisibility(DarkDivideBorder, true);
-            EnterBorder.Begin();
-        }
+        #endregion
 
         #endregion
 
         #region Inner Resources class and Structs
+
+        #region Resources Helper 
+
         /// <summary>
         /// Resources Helper 
         /// </summary>
@@ -386,6 +403,8 @@ namespace LNU.NET {
             };
             #endregion
 
+            #region Type
+
             public static Type GetPageType(NavigateType type) { return pagesMaps.ContainsKey(type) ? pagesMaps[type] : null; }
             static private Dictionary<NavigateType, Type> pagesMaps = new Dictionary<NavigateType, Type> {
                 { NavigateType.BaseList,typeof(BaseListPage)},
@@ -398,6 +417,10 @@ namespace LNU.NET {
                 { NavigateType.ChangePassword,typeof(ChangePassPage)},
                 { NavigateType.Schedule,typeof(SchedulePage)},
             };
+
+            #endregion
+
+            #region Frame
 
             public static Frame GetFrameInstance(NavigateType type) { return frameMaps.ContainsKey(type) ? frameMaps[type] : null; }
             static private Dictionary<NavigateType, Frame> frameMaps = new Dictionary<NavigateType, Frame> {
@@ -412,13 +435,23 @@ namespace LNU.NET {
                 { NavigateType.Schedule,Current.ContentFrame},
             };
 
+            #endregion
+
+            #region Child page for cache
+
             public static void AddBaseListPageInstance(string key, BaseListPage instance) { if (!baseListPageMap.ContainsKey(key)) { baseListPageMap.Add(key, instance); } }
             public static BaseListPage GetPageInstance(string key) { return baseListPageMap.ContainsKey(key) ? baseListPageMap[key] : null; }
             public static bool IfContainsPageInstance(string key) { return baseListPageMap.ContainsKey(key); }
             static private Dictionary<string, BaseListPage> baseListPageMap = new Dictionary<string, BaseListPage> {
             };
 
+            #endregion
+
         }
+
+        #endregion
+
+        #region Structs
 
         /// <summary>
         /// struct for route title saving.
@@ -442,7 +475,10 @@ namespace LNU.NET {
             public string UserTime { get; set; }
             public DateTime CacheMiliTime { get; set; }
             public bool IsInsert { get; set; }
+            public HttpCookie Cookie { get; set; }
         }
+
+        #endregion
 
         #endregion
 
@@ -506,22 +542,29 @@ namespace LNU.NET {
         #endregion
 
         #region Properties and state
-        public static MainPage Current;
-        public TextBlock NavigateTitlePath;
-        public Frame MainContentFrame;
-        public Frame ReLoginPopupFrame;
-        public ProgressRing BaseListRing;
-        public ListBox HamburgerBox;
-        public Popup ReLoginPopup;
+
+        public static HttpClient LoginClient { get; set; }
+        public static MainPage Current { get; private set; }
+        public TextBlock NavigateTitlePath { get; private set; }
+        public Frame MainContentFrame { get; private set; }
+        public Frame ReLoginPopupFrame { get; private set; }
+        public ProgressRing BaseListRing { get; private set; }
+        public ListBox HamburgerBox { get; private set; }
+        public Popup ReLoginPopup { get; private set; }
+
         private bool isNeedClose = false;
-        public delegate void NavigationEventHandler(object sender, NavigateParameter parameter, Frame frame, Type type);
-        public NavigationEventHandler NavigateToBase = (sender, parameter, frame, type) => { frame.Navigate(type, parameter); };
-        public static PathTitle NaviPathTitle = new PathTitle();
-        public static LoginCookies LoginCache = new LoginCookies { IsInsert = false };
+
         public const string HomeHost = "http://jwgl.lnu.edu.cn/";
         public const string HomeHostInsert = "http://jwgl.lnu.edu.cn";
         public const string LoginPath = "http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html";
-        #endregion
 
-    }
+        public delegate void NavigationEventHandler(object sender, NavigateParameter parameter, Frame frame, Type type);
+        public NavigationEventHandler NavigateToBase = (sender, parameter, frame, type) => { frame.Navigate(type, parameter); };
+
+        public static PathTitle NaviPathTitle = new PathTitle();
+        public static LoginCookies LoginCache = new LoginCookies { IsInsert = false };
+
+    #endregion
+
+}
 }

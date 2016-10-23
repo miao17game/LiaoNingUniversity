@@ -566,4 +566,7 @@
   <data name="Login_Uhandled_Error" xml:space="preserve">
     <value>出现未知错误</value>
   </data>
+  <data name="Internet_Failed" xml:space="preserve">
+    <value>登陆初始化失败，请检查网络</value>
+  </data>
 </root>

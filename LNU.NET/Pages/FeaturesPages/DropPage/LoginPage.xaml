@@ -38,9 +38,9 @@
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Margin)" >
                             <Setter.Value>0,20,0,0</Setter.Value>
                         </Setter>
-                        <!--<Setter Target="Scroll.(FrameworkElement.Margin)" >
+                        <Setter Target="Scroll.(FrameworkElement.Margin)" >
                             <Setter.Value>0,70,0,0</Setter.Value>
-                        </Setter>-->
+                        </Setter>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
@@ -81,9 +81,9 @@
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Margin)" >
                             <Setter.Value>0,20,0,0</Setter.Value>
                         </Setter>
-                        <!--<Setter Target="Scroll.(FrameworkElement.Margin)" >
+                        <Setter Target="Scroll.(FrameworkElement.Margin)" >
                             <Setter.Value>0,70,0,0</Setter.Value>
-                        </Setter>-->
+                        </Setter>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
@@ -148,12 +148,12 @@
                             Foreground="White"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
 
-        <!--<WebView Name="Scroll" 
+        <WebView Name="Scroll" 
                  Margin="0,70,0,0"
                  DefaultBackgroundColor="{ThemeResource ENRZForeground01}" 
                  DOMContentLoaded="Scroll_DOMContentLoaded"
                  NavigationStarting="Scroll_NavigationStarting"
-                 ContentLoading="Scroll_ContentLoading"/>-->
+                 ContentLoading="Scroll_ContentLoading"/>
 
         <ProgressRing Name="contentRing" 
                       Width="70" 

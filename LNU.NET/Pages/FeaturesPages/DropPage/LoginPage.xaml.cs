@@ -1,6 +1,5 @@
 ﻿#region Using
 using static Wallace.UWP.Helpers.Tools.UWPStates;
-using static LNU.Core.Tools.LNUWebProcess;
 
 using LNU.Core.Models;
 using LNU.Core.Tools;
@@ -32,7 +31,6 @@ using System.Text;
 using System.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using LNU.NET.Controls;
-using Windows.Web.Http;
 #endregion
 
 namespace LNU.NET.Pages.FeaturesPages {
@@ -50,8 +48,6 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Events
 
-        #region Page and Controls Events
-
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
             MainPage.Current.SetChildPageMargin(
                 currentPage: this,
@@ -59,7 +55,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 isDivideScreen: isDivideScreen);
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e) {
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
             var args = e.Parameter as NavigateParameter;
             if (args == null || args.ToUri == null) { // make sure the navigation action is right.
@@ -70,7 +66,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             currentUri = args.ToUri;
             thisPageType = args.ToFetchType;
 
-            if (args.MessageToReturn != null) { // id need, save the massage to be sent to 'from-url'.
+            if(args.MessageToReturn != null) {
                 fromUri = args.MessageToReturn.FromUri;
                 fromPageType = args.MessageToReturn.FromFetchType;
                 fromNavigateTitle = args.MessageToReturn.ReturnMessage as string;
@@ -79,28 +75,16 @@ namespace LNU.NET.Pages.FeaturesPages {
 
             if (args.MessageBag as string != null) // if there is a title to be saved, save it.
                 navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
-
             if (thisPageType == DataFetchType.LNU_Index_Login || thisPageType == DataFetchType.LNU_Index_ReLogin) { // if need login, do something...
 
                 InitLoginPopupState();
 
-                if (MainPage.IsNeedLoginOrNot) { // need to login.
+                SetVisibility(Scroll, false);
+                Submit.IsEnabled = Abort.IsEnabled = false;
+
+                if (!MainPage.LoginCache.IsInsert || MainPage.IsMoreThan30Minutes(MainPage.LoginCache.CacheMiliTime, DateTime.Now))  // need to login.
                     SetVisibility(MainPopupGrid, true);
-
-                    // DO ASYNC WORK ... MAYBE AWAIT
-
-                    PasswordCheckBox.IsChecked = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsSavePassword) ?? false;
-                    AutoLoginCheckBox.IsChecked = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsAutoLogin) ?? false;
-                    AutoLoginCheckBox.IsChecked = PasswordCheckBox.IsChecked ?? false ? AutoLoginCheckBox.IsChecked : false;
-                    AutoLoginCheckBox.IsEnabled = PasswordCheckBox.IsChecked ?? false;
-
-                    EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
-                    PasswordDecryption();
-
-                    if (AutoLoginCheckBox.IsChecked ?? false)
-                        await ClickSubmitButtonIfAuto();
-
-                } else { // don not need to login but only get the login-message from main-page.
+                else { // don not need to login but only get the login-message from mainpage.
 
                     UserName.Text = MainPage.LoginCache.UserName;
                     UserID.Text = MainPage.LoginCache.UserID;
@@ -114,6 +98,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 }
 
             }
+            Scroll.Source = currentUri;
         }
 
         private void MainPopupGrid_SizeChanged(object sender, SizeChangedEventArgs e) {
@@ -123,6 +108,54 @@ namespace LNU.NET.Pages.FeaturesPages {
         private void LoginPopup_SizeChanged(object sender, SizeChangedEventArgs e) {
             contentGrid.Width = (sender as Popup).ActualWidth;
             contentGrid.Height = (sender as Popup).ActualHeight;
+        }
+
+        #region Web Events
+
+        /// <summary>
+        /// for log-out action completed check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void Scroll_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args) {
+            Scroll.NavigationCompleted -= Scroll_NavigationCompleted;
+            ReportHelper.ReportAttention(GetUIString("LogOut_Success"));
+            isFirstLoaded = true;
+            MainPage.Current.NavigateToBase?.Invoke(
+                this,
+                new NavigateParameter { ToFetchType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, ToUri = currentUri , NaviType = NavigateType.Login},
+                MainPage.InnerResources.GetFrameInstance(NavigateType.Login),
+                typeof(LoginPage));
+        }
+
+        private void Scroll_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args) {
+
+        }
+
+        private void Scroll_ContentLoading(WebView sender, WebViewContentLoadingEventArgs args) {
+
+        }
+
+        /// <summary>
+        /// handled when webview loaded successfully.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private async void Scroll_DOMContentLoaded(WebView sender, WebViewDOMContentLoadedEventArgs args) {
+            contentRing.IsActive = false;
+            await SetLoginPageStateIfNeed();
+        }
+
+        /// <summary>
+        /// receive message when the js in the webview send message to window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnScriNotifypt(object sender, NotifyEventArgs e) {
+            Scroll.ScriptNotify -= OnScriNotifypt;
+            Submit.IsEnabled = true;
+            SubitRing.IsActive = false;
+            CheckIfLoginSucceed(JsonHelper.FromJson<string[]>(e.Value)[1]);
         }
 
         #endregion
@@ -157,7 +190,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         }
 
         /// <summary>
-        /// send login-command to the target apis.
+        /// send login-command to the target web or apis.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -165,24 +198,13 @@ namespace LNU.NET.Pages.FeaturesPages {
             await ClickSubmitButtonIfAuto();
         }
 
-        private async void LogOutButton_Click(object sender, RoutedEventArgs e) {
+        private void LogOutButton_Click(object sender, RoutedEventArgs e) {
             StatusRing.IsActive = true;
             LogOutButton.IsEnabled = false;
+            Scroll.NavigationCompleted += Scroll_NavigationCompleted;
+            MainPage.LoginCache.IsInsert = false;
+            Scroll.Source = new Uri("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.Logout");
             SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
-            var message = await LNULogOutCallback(MainPage.LoginClient, "http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.Logout");
-            if (message == null)
-                Debug.WriteLine("logout_failed");
-            else {
-                MainPage.LoginCache.IsInsert = false;
-                UnRedirectCookiesManager.DeleteCookie(MainPage.LoginCache.Cookie);
-                RefreshHttpClient();
-                ReportHelper.ReportAttention(GetUIString("LogOut_Success"));
-                MainPage.Current.NavigateToBase?.Invoke(
-                    this,
-                    new NavigateParameter { ToFetchType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, ToUri = currentUri, NaviType = NavigateType.Login },
-                    MainPage.InnerResources.GetFrameInstance(NavigateType.Login),
-                    typeof(LoginPage));
-            }
         }
 
         #endregion
@@ -218,8 +240,6 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Methods
 
-        #region State and Command
-
         /// <summary>
         /// make ui of popup right anyway.
         /// </summary>
@@ -236,7 +256,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// <summary>
         /// Open methods to change state when the theme mode changed.
         /// </summary>
-        public void ChangeStateByRequestTheme() {
+        public static void ChangeStateByRequestTheme() {
 
         }
 
@@ -255,15 +275,84 @@ namespace LNU.NET.Pages.FeaturesPages {
 
             // set the abort button with keybord-focus, so that the vitual keyboad in the mobile device with disappear.
             Abort.Focus(FocusState.Keyboard);
+            await InsertLoginMessage(user, pass);
+        }
 
-            //await InsertLoginMessage(user, pass);
-            var loginReturn = await PostLNULoginCallback(MainPage.LoginClient, user, pass);
-            if(loginReturn!=null)
-                CheckIfLoginSucceed(loginReturn);
-            else { 
-                ReportHelper.ReportAttention(GetUIString("Internet_Failed"));
-                Submit.IsEnabled = true;
-                SubitRing.IsActive = false;
+        /// <summary>
+        /// Init login-page state, and if need, fetch the message of login-action whether action succed or not.
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetLoginPageStateIfNeed() {
+            if (( thisPageType == DataFetchType.LNU_Index_Login || thisPageType == DataFetchType.LNU_Index_ReLogin ) && isFirstLoaded) {
+
+                // DO ASYNC WORK ... MAYBE AWAIT
+
+                PasswordCheckBox.IsChecked = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsSavePassword) ?? false;
+                AutoLoginCheckBox.IsChecked = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsAutoLogin) ?? false;
+                AutoLoginCheckBox.IsChecked = PasswordCheckBox.IsChecked ?? false ? AutoLoginCheckBox.IsChecked : false;
+                AutoLoginCheckBox.IsEnabled = PasswordCheckBox.IsChecked ?? false;
+
+                EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
+                PasswordDecryption();
+
+                Scroll.ScriptNotify += OnScriNotifypt;
+            }
+            try {
+                if (isFirstLoaded) { // if first comes, auto-login if need.
+                    Submit.IsEnabled = Abort.IsEnabled = true;
+                    if (AutoLoginCheckBox.IsChecked ?? false)
+                        await ClickSubmitButtonIfAuto();
+                    return;
+                } // if not, ask the webview to send message back to window.
+                await AskWebViewToCallback();
+            } catch (Exception e) { // if any error throws, toast to foreground and clear the auto-login cache to prevent more errors.
+                Debug.WriteLine(e.StackTrace);
+                ReportHelper.ReportAttention(GetUIString("UnhandledError"));
+                SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
+            } finally { // anyway, mark the flag that the first coming is over, this page state will go to next step for receiving message from webview.
+                isFirstLoaded = false;
+            }
+        }
+
+        #region Password Encryption & Decryption
+
+        private void PasswordEncryption(string pass) {
+            if (PasswordCheckBox.IsChecked ?? false) {
+                try { // password encryption is over here.
+                    var finalToSave = CipherEncryption(
+                        pass,
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        256,
+                        out binaryStringEncoding,
+                        out ibufferVector,
+                        out cryptographicKey);
+
+                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, finalToSave.ToArray());
+
+                } catch (Exception e) { // if any error throws, report in debug range and do nothing in the foreground.
+                    Debug.WriteLine(e.StackTrace);
+                }
+            }
+        }
+
+        private void PasswordDecryption() {
+            try { // password decryption over here.
+                var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
+                if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
+                    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+                    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(collForKeyAndIv));
+                    ibufferVector = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
+
+                    PasswordBox.Password = CipherDecryption( // decryption the message.
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        CryptographicBuffer.CreateFromByteArray(Password),
+                        ibufferVector,
+                        BinaryStringEncoding.Utf8,
+                        cryptographicKey);
+                }
+            } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
+                Debug.WriteLine(e.StackTrace);
+                SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
             }
         }
 
@@ -274,25 +363,24 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// <summary>
         /// if login failed, re-navigate to the target Uri, otherwise, show status detail of you.
         /// </summary>
-        /// <param name="htmlContent">html of websites</param>
-        private void CheckIfLoginSucceed(LoginReturnBag loginReturn) {
+        /// <param name="htmlBodyContent">html of websites</param>
+        private void CheckIfLoginSucceed(string htmlBodyContent) {
             var doc = new HtmlDocument();
-            if(loginReturn.HtmlResouces == null) { // login failed, redirect to the login page.
-                ReportHelper.ReportAttention(GetUIString("Login_Failed"));
-                SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
-                RedirectToLoginAgain();
-                return;
-            }
-            doc.LoadHtml(loginReturn.HtmlResouces);
+            doc.LoadHtml(@"<html>
+                                             <head>
+                                             <title>......</title >
+                                             <link href='style.css' rel='stylesheet' type='text/css'>
+                                             <script language='JavaScript1.2' src='nocache.js'></script >
+                                             </head><body>" + htmlBodyContent + "</body></html>");
             var rootNode = doc.DocumentNode;
             var studentStatus = rootNode.SelectSingleNode("//span[@class='t']");
             if (studentStatus == null) { // login failed, redirect to the login page.
                 ReportHelper.ReportAttention(GetUIString("Login_Failed"));
                 SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
+                isFirstLoaded = true;
                 RedirectToLoginAgain();
-                return;
             } else { // login successful, save login status and show it.
-                SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
+                SaveLoginStatus(studentStatus);
                 LoginPopup.IsOpen = false;
                 SetVisibility(MainPopupGrid, false);
                 if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
@@ -354,7 +442,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// save status message in MainPage to be controlled.
         /// </summary>
         /// <param name="item"></param>
-        private void SaveLoginStatus(HtmlNode item, HttpCookie cookie) {
+        private void SaveLoginStatus(HtmlNode item) {
             var message = item.InnerText.Replace(" ", "@").Replace(",", "@");
             var mess = message.Split('@');
             ReportHelper.ReportAttention(GetUIString("Login_Success"));
@@ -367,50 +455,50 @@ namespace LNU.NET.Pages.FeaturesPages {
             MainPage.LoginCache.UserTime = UserTime.Text = mess[3] + GetUIString("TimeAnoutation");
             MainPage.LoginCache.UserIP = UserIP.Text = new Regex("\n").Replace(mess[4].Substring(5, mess[4].Length - 5), "");
             MainPage.LoginCache.CacheMiliTime = DateTime.Now;
-            MainPage.LoginCache.Cookie = cookie;
         }
 
         #endregion
 
-        #region Password Encryption & Decryption
+        #region JS Founctions Cab
 
-        private void PasswordEncryption(string pass) {
-            if (PasswordCheckBox.IsChecked ?? false) {
-                try { // password encryption is over here.
-                    var finalToSave = CipherEncryption(
-                        pass,
-                        SymmetricAlgorithmNames.AesCbcPkcs7,
-                        out binaryStringEncoding,
-                        out ibufferVector,
-                        out cryptographicKey);
-
-                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, finalToSave.ToArray());
-
-                } catch (Exception e) { // if any error throws, report in debug range and do nothing in the foreground.
-                    Debug.WriteLine(e.StackTrace);
-                }
+        /// <summary>
+        /// insert id and password into webview from popup, and after that, click the submit button.
+        /// </summary>
+        /// <param name="user">your cache id</param>
+        /// <param name="pass">your cache password</param>
+        /// <returns></returns>
+        private async Task InsertLoginMessage(string user, string pass) {
+            try { // insert js and run it, so that we can insert message into the target place and click the submit button.
+                var newJSFounction = $@"
+                            var node_list = document.getElementsByTagName('input');
+                                for (var i = 0; i < node_list.length; i++) {"{"}
+                                var node = node_list[i];
+                                    if (node.getAttribute('type') == 'submit') 
+                                        node.click();
+                                    if (node.getAttribute('type') == 'text') 
+                                        node.innerText = '{user}';
+                                    if (node.getAttribute('type') == 'password') 
+                                        node.innerText = '{pass}';
+                                {"}"} ";
+                await Scroll.InvokeScriptAsync("eval", new[] { newJSFounction });
+            } catch ( Exception ) { // if any error throws, reset the UI and report errer.
+                Submit.IsEnabled = true;
+                SubitRing.IsActive = false;
+                ReportHelper.ReportAttention("Error");
             }
         }
 
-        private void PasswordDecryption() {
-            try { // password decryption over here.
-                var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
-                if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
-                    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
-                    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(collForKeyAndIv));
-                    ibufferVector = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
-
-                    PasswordBox.Password = CipherDecryption( // decryption the message.
-                        SymmetricAlgorithmNames.AesCbcPkcs7,
-                        CryptographicBuffer.CreateFromByteArray(Password),
-                        ibufferVector,
-                        BinaryStringEncoding.Utf8,
-                        cryptographicKey);
-                }
-            } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
-                Debug.WriteLine(e.StackTrace);
-                SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
-            }
+        /// <summary>
+        /// send message to windows so that we can get message of login-success whether or not.
+        /// </summary>
+        /// <returns></returns>
+        private async Task AskWebViewToCallback() { // js to callback
+            var js = @"window.external.notify(
+                                    JSON.stringify(
+                                        new Array (
+                                            document.body.innerText,
+                                            document.body.innerHTML)));";
+            await Scroll.InvokeScriptAsync("eval", new[] { js });
         }
 
         #endregion
@@ -420,10 +508,10 @@ namespace LNU.NET.Pages.FeaturesPages {
         public IBuffer CipherEncryption(
             string strMsg,
             string strAlgName,
+            uint keyLength,
             out BinaryStringEncoding encoding,
             out IBuffer iv,
-            out CryptographicKey key,
-            uint keyLength = 128) { 
+            out CryptographicKey key) { 
             iv = null;  // Initialize the initialization vector because some type encryptions do not need it.
             encoding = BinaryStringEncoding.Utf8;
 
@@ -440,7 +528,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                     throw new Exception("Message buffer length must be multiple of block length.");
 
             // Create a symmetric key.
-            // IBuffer keyMaterial = CryptographicBuffer.GenerateRandom(keyLength);     // drop it.
+            // IBuffer keyMaterial = CryptographicBuffer.GenerateRandom(keyLength);
             IBuffer keyMaterial = CryptographicBuffer.CreateFromByteArray(collForKeyAndIv);
             key = objAlg.CreateSymmetricKey(keyMaterial);
 
@@ -487,13 +575,11 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Properties and state
 
-        #region Fields for this
         public static LoginPage Current;
         private BinaryStringEncoding binaryStringEncoding;
         private IBuffer ibufferVector;
         private CryptographicKey cryptographicKey;
         private byte[] collForKeyAndIv = new byte[16] { 234, 123, 231, 44, 25, 16, 7, 68, 11, 206, 137, 44, 95, 67, 173, 108 };
-        #endregion
 
         #region Fields for return
         private Uri fromUri;
