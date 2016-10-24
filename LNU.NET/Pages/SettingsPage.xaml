@@ -185,6 +185,7 @@
                                    Style="{StaticResource SummaryTextStyle}"/>
                             </StackPanel>
                             <ComboBox Name="LanguageCombox" 
+                                      Style="{ThemeResource SpecialComboBox}"
                                       HorizontalAlignment="Right"
                                       MinWidth="150"
                                       SelectionChanged="LanguageCombox_SelectionChanged">
@@ -209,10 +210,15 @@
                             </StackPanel>
                             <Grid HorizontalAlignment="Right">
                                 <Button Name="CacheClearBtn" 
-                                    x:Uid="ClearCache"
-                                    HorizontalAlignment="Right"
-                                    Margin="0,0,5,0"
-                                    Click="CacheClearBtn_Click"/>
+                                        x:Uid="ClearCache"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,0,5,0"
+                                        FontSize="16"
+                                        Click="CacheClearBtn_Click"
+                                        Style="{StaticResource SpecialButtonAbort}" 
+                                        Background="{ThemeResource ENRZForeground02}"
+                                        VerticalAlignment="Stretch">
+                                </Button>
                                 <ProgressRing Name="ClearRing"
                                               Foreground="{ThemeResource ENRZForeground01}"
                                               Width="30"
@@ -272,6 +278,7 @@
                             <Run Text="Version：1.1006.* / 2016.10.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="重写日间模式配色" /><LineBreak/>
                             <Run Text="完善课表详细页面风格" /><LineBreak/>
+                            <Run Text="美化部分控件的风格" /><LineBreak/>
                             <Run Text="修复两个小错误" /><LineBreak/>
                             <Run Text="增加主页内容占位" /><LineBreak/><LineBreak/>
                             
