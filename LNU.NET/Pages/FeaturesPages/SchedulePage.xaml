@@ -95,6 +95,10 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
 
+                        <Setter Target="popup.(FrameworkElement.Margin)">
+                            <Setter.Value>150,250,0,0</Setter.Value>
+                        </Setter>
+
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DesktopExtra_Tablet">
@@ -102,6 +106,10 @@
                         <AdaptiveTrigger MinWindowHeight="700" MinWindowWidth="1300"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+
+                        <Setter Target="popup.(FrameworkElement.Margin)">
+                            <Setter.Value>350,350,0,0</Setter.Value>
+                        </Setter>
 
                     </VisualState.Setters>
                 </VisualState>
@@ -124,7 +132,7 @@
         </Grid.Transitions>
 
         <Border Name="BasePartBorder" 
-                Background="{ThemeResource ENRZForeground01}" 
+                Background="{ThemeResource LNUForeground01}" 
                 Height="70" 
                 VerticalAlignment="Top">
             <TextBlock Name="navigateTitlePath"
@@ -133,18 +141,29 @@
                        FontSize="20"
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"
-                       Foreground="White"/>
+                       FontWeight="Bold"
+                       Foreground="{ThemeResource LNUForeground02}"/>
         </Border>
+        <Rectangle Height="0.5" 
+                   Margin=" 0,69.5,0,0" 
+                   VerticalAlignment="Top" 
+                   Opacity="0.7"
+                   Fill="{ThemeResource ENRZForeground02}"/>
         <Button Name="BaseHamburgerButton"
                             VerticalAlignment="Top"
                             Content="&#xE26C;"
                             Width="70"
                             Height="70"
                             Click="BaseHamburgerButton_Click"
-                            Foreground="White"
+                            Foreground="{ThemeResource LNUForeground02}"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
 
         <ScrollViewer Margin=" 0,70,0,0">
+            <ScrollViewer.Transitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="300"/>
+                </TransitionCollection>
+            </ScrollViewer.Transitions>
             <RelativePanel >
 
                 <!--#region Schedule Table-->
@@ -182,6 +201,11 @@
                               IsVerticalRailEnabled="False"
                               >
                         <Grid Name="TableGrid" MinWidth="1000" MinHeight="800">
+                            <Grid.Transitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </Grid.Transitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition/>
@@ -247,7 +271,7 @@
                                            VerticalAlignment="Center"/>
                     <TextBlock x:Uid="Course_Time" 
                                            Grid.Column="4" 
-                                           HorizontalAlignment="Right" 
+                                           HorizontalAlignment="Center" 
                                            VerticalAlignment="Center"
                                            Margin="3,3,6,3"/>
                 </Grid>
@@ -284,7 +308,7 @@
                                            VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding Time}" 
                                            Grid.Column="4" 
-                                           HorizontalAlignment="Right" 
+                                           HorizontalAlignment="Center" 
                                            VerticalAlignment="Center"
                                            Margin="3"/>
                             </Grid>
@@ -356,6 +380,23 @@
                 <TextBlock Name="TX07" Style="{StaticResource SummaryTestStyle}" Grid.Row="6" Grid.Column="1"/>
                 <TextBlock Name="TX08" Style="{StaticResource SummaryTestStyle}" Grid.Row="7" Grid.Column="1"/>
                 <TextBlock Name="TX09" Style="{StaticResource SummaryTestStyle}" Grid.Row="8" Grid.Column="1"/>
+                <Button Name="PopupBackButton"
+                        Click="PopupBackButton_Click"
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Bottom"
+                        Margin="20" 
+                        Grid.ColumnSpan="9" 
+                        Grid.RowSpan="9"
+                        Style="{StaticResource MainPageButtonBackHamburgerStyle}">
+                    <Border>
+                        <TextBlock Text="&#xEC61;" 
+                                   FontSize="50" 
+                                   Foreground="#EFEFEF"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,0,0"/>
+                    </Border>
+                </Button>
             </Grid>
         </Popup>
         <!--#endregion-->

@@ -37,8 +37,8 @@ namespace LNU.NET.Pages.FeaturesPages {
             Current = this;
             TableBackImage.Source = new BitmapImage(
                 MainPage.Current.RequestedTheme == ElementTheme.Dark ?
-                new Uri("ms-appx:///Assets/15.jpg") :
-                new Uri("ms-appx:///Assets/10.jpg"));
+                new Uri("ms-appx:///Assets/64.jpg") :
+                new Uri("ms-appx:///Assets/63.jpg"));
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
             var item = e.ClickedItem as ScheduleItem;
-            PopupBackground.Background = Application.Current.Resources["ENRZForeground02"] as Brush;
+            PopupBackground.Background = Application.Current.Resources["LNUForeground03"] as Brush;
             SetPopupOpenStatus(item);
         }
 
@@ -106,6 +106,10 @@ namespace LNU.NET.Pages.FeaturesPages {
         private void popup_Closed(object sender, object e) {
             SetVisibility(popupBorder, false);
             OutBorder.Begin();
+        }
+
+        private void PopupBackButton_Click(object sender, RoutedEventArgs e) {
+            popup.IsOpen = false;
         }
 
         private async void Refresh_Click(object sender, RoutedEventArgs e) {

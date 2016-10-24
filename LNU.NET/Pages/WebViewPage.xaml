@@ -98,24 +98,30 @@
         <!--#endregion-->
 
         <Border Name="BasePartBorder" 
-                Background="{ThemeResource ENRZForeground01}" 
+                Background="{ThemeResource LNUForeground01}" 
                 Height="70" 
                 VerticalAlignment="Top">
             <TextBlock Name="navigateTitlePath"
                        MaxWidth="500"
-                       Text="LiaoNingUniversity"
+                       Text="LNU-Web"
                        FontSize="20"
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"
-                       Foreground="White"/>
+                       FontWeight="Bold"
+                       Foreground="{ThemeResource LNUForeground02}"/>
         </Border>
+        <Rectangle Height="0.5" 
+                   Margin=" 0,69.5,0,0" 
+                   VerticalAlignment="Top" 
+                   Opacity="0.7"
+                   Fill="{ThemeResource ENRZForeground02}"/>
         <Button Name="BaseHamburgerButton"
                             VerticalAlignment="Top"
                             Content="&#xE26C;"
                             Width="70"
                             Height="70"
                             Click="BaseHamburgerButton_Click"
-                            Foreground="White"
+                            Foreground="{ThemeResource LNUForeground02}"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
 
         <WebView Name="Scroll" 

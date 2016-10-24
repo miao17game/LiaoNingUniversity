@@ -623,4 +623,28 @@
   <data name="Course_Weekly.Text" xml:space="preserve">
     <value>上课周次</value>
   </data>
+  <data name="LNU_Index_LL" xml:space="preserve">
+    <value>辽大图书馆</value>
+  </data>
+  <data name="LNU_Index_SCH" xml:space="preserve">
+    <value>今年校历</value>
+  </data>
+  <data name="LNU_Index_SH" xml:space="preserve">
+    <value>留学辽大</value>
+  </data>
+  <data name="LNU_Index_SW" xml:space="preserve">
+    <value>学生工作处</value>
+  </data>
+  <data name="LNU_Index_TOOTATU" xml:space="preserve">
+    <value>各教学单位教务办公室</value>
+  </data>
+  <data name="LNU_Index_UAN" xml:space="preserve">
+    <value>辽宁大学本科生招生网</value>
+  </data>
+  <data name="LNU_Index_Weibo" xml:space="preserve">
+    <value>辽宁大学新浪微博</value>
+  </data>
+  <data name="LUN_Index_EIN" xml:space="preserve">
+    <value>辽宁大学就业信息网</value>
+  </data>
 </root>

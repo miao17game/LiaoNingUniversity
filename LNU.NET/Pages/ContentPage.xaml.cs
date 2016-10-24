@@ -21,14 +21,14 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Wallace.UWP.Helpers.Helpers;
+using LNU.NET.Controls;
 
 namespace LNU.NET.Pages {
     
-    public sealed partial class ContentPage : Page {
+    public sealed partial class ContentPage : BaseContentPage {
         public ContentPage() {
             this.InitializeComponent();
             Current = this;
-            InitPageState();
         }
 
         #region Events
@@ -92,7 +92,8 @@ namespace LNU.NET.Pages {
         }
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
-            MainPage.Current.MainContentFrame.Content = null;
+            PageSlideOutStart(VisibleWidth > 800 ? false : true);
+            Current = null;
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e) {
@@ -106,19 +107,10 @@ namespace LNU.NET.Pages {
 
         #region Methods
 
-        private void InitPageState() {
-            isDivideScreen = (bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsDivideScreen) ?? true;
-            MainPage.DivideWindowRange(
-                currentFramePage: this,
-                divideNum: (double?)SettingsHelper.ReadSettingsValue(SettingsSelect.SplitViewMode) ?? 0.6,
-                isDivideScreen: isDivideScreen);
-        }
-
         #endregion
 
         #region Properties and state
         public static ContentPage Current;
-        private bool isDivideScreen;
         private enum ContentType { None = 0, String = 1, Image = 2, Gif = 3, Video = 4, Flash = 5, SelfUri = 6 }
         #endregion
 

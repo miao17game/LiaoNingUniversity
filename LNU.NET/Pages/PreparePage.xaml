@@ -34,7 +34,7 @@
                         <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/1.jpg"/>
+                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/61.jpg"/>
                         <Setter Target="LogeImage.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>0,0,0,40</Thickness>
@@ -47,7 +47,7 @@
                         <AdaptiveTrigger MinWindowWidth="361"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/1.jpg"/>
+                        <Setter Target="BackImage.(FrameworkElement.Source)" Value="/Assets/61.jpg"/>
                         <Setter Target="LogeImage.(FrameworkElement.Margin)">
                             <Setter.Value>
                                 <Thickness>0,0,0,60</Thickness>
@@ -78,7 +78,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Image Name="BackImage" 
-               Source="ms-appx:///Assets/4.jpg"
+               Source="ms-appx:///Assets/62.jpg"
                Grid.ColumnSpan="3"
                Grid.RowSpan="3"
                Stretch="UniformToFill">

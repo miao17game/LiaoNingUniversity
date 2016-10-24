@@ -557,6 +557,18 @@ namespace LNU.NET {
 
             #endregion
 
+            #region Type
+
+            public static List<Type> AnimationPageCollection { get { return animationPagesMaps; } }
+            static private List<Type> animationPagesMaps = new List<Type> {
+                typeof(WebViewPage),
+                typeof(LoginPage),
+                typeof(ChangePassPage),
+                typeof(SchedulePage),
+            };
+
+            #endregion
+
             #region Child page for cache
 
             public static void AddBaseListPageInstance(string key, BaseListPage instance) { if (!baseListPageMap.ContainsKey(key)) { baseListPageMap.Add(key, instance); } }

@@ -269,7 +269,13 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1005.* / 2016.10.21" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1006.* / 2016.10.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="重写日间模式配色" /><LineBreak/>
+                            <Run Text="完善课表详细页面风格" /><LineBreak/>
+                            <Run Text="修复两个小错误" /><LineBreak/>
+                            <Run Text="增加主页内容占位" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1005.2338 / 2016.10.23" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="重写登陆API调用" /><LineBreak/>
                             <Run Text="加入课程表显示" /><LineBreak/>
                             <Run Text="修复部分小问题" /><LineBreak/>

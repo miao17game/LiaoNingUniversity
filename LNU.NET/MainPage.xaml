@@ -294,11 +294,12 @@
             <SplitView.Pane>
 
                 <!--#region HamburgerList-->
-                <RelativePanel Background="{ThemeResource ENRZBackground03}">
+                <RelativePanel Background="{ThemeResource LNUForeground03}">
                     <Button Name="HamburgerButton"
                             Content="&#xE700;"
                             Width="70"
                             Height="70"
+                            FontWeight="ExtraBold"
                             Click="HamburgerButton_Click"
                             Foreground="White"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
@@ -367,23 +368,32 @@
                 <Grid>
 
                     <Border Name="BasePartBorder" 
-                            Background="{ThemeResource ENRZForeground01}" 
-                            Height="70" VerticalAlignment="Top">
+                Background="{ThemeResource LNUForeground01}" 
+                Height="70" 
+                VerticalAlignment="Top">
                         <TextBlock Name="navigateTitlePath"
+                                   MaxWidth="400"
                                    x:Uid="LNU_Title" FontSize="20"
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"
-                                   Foreground="White"
-                                   MaxWidth="400"/>
+                                   FontWeight="Bold"
+                                   Foreground="{ThemeResource LNUForeground02}"/>
                     </Border>
+                    <Rectangle Height="0.5" 
+                   Margin=" 0,69,0,0" 
+                   VerticalAlignment="Top" 
+                   Opacity="0.7"
+                   Fill="{ThemeResource ENRZForeground02}"/>
                     <Button Name="BaseHamburgerButton"
                             VerticalAlignment="Top"
                             Content="&#xE700;"
                             Width="70"
                             Height="70"
+                            FontWeight="ExtraBold"
                             Click="HamburgerButton_Click"
-                            Foreground="White"
+                            Foreground="{ThemeResource LNUForeground02}"
                             Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
+
                     <Frame Name="BasePartFrame" Margin="0,70,0,0"/>
 
                     <ProgressRing Name="baseListRing" Width="70" Height=" 70" IsActive="False"

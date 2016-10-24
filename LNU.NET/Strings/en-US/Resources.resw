@@ -622,4 +622,28 @@
   <data name="Course_Weekly.Text" xml:space="preserve">
     <value>Weeks</value>
   </data>
+  <data name="LNU_Index_LL" xml:space="preserve">
+    <value>Library</value>
+  </data>
+  <data name="LNU_Index_SCH" xml:space="preserve">
+    <value>School Calendar</value>
+  </data>
+  <data name="LNU_Index_SH" xml:space="preserve">
+    <value>Study Here</value>
+  </data>
+  <data name="LNU_Index_SW" xml:space="preserve">
+    <value>Student WorkPlace</value>
+  </data>
+  <data name="LNU_Index_TOOTATU" xml:space="preserve">
+    <value>The Office Of The Academic Teaching Units</value>
+  </data>
+  <data name="LNU_Index_UAN" xml:space="preserve">
+    <value>Undergraduate Admissions Network</value>
+  </data>
+  <data name="LNU_Index_Weibo" xml:space="preserve">
+    <value>LiaoNing University Weibo</value>
+  </data>
+  <data name="LUN_Index_EIN" xml:space="preserve">
+    <value>Employment Information Network</value>
+  </data>
 </root>

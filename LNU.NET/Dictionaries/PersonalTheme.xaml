@@ -98,6 +98,13 @@
             <!--LNUBackground02-->
             <SolidColorBrush x:Key="LNUBackground02" Color="#121212"/>
 
+            <!--LNUForeground01-->
+            <SolidColorBrush x:Key="LNUForeground01" Color="#CA003E"/>
+            <!--LNUForeground02-->
+            <SolidColorBrush x:Key="LNUForeground02" Color="#EEEFEFEF"/>
+            <!--LNUForeground03-->
+            <SolidColorBrush x:Key="LNUForeground03" Color="#383838"/>
+
             <!--LNUTextColor01-->
             <SolidColorBrush x:Key="LNUTextColor01" Color="#CCEEEEEE"/>
 
@@ -186,7 +193,7 @@
             <SolidColorBrush x:Key="DQDListBottomColor" Color="#4430BB45"/>
 
             <!--ENRZForeground01-->
-            <SolidColorBrush x:Key="ENRZForeground01" Color="#4368CB"/>
+            <SolidColorBrush x:Key="ENRZForeground01" Color="#CC202020"/>
             <!--ENRZForeground02-->
             <SolidColorBrush x:Key="ENRZForeground02" Color="#FE9A04"/>
             <!--ENRZForeground03-->
@@ -205,6 +212,13 @@
             <SolidColorBrush x:Key="LNUBackground01" Color="#FCFCFC"/>
             <!--LNUBackground02-->
             <SolidColorBrush x:Key="LNUBackground02" Color="#EDEDED"/>
+
+            <!--LNUForeground01-->
+            <SolidColorBrush x:Key="LNUForeground01" Color="#E5E5E5"/>
+            <!--LNUForeground02-->
+            <SolidColorBrush x:Key="LNUForeground02" Color="#CC202020"/>
+            <!--LNUForeground03-->
+            <SolidColorBrush x:Key="LNUForeground03" Color="#CC202020"/>
 
             <!--LNUTextColor01--> 
             <SolidColorBrush x:Key="LNUTextColor01" Color="#CC333333"/>
