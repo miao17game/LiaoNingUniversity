@@ -27,6 +27,8 @@ using Windows.Storage.FileProperties;
 using LNU.NET.Tools;
 using LNU.NET.Pages.FeaturesPages;
 using LNU.Core.Models;
+using Wallace.UWP.Helpers.Tools;
+using Windows.UI;
 #endregion
 
 namespace LNU.NET.Pages {
@@ -173,6 +175,8 @@ namespace LNU.NET.Pages {
             MainPage.Current.RequestedTheme = sender.IsOn ? ElementTheme.Dark : ElementTheme.Light;
             if (isInitViewOrNot)
                 return;
+            StatusBarInit.InitDesktopStatusBar(!sender.IsOn, Colors.Black, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
+            StatusBarInit.InitMobileStatusBar(!sender.IsOn, Colors.Black, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
             if (SchedulePage.Current != null)
                 MainPage.Current.NavigateToBase?.Invoke(
                     this,

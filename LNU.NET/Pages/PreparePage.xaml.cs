@@ -30,7 +30,7 @@ namespace LNU.NET.Pages {
         private TranslateTransform translateT;
         DispatcherTimer WeocomeTimer;
         private bool isColorfulOrNot;
-        private bool isLightOrNot;
+        private bool isDarkOrNot;
 
         public PreparePage ( ) {
             translateT = this . RenderTransform as TranslateTransform;
@@ -40,10 +40,10 @@ namespace LNU.NET.Pages {
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) {
             isColorfulOrNot = (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsColorfulOrNot) ?? false;
-            isLightOrNot = (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsDarkThemeOrNot) ?? false;
+            isDarkOrNot= (bool?)SettingsHelper.ReadSettingsValue(SettingsConstants.IsDarkThemeOrNot) ?? false;
             if (StatusBarInit.HaveAddMobileExtensions()) { StatusBarInit.InitInnerMobileStatusBar(true); }
-            StatusBarInit.InitDesktopStatusBar(false, Colors.White, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
-            StatusBarInit.InitMobileStatusBar(false, Colors.White, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
+            StatusBarInit.InitDesktopStatusBar(!isDarkOrNot, Colors.Black, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
+            StatusBarInit.InitMobileStatusBar(!isDarkOrNot, Colors.Black, Color.FromArgb(255, 67, 104, 203), Colors.White, Color.FromArgb(255, 202, 0, 62));
             InitSliderTimer();
             OutIMG.BeginTime = new TimeSpan(0, 0, 0, 0, 800);
             OutREC.BeginTime = new TimeSpan(0, 0, 0, 0, 800);
@@ -84,7 +84,7 @@ namespace LNU.NET.Pages {
             if ( translateT == null )
                 this . RenderTransform = new TranslateTransform ( );
             translateT . Y = 0;
-            RequestedTheme = isLightOrNot ? ElementTheme.Light : ElementTheme.Dark;
+            RequestedTheme = isDarkOrNot ? ElementTheme.Dark : ElementTheme.Light;
             //MainPage.Current.ChangeStatusBar(isColorfulOrNot, isLightOrNot);
         }
     }
