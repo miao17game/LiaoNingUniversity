@@ -80,7 +80,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             if (args.MessageBag as string != null) // if there is a title to be saved, save it.
                 navigateTitle = navigateTitlePath.Text = args.MessageBag as string;
 
-            if (thisPageType == DataFetchType.LNU_Index_Login || thisPageType == DataFetchType.LNU_Index_ReLogin) { // if need login, do something...
+            if (thisPageType == DataFetchType.Index_Login || thisPageType == DataFetchType.Index_ReLogin) { // if need login, do something...
 
                 InitLoginPopupState();
 
@@ -148,7 +148,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         #region Button Events
 
         private void BaseHamburgerButton_Click(object sender, RoutedEventArgs e) {
-            if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
+            if (thisPageType == DataFetchType.Index_ReLogin) {
                 MainPage.Current.ReLoginPopup.IsOpen = false;
                 MainPage.Current.MainContentFrame.Content = null;
                 return;
@@ -179,7 +179,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 ReportHelper.ReportAttention(GetUIString("LogOut_Success"));
                 MainPage.Current.NavigateToBase?.Invoke(
                     this,
-                    new NavigateParameter { ToFetchType = DataFetchType.LNU_Index_Login, MessageBag = navigateTitle, ToUri = currentUri, NaviType = NavigateType.Login },
+                    new NavigateParameter { ToFetchType = DataFetchType.Index_Login, MessageBag = navigateTitle, ToUri = currentUri, NaviType = NavigateType.Login },
                     MainPage.InnerResources.GetFrameInstance(NavigateType.Login),
                     typeof(LoginPage));
             }
@@ -224,7 +224,7 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// make ui of popup right anyway.
         /// </summary>
         private void InitLoginPopupState() {
-            if (thisPageType == DataFetchType.LNU_Index_ReLogin)
+            if (thisPageType == DataFetchType.Index_ReLogin)
                 if (VisibleWidth <= 800 || IsMobile) {
                     this.Width = VisibleWidth - 60;
                     this.Height = VisibleHeight - 60;
@@ -295,7 +295,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                 SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
                 LoginPopup.IsOpen = false;
                 SetVisibility(MainPopupGrid, false);
-                if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
+                if (thisPageType == DataFetchType.Index_ReLogin) {
                     RedirectToPageBefore();
                     return;
                 }
@@ -319,11 +319,11 @@ namespace LNU.NET.Pages.FeaturesPages {
         /// redirect to login when login-error throws.
         /// </summary>
         private void RedirectToLoginAgain() {
-            if (thisPageType == DataFetchType.LNU_Index_ReLogin) {
+            if (thisPageType == DataFetchType.Index_ReLogin) {
                 MainPage.Current.NavigateToBase?.Invoke(
                     this,
                     new NavigateParameter {
-                        ToFetchType = DataFetchType.LNU_Index_ReLogin,
+                        ToFetchType = DataFetchType.Index_ReLogin,
                         MessageBag = navigateTitle,
                         ToUri = currentUri,
                         NaviType = NavigateType.ReLogin,
@@ -341,7 +341,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             MainPage.Current.NavigateToBase?.Invoke(
                 this,
                 new NavigateParameter {
-                    ToFetchType = DataFetchType.LNU_Index_Login,
+                    ToFetchType = DataFetchType.Index_Login,
                     MessageBag = navigateTitle,
                     ToUri = currentUri,
                     NaviType = NavigateType.Login
