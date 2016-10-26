@@ -15,7 +15,7 @@
             </Setter>
             <Setter Property="BorderBrush" Value="#909090"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="#20303030"/>
+            <Setter Property="Background" Value="#C6C6C6"/>
         </Style>
         <Style x:Name="ThisBorderStyle02" TargetType="Border">
             <Setter Property="Margin">
@@ -47,6 +47,7 @@
             </Setter>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#202020"/>
         </Style>
         <Style x:Name="ThisTextBlock02" TargetType="TextBlock">
             <Setter Property="Margin" >
@@ -187,43 +188,42 @@
                 <Border Style="{StaticResource ThisBorderStyle}" 
                     Grid.Row="0" Grid.Column="0">
                     <TextBlock Style="{StaticResource ThisTextBlock}"
-                           Text="选课日程"/>
+                           x:Uid="Data_CalenderTitle"/>
                 </Border>
                 <Border Style="{StaticResource ThisBorderStyle}"
                     Grid.Row="1" Grid.Column="0">
                     <TextBlock Style="{StaticResource ThisTextBlock}"
-                           Text="预选"/>
+                           x:Uid="Data_Preselection"/>
                 </Border>
                 <Border Style="{StaticResource ThisBorderStyle}"
                         Grid.Row="2" Grid.Column="0">
                     <TextBlock Style="{StaticResource ThisTextBlock}"
-                           Text="正选"/>
+                           x:Uid="Data_Selection"/>
                 </Border>
                 <Border Style="{StaticResource ThisBorderStyle}"
                         Grid.Row="3" Grid.Column="0">
                     <TextBlock Style="{StaticResource ThisTextBlock}"
-                           Text="特殊补退选"/>
+                           x:Uid="Data_MakeUp"/>
                 </Border>
                 <Border Style="{StaticResource ThisBorderStyle}"
                         Grid.Row="4" Grid.Column="0">
                     <TextBlock Style="{StaticResource ThisTextBlock}"
-                           Text="课表查询"/>
+                           x:Uid="Data_Query"/>
                 </Border>
 
                 <Border Style="{StaticResource ThisBorderStyle02}"
                         Grid.Row="0" Grid.Column="1">
                     <TextBlock Style="{StaticResource ThisTextBlock02}"
-                           Text="崇山校区" />
+                           x:Uid="Data_CSRange" />
                 </Border>
                 <Border Style="{StaticResource ThisBorderStyle03}"
                         Grid.Row="0" Grid.Column="2">
                     <TextBlock Style="{StaticResource ThisTextBlock02}"
-                           Text="蒲河校区" />
+                           x:Uid="Data_PHRange" />
                 </Border>
 
                 <Border Style="{StaticResource ThisBorderStyle02}"
-                        Grid.Row="1" Grid.Column="1"
-                         Background="#59ADF2">
+                        Grid.Row="1" Grid.Column="1">
                     <TextBlock Style="{StaticResource ThisTextBlock02}"
                            Name="PreSelectCS" />
                 </Border>
@@ -234,8 +234,7 @@
                 </Border>
 
                 <Border Style="{StaticResource ThisBorderStyle02}"
-                        Grid.Row="2" Grid.Column="1"
-                         Background="#59ADF2">
+                        Grid.Row="2" Grid.Column="1">
                     <TextBlock Style="{StaticResource ThisTextBlock02}"
                            Name="SelectCS" />
                 </Border>
@@ -258,7 +257,7 @@
 
                 <TextBlock FontSize="12" TextWrapping="WrapWholeWords" 
                            Grid.Row="6" Grid.ColumnSpan="3" Margin="5"
-                    Text="各学院应加强对学生选课密码的管理，对选课密码进行妥善保管并督促学生及时上网更改系统预置密码，如出现学生个人选课密码保管不当或委托他人代选课而造成的错选、少选等情况，责任自负。"/>
+                    x:Uid="Data_Annotation"/>
 
             </Grid>
             <!--#endregion-->

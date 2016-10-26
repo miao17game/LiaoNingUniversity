@@ -380,7 +380,7 @@
                                    Foreground="{ThemeResource LNUForeground02}"/>
                     </Border>
                     <Rectangle Height="0.5" 
-                   Margin=" 0,69,0,0" 
+                   Margin=" 0,69.5,0,0" 
                    VerticalAlignment="Top" 
                    Opacity="0.7"
                    Fill="{ThemeResource ENRZForeground02}"/>

@@ -647,4 +647,28 @@
   <data name="LUN_Index_EIN" xml:space="preserve">
     <value>辽宁大学就业信息网</value>
   </data>
+  <data name="Data_Annotation.Text" xml:space="preserve">
+    <value>各学院应加强对学生选课密码的管理，对选课密码进行妥善保管并督促学生及时上网更改系统预置密码，如出现学生个人选课密码保管不当或委托他人代选课而造成的错选、少选等情况，责任自负。</value>
+  </data>
+  <data name="Data_CalenderTitle.Text" xml:space="preserve">
+    <value>选课日程</value>
+  </data>
+  <data name="Data_CSRange.Text" xml:space="preserve">
+    <value>崇山校区</value>
+  </data>
+  <data name="Data_MakeUp.Text" xml:space="preserve">
+    <value>特殊补退选</value>
+  </data>
+  <data name="Data_PHRange.Text" xml:space="preserve">
+    <value>蒲河校区</value>
+  </data>
+  <data name="Data_Preselection.Text" xml:space="preserve">
+    <value>预选</value>
+  </data>
+  <data name="Data_Query.Text" xml:space="preserve">
+    <value>课表查询</value>
+  </data>
+  <data name="Data_Selection.Text" xml:space="preserve">
+    <value>正选</value>
+  </data>
 </root>

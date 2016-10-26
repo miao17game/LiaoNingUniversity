@@ -401,7 +401,7 @@
     <value>Only on PC this mode is enabled</value>
   </data>
   <data name="LNU_Index_CS" xml:space="preserve">
-    <value>Course Schedule</value>
+    <value>Course Selection</value>
   </data>
   <data name="LNU_Index_GCI" xml:space="preserve">
     <value>General Course Introduction</value>
@@ -645,5 +645,29 @@
   </data>
   <data name="LUN_Index_EIN" xml:space="preserve">
     <value>Employment Information Network</value>
+  </data>
+  <data name="Data_Annotation.Text" xml:space="preserve">
+    <value>The College should strengthen the management of student course passwords, to keep the course password and urge students to the Internet system preferences password changes, as a result of students ' course selection password is improper or appoint a proxy classes as a result of wrong choice, fewer conditions, responsible.</value>
+  </data>
+  <data name="Data_CalenderTitle.Text" xml:space="preserve">
+    <value>Campus</value>
+  </data>
+  <data name="Data_CSRange.Text" xml:space="preserve">
+    <value>Campus Chongshan</value>
+  </data>
+  <data name="Data_MakeUp.Text" xml:space="preserve">
+    <value>Make up</value>
+  </data>
+  <data name="Data_PHRange.Text" xml:space="preserve">
+    <value>Campus Puhe</value>
+  </data>
+  <data name="Data_Preselection.Text" xml:space="preserve">
+    <value>Preselection</value>
+  </data>
+  <data name="Data_Query.Text" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="Data_Selection.Text" xml:space="preserve">
+    <value>Selection</value>
   </data>
 </root>
