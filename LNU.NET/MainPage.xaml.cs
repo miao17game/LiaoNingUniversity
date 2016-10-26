@@ -92,6 +92,10 @@ namespace LNU.NET {
                         SchedulePage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
                         SchedulePage.Current = null;
                     }
+                    if (SimpleDataPage.Current != null) {
+                        SimpleDataPage.Current.PageSlideOutStart(VisibleWidth > 800 ? false : true);
+                        SimpleDataPage.Current = null;
+                    }
                     if (ContentPage.Current != null)
                         MainContentFrame.Content = null;
                 }
@@ -163,7 +167,7 @@ namespace LNU.NET {
             NavigateToBase?.Invoke(
                 this,
                 new NavigateParameter {
-                    ToFetchType = DataFetchType.LNU_Index_ReLogin,
+                    ToFetchType = DataFetchType.Index_ReLogin,
                     MessageBag = GetUIString("LNU_Index_LS"),
                     ToUri = new Uri(LoginPath),
                     NaviType = NavigateType.ReLogin
@@ -411,7 +415,7 @@ namespace LNU.NET {
             Current.NavigateToBase?.Invoke(
                 null,
                 new NavigateParameter {
-                    ToFetchType = DataFetchType.LNU_Index_ReLogin,
+                    ToFetchType = DataFetchType.Index_ReLogin,
                     ToUri = new Uri(LoginPath),
                     MessageBag = GetUIString("LNU_Index_LS"),
                     NaviType = NavigateType.ReLogin,
@@ -446,13 +450,13 @@ namespace LNU.NET {
                     Title = GetUIString("LNU_Index"),
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/"),
                     NaviType = NavigateType.Index,
-                    FetchType = DataFetchType.LNU_Index,
+                    FetchType = DataFetchType.Index,
                 },
                 new NavigationBar {
                     Title = GetUIString("LNU_Search_Query"),
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks.html"),
                     NaviType = NavigateType.Index,
-                    FetchType = DataFetchType.LNU_CourseMark,
+                    FetchType = DataFetchType.CourseMark,
                 },
                 new NavigationBar {
                     Title = GetUIString("LNU_For_Teacher"),
@@ -536,6 +540,7 @@ namespace LNU.NET {
                 { NavigateType.ReLogin,typeof(LoginPage)},
                 { NavigateType.ChangePassword,typeof(ChangePassPage)},
                 { NavigateType.Schedule,typeof(SchedulePage)},
+                { NavigateType.SimpleData,typeof(SimpleDataPage)},
             };
 
             #endregion
@@ -553,6 +558,7 @@ namespace LNU.NET {
                 { NavigateType.ReLogin,Current.LoginPopupFrame},
                 { NavigateType.ChangePassword,Current.ContentFrame},
                 { NavigateType.Schedule,Current.ContentFrame},
+                { NavigateType.SimpleData,Current.ContentFrame},
             };
 
             #endregion

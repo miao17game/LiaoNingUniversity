@@ -33,8 +33,8 @@
             <FadeOutThemeAnimation Storyboard.TargetName="popupBorder" />
         </Storyboard>
     </base:BaseContentPage.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="Grid_SizeChanged">
+
+    <Grid Background="{ThemeResource LNUBackground01}" SizeChanged="Grid_SizeChanged">
 
         <!--#region StateTriggers-->
         <VisualStateManager.VisualStateGroups>

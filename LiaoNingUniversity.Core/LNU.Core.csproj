@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BarItemModel.cs" />
+    <Compile Include="Models\ContentModels\CourseCalender.cs" />
     <Compile Include="Models\ContentModels\ScheduleItem.cs" />
     <Compile Include="Models\DataFetchType.cs" />
     <Compile Include="Models\IndexModels\AdaptiveItem.cs" />

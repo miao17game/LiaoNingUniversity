@@ -15,5 +15,6 @@ namespace LNU.Core.Models {
         ReLogin = 6,
         ChangePassword = 7,
         Schedule = 8,
+        SimpleData = 9,
     }
 }

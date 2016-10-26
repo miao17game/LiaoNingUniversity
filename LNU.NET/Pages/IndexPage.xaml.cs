@@ -86,7 +86,8 @@ namespace LNU.NET.Pages {
                     ItemIcon = char.ConvertFromUtf32(0xE162),
                     ItemTitle =GetUIString("LNU_Index_CS"),
                     Description = null,
-                    NaviType = NavigateType.Webview,
+                    NaviType = NavigateType.SimpleData,
+                    DataType = DataFetchType.Data_CourseCalender,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 97, 17, 171)), 
                     IconForeground = new SolidColorBrush(Colors.White),
@@ -228,7 +229,7 @@ namespace LNU.NET.Pages {
                     ItemTitle =GetUIString("LNU_Index_LS"),
                     Description = null,
                     NaviType = NavigateType.Login,
-                    DataType = DataFetchType.LNU_Index_Login,
+                    DataType = DataFetchType.Index_Login,
                     PathUri = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/zhxt_bks_right.html"),
                     Background = new SolidColorBrush(Color.FromArgb(255, 255, 67, 63)),
                     IconForeground = new SolidColorBrush(Colors.White),
@@ -377,8 +378,8 @@ namespace LNU.NET.Pages {
             /// Decide which page need to be loaded.
             /// </summary>
             static private Dictionary<DataFetchType, List<AdaptiveItem>> resourcesDic = new Dictionary<DataFetchType, List<AdaptiveItem>> {
-                { DataFetchType.LNU_Index, IndexResList },
-                { DataFetchType.LNU_CourseMark, CourseMarkResList },
+                { DataFetchType.Index, IndexResList },
+                { DataFetchType.CourseMark, CourseMarkResList },
             };
             #endregion
 

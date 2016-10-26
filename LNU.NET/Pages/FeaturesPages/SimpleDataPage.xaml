@@ -1,0 +1,275 @@
+﻿<base:BaseContentPage
+    x:Class="LNU.NET.Pages.FeaturesPages.SimpleDataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LNU.NET.Pages.FeaturesPages"
+    xmlns:base="using:LNU.NET.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <base:BaseContentPage.Resources>
+        <Style x:Name="ThisBorderStyle" TargetType="Border">
+            <Setter Property="Margin">
+                <Setter.Value>0.5</Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#909090"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#20303030"/>
+        </Style>
+        <Style x:Name="ThisBorderStyle02" TargetType="Border">
+            <Setter Property="Margin">
+                <Setter.Value>0.5</Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#909090"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#59ADF2"/>
+        </Style>
+        <Style x:Name="ThisBorderStyle03" TargetType="Border">
+            <Setter Property="Margin">
+                <Setter.Value>0.5</Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#909090"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#FB6CA4"/>
+        </Style>
+        <Style x:Name="ThisBorderStyle04" TargetType="Border">
+            <Setter Property="Margin">
+                <Setter.Value>0.5</Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#909090"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#7079E8"/>
+        </Style>
+        <Style x:Name="ThisTextBlock" TargetType="TextBlock">
+            <Setter Property="Margin" >
+                <Setter.Value>10</Setter.Value>
+            </Setter>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Name="ThisTextBlock02" TargetType="TextBlock">
+            <Setter Property="Margin" >
+                <Setter.Value>5</Setter.Value>
+            </Setter>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </base:BaseContentPage.Resources>
+
+    <Grid Background="{ThemeResource LNUBackground01}">
+
+        <!--#region StateTriggers-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Mobile360">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="navigateTitlePath.(FrameworkElement.MaxWidth)" Value="200"/>
+                        <Setter Target="BasePartBorder.(FrameworkElement.Height)" Value="70"/>
+                        <Setter Target="navigateTitlePath.(FrameworkElement.Margin)" >
+                            <Setter.Value>0,20,0,0</Setter.Value>
+                        </Setter>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Margin)" >
+                            <Setter.Value>0,20,0,0</Setter.Value>
+                        </Setter>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
+                        <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile480">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="361"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                        <Setter Target="navigateTitlePath.(FrameworkElement.MaxWidth)" Value="300"/>
+                        <Setter Target="BasePartBorder.(FrameworkElement.Height)" Value="70"/>
+                        <Setter Target="navigateTitlePath.(FrameworkElement.Margin)" >
+                            <Setter.Value>0,20,0,0</Setter.Value>
+                        </Setter>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Margin)" >
+                            <Setter.Value>0,20,0,0</Setter.Value>
+                        </Setter>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Width)" Value="50"/>
+                        <Setter Target="BaseHamburgerButton.(FrameworkElement.Height)" Value="50"/>
+                        <Setter Target="navigateTitlePath.(TextBlock.FontSize)" Value="15"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="400" MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopExtra_Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="700" MinWindowWidth="1300"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopExtra_LightTablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1300"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <!--#endregion-->
+
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromHorizontalOffset="400"/>
+            </TransitionCollection>
+        </Grid.Transitions>
+
+        <Border Name="BasePartBorder" 
+                Background="{ThemeResource LNUForeground01}" 
+                Height="70" 
+                VerticalAlignment="Top">
+            <TextBlock Name="navigateTitlePath"
+                       MaxWidth="500"
+                       Text="Data View"
+                       FontSize="20"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"
+                       Foreground="{ThemeResource LNUForeground02}"/>
+        </Border>
+        <Rectangle Height="0.5" 
+                   Margin=" 0,69.5,0,0" 
+                   VerticalAlignment="Top" 
+                   Opacity="0.7"
+                   Fill="{ThemeResource ENRZForeground02}"/>
+        <Button Name="BaseHamburgerButton"
+                            VerticalAlignment="Top"
+                            Content="&#xE26C;"
+                            Width="70"
+                            Height="70"
+                            Click="BaseHamburgerButton_Click"
+                            Foreground="{ThemeResource LNUForeground02}"
+                            Style="{ThemeResource MainPageButtonBackHamburgerStyle}"/>
+
+        <Grid Margin="0,70,0,0" Name="PageContentRange">
+
+            <!--#region CourseCalenderView-->
+            <Grid Margin="20" Name="CourseCalenderView" 
+                  MaxWidth="600" MaxHeight="700" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource ThisBorderStyle}" 
+                    Grid.Row="0" Grid.Column="0">
+                    <TextBlock Style="{StaticResource ThisTextBlock}"
+                           Text="选课日程"/>
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle}"
+                    Grid.Row="1" Grid.Column="0">
+                    <TextBlock Style="{StaticResource ThisTextBlock}"
+                           Text="预选"/>
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle}"
+                        Grid.Row="2" Grid.Column="0">
+                    <TextBlock Style="{StaticResource ThisTextBlock}"
+                           Text="正选"/>
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle}"
+                        Grid.Row="3" Grid.Column="0">
+                    <TextBlock Style="{StaticResource ThisTextBlock}"
+                           Text="特殊补退选"/>
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle}"
+                        Grid.Row="4" Grid.Column="0">
+                    <TextBlock Style="{StaticResource ThisTextBlock}"
+                           Text="课表查询"/>
+                </Border>
+
+                <Border Style="{StaticResource ThisBorderStyle02}"
+                        Grid.Row="0" Grid.Column="1">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Text="崇山校区" />
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle03}"
+                        Grid.Row="0" Grid.Column="2">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Text="蒲河校区" />
+                </Border>
+
+                <Border Style="{StaticResource ThisBorderStyle02}"
+                        Grid.Row="1" Grid.Column="1"
+                         Background="#59ADF2">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="PreSelectCS" />
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle03}"
+                        Grid.Row="1" Grid.Column="2">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="PreSelectPH"/>
+                </Border>
+
+                <Border Style="{StaticResource ThisBorderStyle02}"
+                        Grid.Row="2" Grid.Column="1"
+                         Background="#59ADF2">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="SelectCS" />
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle03}"
+                        Grid.Row="2" Grid.Column="2">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="SelectPH"/>
+                </Border>
+
+                <Border Style="{StaticResource ThisBorderStyle04}"
+                        Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="CoverSelect"/>
+                </Border>
+                <Border Style="{StaticResource ThisBorderStyle04}"
+                        Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="1">
+                    <TextBlock Style="{StaticResource ThisTextBlock02}"
+                           Name="QueryDate"/>
+                </Border>
+
+                <TextBlock FontSize="12" TextWrapping="WrapWholeWords" 
+                           Grid.Row="6" Grid.ColumnSpan="3" Margin="5"
+                    Text="各学院应加强对学生选课密码的管理，对选课密码进行妥善保管并督促学生及时上网更改系统预置密码，如出现学生个人选课密码保管不当或委托他人代选课而造成的错选、少选等情况，责任自负。"/>
+
+            </Grid>
+            <!--#endregion-->
+
+        </Grid>
+
+        <ProgressRing Name="contentRing" 
+                          Width="50" 
+                          Height="50" 
+                          IsActive="False"
+                          Foreground="{ThemeResource ENRZForeground01}" />
+
+    </Grid>
+</base:BaseContentPage>

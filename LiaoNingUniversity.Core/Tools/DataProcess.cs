@@ -113,5 +113,30 @@ namespace LNU.Core.Tools {
             return list;
         }
 
+        public static CourseCalender FetchCourseCalenderFromHtml(string htmlResources) {
+            var cc = new CourseCalender();
+            try {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(EscapeReplace.ToEscape(htmlResources));
+                var rootNode = doc.DocumentNode;
+
+                var target = rootNode
+                    .SelectSingleNode("//table[@width='490']")
+                    .SelectNodes("tr");
+
+                cc.PreSelectCS = target[1].SelectNodes("td").ElementAt(1).InnerText;
+                cc.PreSelectPH = target[1].SelectNodes("td").ElementAt(2).InnerText;
+                cc.SelectCS = target[2].SelectNodes("td").ElementAt(1).InnerText;
+                cc.SelectPH = target[2].SelectNodes("td").ElementAt(2).InnerText;
+                cc.CoverSelect = target[3].SelectNodes("td").ElementAt(1).InnerText;
+                cc.QueryDate = target[4].SelectNodes("td").ElementAt(1).InnerText;
+
+            } catch (Exception ex) {
+                Debug.WriteLine(ex.StackTrace);
+                return cc;
+            }
+            return cc;
+        }
+
     }
 }
