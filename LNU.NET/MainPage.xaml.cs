@@ -157,7 +157,12 @@ namespace LNU.NET {
             LoginClient = UnRedirectHttpClient;
             IfNeedAdapteVitualNavigationBar();
             InitSlideRecState();
+
+            /// Change for Windows Store
+
             AutoLoginIfNeed();
+
+            ///
         }
 
         /// <summary>
@@ -242,7 +247,8 @@ namespace LNU.NET {
                             RedirectToLoginAgain();
                             return;
                         } else { // login successful, save status and do nothing.
-                            SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
+                            if(!studentStatus.InnerText.Contains("请先登录再使用"))
+                                SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
                         }
                     } else
                         ReportHelper.ReportAttention(GetUIString("Internet_Failed"));
@@ -276,19 +282,28 @@ namespace LNU.NET {
         private string PasswordDecryption() {
             try { // password decryption over here.
                 var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
-                if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
-                    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
-                    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv));
-                    ibufferVector = CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv);
 
-                    return CipherEncryptionHelper.CipherDecryption( // decryption the message.
-                        SymmetricAlgorithmNames.AesCbcPkcs7,
-                        CryptographicBuffer.CreateFromByteArray(Password),
-                        ibufferVector,
-                        BinaryStringEncoding.Utf8,
-                        cryptographicKey);
-                }
-                return null;
+                /// Change For Windows Store
+
+                return Convert.ToBase64String(Password);
+
+                //if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
+                //    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+                //    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv));
+                //    ibufferVector = CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv);
+
+                //    return CipherEncryptionHelper.CipherDecryption( // decryption the message.
+                //        SymmetricAlgorithmNames.AesCbcPkcs7,
+                //        CryptographicBuffer.CreateFromByteArray(Password),
+                //        ibufferVector,
+                //        BinaryStringEncoding.Utf8,
+                //        cryptographicKey);
+                //}
+
+                //return null;
+
+                ///
+
             } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
                 Debug.WriteLine(e.StackTrace);
                 SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);

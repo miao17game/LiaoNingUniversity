@@ -251,7 +251,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             var pass = PasswordBox.Password;
 
             SettingsHelper.SaveSettingsValue(SettingsConstants.Email, user);
-            PasswordEncryption(pass);
+            PasswordEncryption(ref pass);
 
             // set the abort button with keybord-focus, so that the vitual keyboad in the mobile device with disappear.
             Abort.Focus(FocusState.Keyboard);
@@ -374,7 +374,7 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Password Encryption & Decryption
 
-        private void PasswordEncryption(string pass) {
+        private void PasswordEncryption(ref string pass) {
             if (PasswordCheckBox.IsChecked ?? false) {
                 try { // password encryption is over here.
                     var finalToSave = CipherEncryptionHelper.CipherEncryption(
@@ -385,6 +385,12 @@ namespace LNU.NET.Pages.FeaturesPages {
                         out cryptographicKey);
 
                     SettingsHelper.SaveSettingsValue(SettingsConstants.Password, finalToSave.ToArray());
+
+                    /// Changes For Windows Store
+
+                    pass = Convert.ToBase64String(finalToSave.ToArray());
+
+                    ///
 
                 } catch (Exception e) { // if any error throws, report in debug range and do nothing in the foreground.
                     Debug.WriteLine(e.StackTrace);

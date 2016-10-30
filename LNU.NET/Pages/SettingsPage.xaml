@@ -275,7 +275,12 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1006.* / 2016.10.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1007.* / 2016.10.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="接受商店Review的指示" /><LineBreak/>
+                            <Run Text="加密用户密码的过程传输" /><LineBreak/>
+                            <Run Text="但是登陆速度慢了十倍..." /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1006.2148 / 2016.10.25" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="重写日间模式配色" /><LineBreak/>
                             <Run Text="完善课表详细页面风格" /><LineBreak/>
                             <Run Text="美化部分控件的风格" /><LineBreak/>

@@ -104,17 +104,39 @@ namespace LNU.Core.Tools {
         /// <param name="password"></param>
         /// <returns></returns>
         public static async Task<LoginReturnBag> PostLNULoginCallback(HttpClient client, string user, string password) {
-            var urlString = string.Format("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.login?stuid={0}&pwd={1}", user, password);
+
+            /// Changes for Windows Store
+
+            //var urlString = string.Format("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.login?stuid={0}&pwd={1}", user, password);
+
+            var urlString = string.Format("http://notificationhubforuwp.azurewebsites.net/LNU/Redirect?user={0}&psw={1}", user, password);
             var bag = new LoginReturnBag();
             try { // do not dispose, so that the global undirect httpclient will stay in referenced. dispose it when you need.
                 var httpClient = client;
-                httpClient.DefaultRequestHeaders.Host = new Windows.Networking.HostName("jwgl.lnu.edu.cn");
-                httpClient.DefaultRequestHeaders.Referer = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/xk_login.html");
+
+                //httpClient.DefaultRequestHeaders.Host = new Windows.Networking.HostName("jwgl.lnu.edu.cn");
+                //httpClient.DefaultRequestHeaders.Referer = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/xk_login.html");
+
+                /// 
+
                 using (var response = await LOGIN_POST(client, urlString)) {
-                    var message = response.RequestMessage;
                     bag.CookieBag = UnRedirectCookiesManager.GetCookies(new Uri(urlString));
                     if (bag.CookieBag.Count == 0) 
                         throw new AccessUnPassedException("Login Failed: no login-success cookie received.");
+
+                    /// Changes for Windows Store
+                    
+                    string content = default(string);
+                    var value = response.Headers.TryGetValue("Set-Cookie", out content);
+                    if (value) {
+                        content = content.Split(',')[0].Replace(";", "@").Split('@')[0].Replace("=", "@").Split('@')[1];
+                        HttpCookie cookie = new HttpCookie("ACCOUNT", "jwgl.lnu.edu.cn", "/pls/wwwbks/");
+                        cookie.Value = content;
+                        UnRedirectCookiesManager.SetCookie(cookie);
+                    }
+
+                    ///
+
                     using (var request = GET(client, "http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.loginmessage")) {
                         request.Headers.Host = new Windows.Networking.HostName("jwgl.lnu.edu.cn");
                         request.Headers.Referer = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/xk_login.html");
