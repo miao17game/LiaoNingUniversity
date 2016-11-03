@@ -226,8 +226,9 @@ namespace LNU.NET {
         /// </summary>
         private async void AutoLoginIfNeed() {
             if ((bool?)SettingsHelper.ReadSettingsValue(SettingsSelect.IsAutoLogin) ?? false) {
-                var user = SettingsHelper.ReadSettingsValue(SettingsConstants.Email) as string;
-                var pass = PasswordDecryption();
+                var user = default(string);
+                var pass = default(string);
+                PasswordDecryption(out user, out pass);
                 if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(pass)) {
                     var loginReturn = await PostLNULoginCallback(LoginClient, user, pass);
                     if (loginReturn != null) {
@@ -248,7 +249,7 @@ namespace LNU.NET {
                             return;
                         } else { // login successful, save status and do nothing.
                             if(!studentStatus.InnerText.Contains("请先登录再使用"))
-                                SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
+                                SaveLoginStatus(studentStatus, loginReturn.CookieBag);
                         }
                     } else
                         ReportHelper.ReportAttention(GetUIString("Internet_Failed"));
@@ -279,13 +280,15 @@ namespace LNU.NET {
 
         #region Password Decryption
 
-        private string PasswordDecryption() {
+        private void PasswordDecryption( out string user, out string pass ) {
             try { // password decryption over here.
-                var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
+
+                var userBytes = SettingsHelper.ReadSettingsValue(SettingsConstants.Email) as byte[];
+                var passBytes = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
+                user = userBytes != null ? Convert.ToBase64String(userBytes).Replace("/", "$") : null;
+                pass = passBytes != null ? Convert.ToBase64String(passBytes).Replace("/", "$") : null;
 
                 /// Change For Windows Store
-
-                return Convert.ToBase64String(Password);
 
                 //if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
                 //    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
@@ -307,7 +310,9 @@ namespace LNU.NET {
             } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
                 Debug.WriteLine(e.StackTrace);
                 SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
-                return null;
+                SettingsHelper.SaveSettingsValue(SettingsConstants.Email, null);
+                user = null;
+                pass = null;
             }
         }
 

@@ -94,8 +94,7 @@ namespace LNU.NET.Pages.FeaturesPages {
                     AutoLoginCheckBox.IsChecked = PasswordCheckBox.IsChecked ?? false ? AutoLoginCheckBox.IsChecked : false;
                     AutoLoginCheckBox.IsEnabled = PasswordCheckBox.IsChecked ?? false;
 
-                    EmailBox.Text = (string)SettingsHelper.ReadSettingsValue(SettingsConstants.Email) ?? "";
-                    PasswordDecryption();
+                    PasswordAndUserDecryption();
 
                     if (AutoLoginCheckBox.IsChecked ?? false)
                         await ClickSubmitButtonIfAuto();
@@ -206,6 +205,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             SettingsHelper.SaveSettingsValue(SettingsSelect.IsSavePassword, isChecked);
             if (!isChecked) {
                 SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
+                SettingsHelper.SaveSettingsValue(SettingsConstants.Email, null);
                 AutoLoginCheckBox.IsChecked = false;
                 AutoLoginCheckBox.IsEnabled = false;
             } else
@@ -250,8 +250,7 @@ namespace LNU.NET.Pages.FeaturesPages {
             var user = EmailBox.Text;
             var pass = PasswordBox.Password;
 
-            SettingsHelper.SaveSettingsValue(SettingsConstants.Email, user);
-            PasswordEncryption(ref pass);
+            PasswordAndUserEncryption(ref user, ref pass);
 
             // set the abort button with keybord-focus, so that the vitual keyboad in the mobile device with disappear.
             Abort.Focus(FocusState.Keyboard);
@@ -292,14 +291,21 @@ namespace LNU.NET.Pages.FeaturesPages {
                 RedirectToLoginAgain();
                 return;
             } else { // login successful, save login status and show it.
-                SaveLoginStatus(studentStatus, loginReturn.CookieBag.FirstOrDefault());
-                LoginPopup.IsOpen = false;
-                SetVisibility(MainPopupGrid, false);
-                if (thisPageType == DataFetchType.Index_ReLogin) {
-                    RedirectToPageBefore();
+                if (!studentStatus.InnerText.Contains("请先登录再使用")) {
+                    SaveLoginStatus(studentStatus, loginReturn.CookieBag);
+                    LoginPopup.IsOpen = false;
+                    SetVisibility(MainPopupGrid, false);
+                    if (thisPageType == DataFetchType.Index_ReLogin) {
+                        RedirectToPageBefore();
+                        return;
+                    }
+                    SetVisibility(StatusGrid, true);
+                }else {
+                    ReportHelper.ReportAttention(GetUIString("Login_Failed"));
+                    SettingsHelper.SaveSettingsValue(SettingsSelect.IsAutoLogin, false);
+                    RedirectToLoginAgain();
                     return;
                 }
-                SetVisibility(StatusGrid, true);
             }
         }
 
@@ -374,21 +380,31 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Password Encryption & Decryption
 
-        private void PasswordEncryption(ref string pass) {
+        private void PasswordAndUserEncryption(ref string user, ref string pass) {
             if (PasswordCheckBox.IsChecked ?? false) {
                 try { // password encryption is over here.
-                    var finalToSave = CipherEncryptionHelper.CipherEncryption(
+
+                    var userToSave = CipherEncryptionHelper.CipherEncryption(
+                        user,
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        out binaryStringEncoding,
+                        out ibufferVector,
+                        out cryptographicKey);
+
+                    var passToSave = CipherEncryptionHelper.CipherEncryption(
                         pass,
                         SymmetricAlgorithmNames.AesCbcPkcs7,
                         out binaryStringEncoding,
                         out ibufferVector,
                         out cryptographicKey);
 
-                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, finalToSave.ToArray());
+                    SettingsHelper.SaveSettingsValue(SettingsConstants.Password, passToSave.ToArray());
+                    SettingsHelper.SaveSettingsValue(SettingsConstants.Email, userToSave.ToArray());
 
                     /// Changes For Windows Store
 
-                    pass = Convert.ToBase64String(finalToSave.ToArray());
+                    pass = Convert.ToBase64String(passToSave.ToArray()).Replace("/", "$");
+                    user = Convert.ToBase64String(userToSave.ToArray()).Replace("/", "$");
 
                     ///
 
@@ -398,8 +414,10 @@ namespace LNU.NET.Pages.FeaturesPages {
             }
         }
 
-        private void PasswordDecryption() {
+        private void PasswordAndUserDecryption() {
+
             try { // password decryption over here.
+
                 var Password = SettingsHelper.ReadSettingsValue(SettingsConstants.Password) as byte[];
                 if (Password != null) { // init ibuffer vector and cryptographic key for decryption.
                     SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
@@ -413,9 +431,24 @@ namespace LNU.NET.Pages.FeaturesPages {
                         BinaryStringEncoding.Utf8,
                         cryptographicKey);
                 }
+
+                var User = SettingsHelper.ReadSettingsValue(SettingsConstants.Email) as byte[];
+                if (User != null) { // init ibuffer vector and cryptographic key for decryption.
+                    SymmetricKeyAlgorithmProvider objAlg = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+                    cryptographicKey = objAlg.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv));
+                    ibufferVector = CryptographicBuffer.CreateFromByteArray(CipherEncryptionHelper.CollForKeyAndIv);
+
+                    EmailBox.Text = CipherEncryptionHelper.CipherDecryption( // decryption the message.
+                        SymmetricAlgorithmNames.AesCbcPkcs7,
+                        CryptographicBuffer.CreateFromByteArray(User),
+                        ibufferVector,
+                        BinaryStringEncoding.Utf8,
+                        cryptographicKey);
+                }
             } catch (Exception e) { // if any error throws, clear the password cache to prevent more errors.
                 Debug.WriteLine(e.StackTrace);
                 SettingsHelper.SaveSettingsValue(SettingsConstants.Password, null);
+                SettingsHelper.SaveSettingsValue(SettingsConstants.Email, null);
             }
         }
 

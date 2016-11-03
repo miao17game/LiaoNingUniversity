@@ -9,6 +9,6 @@ using Windows.Web.Http;
 namespace LNU.Core.Models {
     public class LoginReturnBag {
         public string HtmlResouces { get; set; }
-        public HttpCookieCollection CookieBag { get; set; }
+        public HttpCookie CookieBag { get; set; }
     }
 }

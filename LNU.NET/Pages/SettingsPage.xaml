@@ -275,7 +275,12 @@
                         <TextBlock Margin="10,5,10,5" FontSize="12" FontWeight="Thin"
                                TextWrapping="WrapWholeWords">
                             
-                            <Run Text="Version：1.1007.* / 2016.10.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="Version：1.1008.* / 2016.11.*" FontSize="15" FontWeight="Medium" /><LineBreak/>
+                            <Run Text="用户名都加密了" /><LineBreak/>
+                            <Run Text="HTTPS都已经启用了" /><LineBreak/>
+                            <Run Text="还说我用纯文本传输密码...excuse me？？？" /><LineBreak/><LineBreak/>
+                            
+                            <Run Text="Version：1.1007.2158 / 2016.10.30" FontSize="15" FontWeight="Medium" /><LineBreak/>
                             <Run Text="接受商店Review的指示" /><LineBreak/>
                             <Run Text="加密用户密码的过程传输" /><LineBreak/>
                             <Run Text="但是登陆速度慢了十倍..." /><LineBreak/><LineBreak/>

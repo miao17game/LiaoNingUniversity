@@ -23,6 +23,9 @@ using System.Diagnostics;
 using LNU.NET.Tools;
 using LNU.Core.Models;
 using HtmlAgilityPack;
+using Windows.Security.Cryptography.Core;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 
 namespace LNU.NET.Pages.FeaturesPages {
    
@@ -69,13 +72,24 @@ namespace LNU.NET.Pages.FeaturesPages {
             var newPass = PB_New.Password;
             var confirm = PB_Recofirm.Password;
 
-            var returnMessage = await PostLNUChangePassword(
-                MainPage.LoginClient,
-                string.Format(
-                    "http://jwgl.lnu.edu.cn/pls/wwwbks//bks_login2.ChangePass?p_oldpass={0}&p_newpass1={1}&p_newpass2={2}",
+            EncryptionFor(ref oldPass, ref newPass, ref confirm);
+
+            Debug.WriteLine(string.Format(
+                    "https://notificationhubforuwp.azurewebsites.net/LNU/ChangePassword?old={0}&newPass={1}&reconfirm={2}",
                     oldPass,
                     newPass,
-                    confirm));
+                    confirm)
+                );
+
+            var returnMessage = await PostLNURedirectPOSTMethod(
+                MainPage.LoginClient,
+                string.Format(
+                    "https://notificationhubforuwp.azurewebsites.net/LNU/ChangePassword?old={0}&newPass={1}&reconfirm={2}",
+                    oldPass,
+                    newPass,
+                    confirm),
+                MainPage.LoginCache.Cookie
+                );
 
             if (returnMessage == null)
                 RedirectToLogin();
@@ -127,33 +141,68 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         private void ChangePasswordAndReport(string returnMessage) {
             contentRing.IsActive = false;
-            var doc = new HtmlDocument();
-            doc.LoadHtml(returnMessage);
-            var rootNode = doc.DocumentNode;
-            var requestResult = rootNode.SelectSingleNode("//span[@class='t']");
-            if (requestResult != null) {
-                switch (requestResult.InnerText.Substring(1, requestResult.InnerText.Length - 2)) {
-                    case "新密码输入不一致!":
-                        isFirstLoaded = true;
-                        PB_New.Password = "";
-                        PB_Recofirm.Password = "";
-                        ReportHelper.ReportAttention(GetUIString("Login_Reconfirm_Failed"));
-                        break;
-                    case "密码输入有误!":
-                        isFirstLoaded = true;
-                        ReportHelper.ReportAttention(GetUIString("Login_Pass_Input_Error"));
-                        break;
-                    case "你已经改变了你的密码!":
-                        PageSlideOutStart(VisibleWidth > 800 ? false : true);
-                        ReportHelper.ReportAttention(GetUIString("Login_Pass_Changed"));
-                        break;
-                    default:
-                        isFirstLoaded = true;
-                        ReportHelper.ReportAttention(GetUIString("Login_Uhandled_Error"));
-                        break;
-                }
-            } else {
-                // e...oh...
+            Debug.WriteLine(returnMessage);
+            var errorCode = default(ErrorStatus);
+            errorCode = returnMessage.Contains("新密码输入不一致!") ? ErrorStatus.UnConfirmed :
+                returnMessage.Contains("密码输入有误!") ? ErrorStatus.PasswordError :
+                returnMessage.Contains("你已经改变了你的密码!") ? ErrorStatus.Succeed :
+                ErrorStatus.Unknown;
+            switch (errorCode) {
+                case ErrorStatus.UnConfirmed:
+                    isFirstLoaded = true;
+                    PB_New.Password = "";
+                    PB_Recofirm.Password = "";
+                    ReportHelper.ReportAttention(GetUIString("Login_Reconfirm_Failed"));
+                    break;
+                case ErrorStatus.PasswordError:
+                    isFirstLoaded = true;
+                    ReportHelper.ReportAttention(GetUIString("Login_Pass_Input_Error"));
+                    break;
+                case ErrorStatus.Succeed:
+                    PageSlideOutStart(VisibleWidth > 800 ? false : true);
+                    ReportHelper.ReportAttention(GetUIString("Login_Pass_Changed"));
+                    break;
+                default:
+                    isFirstLoaded = true;
+                    ReportHelper.ReportAttention(GetUIString("Login_Uhandled_Error"));
+                    break;
+            }
+        }
+
+        private void EncryptionFor (ref string old, ref string newPass, ref string confirm ) {
+            try { // password encryption is over here.
+
+                var userToTransmit = CipherEncryptionHelper.CipherEncryption(
+                    old,
+                    SymmetricAlgorithmNames.AesCbcPkcs7,
+                    out binaryStringEncoding,
+                    out ibufferVector,
+                    out cryptographicKey);
+
+                var passToTransmit = CipherEncryptionHelper.CipherEncryption(
+                    newPass,
+                    SymmetricAlgorithmNames.AesCbcPkcs7,
+                    out binaryStringEncoding,
+                    out ibufferVector,
+                    out cryptographicKey);
+
+                var confirmToTransmit = CipherEncryptionHelper.CipherEncryption(
+                    confirm,
+                    SymmetricAlgorithmNames.AesCbcPkcs7,
+                    out binaryStringEncoding,
+                    out ibufferVector,
+                    out cryptographicKey);
+
+                /// Changes For Windows Store
+
+                newPass = Convert.ToBase64String(passToTransmit.ToArray()).Replace("/","$");
+                old = Convert.ToBase64String(userToTransmit.ToArray()).Replace("/", "$");
+                confirm = Convert.ToBase64String(confirmToTransmit.ToArray()).Replace("/", "$");
+
+                ///
+
+            } catch (Exception e) { // if any error throws, report in debug range and do nothing in the foreground.
+                Debug.WriteLine(e.StackTrace);
             }
         }
 
@@ -161,6 +210,11 @@ namespace LNU.NET.Pages.FeaturesPages {
 
         #region Properties
         public static ChangePassPage Current;
+        private BinaryStringEncoding binaryStringEncoding;
+        private IBuffer ibufferVector;
+        private CryptographicKey cryptographicKey;
+
+        private enum ErrorStatus { Unknown, UnConfirmed, PasswordError, Succeed }
         #endregion
 
     }

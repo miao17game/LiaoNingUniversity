@@ -84,10 +84,10 @@ namespace LNU.Core.Tools {
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        private static async Task<StringBuilder> CastStreamContentToString(HttpResponseMessage result) {
+        private static async Task<StringBuilder> CastStreamContentToString(HttpResponseMessage result, bool IsGB2312 = true ) {
             var stream = await (result.Content as HttpStreamContent).ReadAsInputStreamAsync();
             var LrcStringBuider = new StringBuilder();
-            var streamReader = new StreamReader(stream.AsStreamForRead(), DBCSEncoding.GetDBCSEncoding("gb2312"));
+            var streamReader = new StreamReader(stream.AsStreamForRead(), IsGB2312? DBCSEncoding.GetDBCSEncoding("gb2312"): Encoding.UTF8);
             LrcStringBuider.Append(await streamReader.ReadToEndAsync());
             return LrcStringBuider;
         }
@@ -109,7 +109,7 @@ namespace LNU.Core.Tools {
 
             //var urlString = string.Format("http://jwgl.lnu.edu.cn/pls/wwwbks/bks_login2.login?stuid={0}&pwd={1}", user, password);
 
-            var urlString = string.Format("http://notificationhubforuwp.azurewebsites.net/LNU/Redirect?user={0}&psw={1}", user, password);
+            var urlString = string.Format("https://notificationhubforuwp.azurewebsites.net/LNU/Redirect?user={0}&psw={1}", user, password);
             var bag = new LoginReturnBag();
             try { // do not dispose, so that the global undirect httpclient will stay in referenced. dispose it when you need.
                 var httpClient = client;
@@ -118,10 +118,10 @@ namespace LNU.Core.Tools {
                 //httpClient.DefaultRequestHeaders.Referer = new Uri("http://jwgl.lnu.edu.cn/zhxt_bks/xk_login.html");
 
                 /// 
-
+                
                 using (var response = await LOGIN_POST(client, urlString)) {
-                    bag.CookieBag = UnRedirectCookiesManager.GetCookies(new Uri(urlString));
-                    if (bag.CookieBag.Count == 0) 
+                    var returnCookies = UnRedirectCookiesManager.GetCookies(new Uri("https://notificationhubforuwp.azurewebsites.net/"));
+                    if (returnCookies.Count == 0) 
                         throw new AccessUnPassedException("Login Failed: no login-success cookie received.");
 
                     /// Changes for Windows Store
@@ -132,7 +132,15 @@ namespace LNU.Core.Tools {
                         content = content.Split(',')[0].Replace(";", "@").Split('@')[0].Replace("=", "@").Split('@')[1];
                         HttpCookie cookie = new HttpCookie("ACCOUNT", "jwgl.lnu.edu.cn", "/pls/wwwbks/");
                         cookie.Value = content;
+
+                        /// DEBUG Method
+
+                        Debug.WriteLine("DEBUG ----->   " + content );
+
+                        ///
+
                         UnRedirectCookiesManager.SetCookie(cookie);
+                        bag.CookieBag = cookie;
                     }
 
                     ///
@@ -241,7 +249,35 @@ namespace LNU.Core.Tools {
             } catch (ObjectDisposedException ex) { // when web connect recovery , recreate a new instance to implemente a recursive function to solve the problem.
                 Debug.WriteLine("\nFailed：\n" + ex.StackTrace);
                 unRedirectHttpClient = null;
-                return await LNULogOutCallback(UnRedirectHttpClient, logoutPath);
+                return await PostLNUChangePassword(UnRedirectHttpClient, logoutPath);
+            } catch (COMException ex) { // it is obvious that the internrt connect go wrong.
+                Debug.WriteLine("\nFailed：\n" + ex.StackTrace);
+                return null;
+            } catch (Exception ex) { // unkown error, report it.
+                Debug.WriteLine("\nFailed：\n" + ex.StackTrace);
+                return null;
+            }
+            return bag;
+        }
+
+        /// <summary>
+        /// change password.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="logoutPath"></param>
+        /// <returns></returns>
+        public static async Task<string> PostLNURedirectPOSTMethod(HttpClient client, string logoutPath, HttpCookie cookie) {
+            var bag = default(string);
+            try { // do not dispose, so that the global undirect httpclient will stay in referenced. dispose it when you need.
+                using (var request = POST(client, logoutPath)) {
+                    request.Headers["Cookie"] = "ACCOUNT=" + cookie.Value + "; path=/pls/wwwbks/";
+                    var result = await client.SendRequestAsync(request);
+                    bag = (await CastStreamContentToString(result, false)).ToString();
+                }
+            } catch (ObjectDisposedException ex) { // when web connect recovery , recreate a new instance to implemente a recursive function to solve the problem.
+                Debug.WriteLine("\nFailed：\n" + ex.StackTrace);
+                unRedirectHttpClient = null;
+                return await PostLNURedirectPOSTMethod(UnRedirectHttpClient, logoutPath, cookie);
             } catch (COMException ex) { // it is obvious that the internrt connect go wrong.
                 Debug.WriteLine("\nFailed：\n" + ex.StackTrace);
                 return null;
