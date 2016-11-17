@@ -74,13 +74,6 @@ namespace LNU.NET.Pages.FeaturesPages {
 
             EncryptionFor(ref oldPass, ref newPass, ref confirm);
 
-            Debug.WriteLine(string.Format(
-                    "https://notificationhubforuwp.azurewebsites.net/LNU/ChangePassword?old={0}&newPass={1}&reconfirm={2}",
-                    oldPass,
-                    newPass,
-                    confirm)
-                );
-
             var returnMessage = await PostLNURedirectPOSTMethod(
                 MainPage.LoginClient,
                 string.Format(
